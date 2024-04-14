@@ -15,6 +15,8 @@ import EditConfirmedNeed from './views/EditConfirmedNeed';
 import Home from './views/Home';
 import Login from './views/Login';
 import Register from './views/Register';
+import TurkeyMap from './views/TrMap';
+import City from './views/City';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
@@ -56,6 +58,9 @@ function App() {
             <Route exact path="/signup">
               <Register />
             </Route>
+            <Route exact path="/turkey-map">
+              <TurkeyMap />
+            </Route>
             <Route exact path="/supports">
               <Supports />
             </Route>
@@ -96,6 +101,9 @@ function App() {
             <Route exact path="/signup">
               <Register />
             </Route>
+            <Route exact path="/turkey-map">
+              <TurkeyMap />
+            </Route>
             <Route exact path="/supports">
               <Home />
             </Route>
@@ -112,6 +120,7 @@ function App() {
             <Route path="/need/edit/:id" component={EditNeed}></Route>
             <Route path="/confirmed_support/edit/:id" component={EditConfirmedSupport}></Route>
             <Route path="/confirmed_need/edit/:id" component={EditConfirmedNeed}></Route>
+            <Route path="/turkey-map/:city" component={City}></Route>
           </Switch>
         </div>
 

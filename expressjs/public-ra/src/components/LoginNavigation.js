@@ -24,6 +24,9 @@ function LoginNavigation(props) {
                     <Nav.Link className="nav-item p-1">
                         <Link to="/confirmed_supports" className="nav-link" >Onaylanmış Destekler</Link>
                     </Nav.Link>
+                    <Nav.Link className="nav-item p-1">
+                        <Link to="/turkey-map" className="nav-link" >Türkiye Haritası</Link>
+                    </Nav.Link>
                     <li className="nav-item mr-3 mt-1 row ml-auto">
                         <span className="navbar-text c-white pr-1">Hoşgeldin,</span>
                         <span className="navbar-text">{props.username}</span>

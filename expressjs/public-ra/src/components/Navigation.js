@@ -12,6 +12,9 @@ function Navigation() {
                     <Nav.Link className="nav-item p-1">
                         <Link to="/" className="nav-link" >Anasayfa</Link>
                     </Nav.Link>
+                    <Nav.Link className="nav-item p-1">
+                        <Link to="/turkey-map" className="nav-link" >Türkiye Haritası</Link>
+                    </Nav.Link>
                     <Nav.Link className="nav-item p-1 ml-auto res-button">
                         <Link to="/signup" className="nav-link" >Kayıt Ol</Link>
                     </Nav.Link>
