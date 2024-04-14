@@ -14,7 +14,7 @@ require('./passport_setup')(passport);
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'public-ra/src/index.html'));
+app.set('views', path.join(__dirname, 'public-ra/src/views'));
 app.set('view engine', 'pug');
 
 app.use(cors());

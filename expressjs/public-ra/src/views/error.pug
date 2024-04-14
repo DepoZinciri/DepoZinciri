@@ -1,0 +1,17 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Error
+
+  body
+    h1 Error
+    if message
+      p= message
+    else
+      p Something went wrong.
+    if error && error.stack
+      pre= error.stack
+    else
+      pre Error details not available.

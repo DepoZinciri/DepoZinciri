@@ -40,8 +40,16 @@ exports.login = function (req, res, next) {
 }
 
 exports.logout = function (req, res, next) {
-    req.logout();
-    req.session.destroy();
-    res.redirect('/');
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        req.session.destroy((err) => {
+            if (err) {
+                console.error('Error destroying session:', err);
+                return next(err);
+            }
+            res.redirect('/');
+        });
+      });
+
 }
 
