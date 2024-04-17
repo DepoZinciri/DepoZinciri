@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Footer from './components/Footer';
 import Navigation from './components/Navigation';
+import WRoleNavigation from './components/WRoleNavigation';
 import LoginNavigation from './components/LoginNavigation';
 import Supports from './views/Supports';
 import Needs from './views/Needs';
@@ -22,10 +23,11 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import "./public/css/style.css";
 import PersonalData from './views/PersonalData';
+import Warehouse from './views/Warehouse';
 
 function App() {
 
-  const [userResponse, setUserResponse] = useState([]);
+  const [userResponse, setUserResponse] = useState("TEST");
   const [username, setUsername] = useState([]);
 
   useEffect(() => {
@@ -83,6 +85,49 @@ function App() {
 
         <Footer />
 
+      </Router>
+    );
+  } else if(userResponse === "TEST") {
+    return (
+      <Router>
+        <div className="App">
+          <WRoleNavigation />
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/signup">
+              <Register />
+            </Route>
+            <Route exact path="/turkey-map">
+              <TurkeyMap />
+            </Route>
+            <Route exact path="/warehouse">
+              <Warehouse />
+            </Route>
+            <Route exact path="/supports">
+              <Home />
+            </Route>
+            <Route exact path="/needs">
+              <Home />
+            </Route>
+            <Route exact path="/confirmed_supports">
+              <Home />
+            </Route>
+            <Route exact path="/confirmed_needs">
+              <Home />
+            </Route>
+            <Route path="/support/edit/:id" component={EditSupport}></Route>
+            <Route path="/need/edit/:id" component={EditNeed}></Route>
+            <Route path="/confirmed_support/edit/:id" component={EditConfirmedSupport}></Route>
+            <Route path="/confirmed_need/edit/:id" component={EditConfirmedNeed}></Route>
+            <Route path="/turkey-map/:city" component={City}></Route>
+          </Switch>
+        </div>
+        <Footer />
       </Router>
     );
   } else {
