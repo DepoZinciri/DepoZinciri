@@ -1,0 +1,495 @@
+{
+  "Adana": {
+    "Nüfus": 2270298,
+    "Kadın Nüfusu":1135252 ,
+    "Erkek Nüfusu": 1135046,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 167
+  },
+  "Adıyaman": {
+    "Nüfus": 604978,
+    "Kadın Nüfusu": 298199,
+    "Erkek Nüfusu":306779,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 106
+  },
+  "Afyonkarahisar": {
+    "Nüfus": 751344,
+    "Kadın Nüfusu": 376639,
+    "Erkek Nüfusu": 374705,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 140
+  },
+  "Ağrı": {
+    "Nüfus": 511238,
+    "Kadın Nüfusu":245653 ,
+    "Erkek Nüfusu": 265585,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 137
+  },
+  "Aksaray": {
+    "Nüfus": 438504,
+    "Kadın Nüfusu": 219498,
+    "Erkek Nüfusu": 219006,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 157
+  },
+  "Amasya": {
+    "Nüfus": 339529,
+    "Kadın Nüfusu": 171239,
+    "Erkek Nüfusu": 168290,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 164
+  },
+  "Ankara": {
+    "Nüfus": 5803482,
+    "Kadın Nüfusu": 2943121,
+    "Erkek Nüfusu": 2860361,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 211
+  },
+  "Antalya": {
+    "Nüfus": 2696249,
+    "Kadın Nüfusu": 1339051,
+    "Erkek Nüfusu": 1357198,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 318
+  },
+  "Ardahan": {
+    "Nüfus": 92819,
+    "Kadın Nüfusu": 44580,
+    "Erkek Nüfusu": 48239,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 162
+  },
+  "Artvin": {
+    "Nüfus": 172356,
+    "Kadın Nüfusu":86001,
+    "Erkek Nüfusu": 86355,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 123
+  },
+  "Aydın": {
+    "Nüfus": 1161702,
+    "Kadın Nüfusu": 585440,
+    "Erkek Nüfusu": 576262,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 182
+  },
+  "Balıkesir": {
+    "Nüfus": 1273519,
+    "Kadın Nüfusu": 639260,
+    "Erkek Nüfusu": 634259,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 191
+  },
+  "Bartın": {
+    "Nüfus": 207238,
+    "Kadın Nüfusu": 104151,
+    "Erkek Nüfusu": 103087,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 96
+  },
+  "Batman": {
+    "Nüfus": 647205,
+    "Kadın Nüfusu": 104151,
+    "Erkek Nüfusu": 327361,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 189
+  },
+  "Bayburt": {
+    "Nüfus": 86047,
+    "Kadın Nüfusu": 42444,
+    "Erkek Nüfusu": 43603,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 149
+  },
+
+  "Bilecik": {
+    "Nüfus": 228058,
+    "Kadın Nüfusu": 112640,
+    "Erkek Nüfusu": 115418,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 125
+  },
+  "Bingöl": {
+    "Nüfus": 285655,
+    "Kadın Nüfusu": 141641,
+    "Erkek Nüfusu": 144014,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 130
+  },
+  "Bitlis": {
+    "Nüfus": 359747,
+    "Kadın Nüfusu": 173709,
+    "Erkek Nüfusu": 186038,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 170
+  },
+  "Bolu": {
+    "Nüfus": 324789,
+    "Kadın Nüfusu": 163470,
+    "Erkek Nüfusu": 161319,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 260
+  },
+  "Burdur": {
+    "Nüfus": 277452,
+    "Kadın Nüfusu": 139011,
+    "Erkek Nüfusu": 138441,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 170
+  },
+  "Bursa": {
+    "Nüfus": 3214571,
+    "Kadın Nüfusu": 1608630,
+    "Erkek Nüfusu": 1605941,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 149
+  },
+  "Çanakkale": {
+    "Nüfus": 570499,
+    "Kadın Nüfusu": 285153,
+    "Erkek Nüfusu": 285346,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 166
+  },
+  "Çankırı": {
+    "Nüfus": 205501,
+    "Kadın Nüfusu": 102464,
+    "Erkek Nüfusu": 103037,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 108
+  },
+  "Çorum": {
+    "Nüfus": 528351,
+    "Kadın Nüfusu": 266401,
+    "Erkek Nüfusu": 261950,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 188
+  },
+
+  "Denizli": {
+    "Nüfus": 1059082,
+    "Kadın Nüfusu": 532365,
+    "Erkek Nüfusu": 526717,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 123
+  },
+
+  "Şanlıurfa": {
+    "Nüfus": 2213964,
+    "Kadın Nüfusu": 1097130,
+    "Erkek Nüfusu": 1116834,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 184
+  },
+  "Diyarbakır": {
+    "Nüfus": 1818133,
+    "Kadın Nüfusu": 899153,
+    "Erkek Nüfusu": 918980,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 107
+  },
+  "Düzce": {
+    "Nüfus": 409865,
+    "Kadın Nüfusu": 205131,
+    "Erkek Nüfusu": 204734,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 138
+  },
+  "Edirne": {
+    "Nüfus": 419913,
+    "Kadın Nüfusu": 209260,
+    "Erkek Nüfusu": 210653,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 181
+  },
+  "Elazığ": {
+    "Nüfus": 604411,
+    "Kadın Nüfusu": 305566,
+    "Erkek Nüfusu": 298845,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 197
+  },
+  "Erzincan": {
+    "Nüfus": 119155,
+    "Kadın Nüfusu": 116127,
+    "Erkek Nüfusu": 124244,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 202
+  },
+  "Erzurum": {
+    "Nüfus": 749993,
+    "Kadın Nüfusu": 377371,
+    "Erkek Nüfusu": 372622,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 125
+  },
+  "Eskişehir": {
+    "Nüfus": 915418,
+    "Kadın Nüfusu": 460812,
+    "Erkek Nüfusu": 454606,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 155
+  },
+  "İğdır": {
+    "Nüfus": 209738,
+    "Kadın Nüfusu": 100028,
+    "Erkek Nüfusu": 109710,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 74
+  },
+  "Gaziantep": {
+    "Nüfus": 2164134,
+    "Kadın Nüfusu": 1072304,
+    "Erkek Nüfusu": 1091830,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 196
+  },
+  "Giresun": {
+    "Nüfus": 461712,
+    "Kadın Nüfusu": 230984,
+    "Erkek Nüfusu": 230728,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 111
+  },
+  "Gümüşhane": {
+    "Nüfus": 148539,
+    "Kadın Nüfusu": 73958,
+    "Erkek Nüfusu": 74581,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 120
+  },
+  "Hakkari": {
+    "Nüfus": 287625,
+    "Kadın Nüfusu": 133390,
+    "Erkek Nüfusu": 154235,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 81
+  },
+  "Hatay": {
+    "Nüfus": 762337,
+    "Kadın Nüfusu": 823673,
+    "Erkek Nüfusu": 782303,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 215
+  },
+  "Isparta": {
+    "Nüfus": 449777,
+    "Kadın Nüfusu": 227262,
+    "Erkek Nüfusu": 222515,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 174
+  },
+  "İstanbul": {
+    "Nüfus": 15655924,
+    "Kadın Nüfusu": 7849137,
+    "Erkek Nüfusu": 7806787,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 256
+  },
+  "İzmir": {
+    "Nüfus": 4479525,
+    "Kadın Nüfusu": 2258345,
+    "Erkek Nüfusu": 2221180,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 181
+  },
+  "Kahramanmaraş": {
+    "Nüfus": 1116618,
+    "Kadın Nüfusu": 548554,
+    "Erkek Nüfusu": 568064,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 162
+  },
+  "Karabük": {
+    "Nüfus": 255242,
+    "Kadın Nüfusu": 126862,
+    "Erkek Nüfusu": 123520,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 227
+  },
+  "Karaman": {
+    "Nüfus": 263960,
+    "Kadın Nüfusu": 132389,
+    "Erkek Nüfusu": 128370,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 144
+  },
+  "Kars": {
+    "Nüfus": 278335,
+    "Kadın Nüfusu": 134311,
+    "Erkek Nüfusu": 144024,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 198
+  },
+  "Kastamonu": {
+    "Nüfus": 388990,
+    "Kadın Nüfusu": 196942,
+    "Erkek Nüfusu": 192048,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 167
+  },
+  "Kayseri": {
+    "Nüfus": 1445683,
+    "Kadın Nüfusu": 723114,
+    "Erkek Nüfusu": 722569,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 157
+  },
+  "Kırıkkale": {
+    "Nüfus": 285744,
+    "Kadın Nüfusu": 148182,
+    "Erkek Nüfusu": 151651,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 98
+  },
+
+  "Kırklareli": {
+    "Nüfus": 377156,
+    "Kadın Nüfusu": 143093,
+    "Erkek Nüfusu": 142651,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 127
+  },
+  "Kırşehir": {
+    "Nüfus": 247179,
+    "Kadın Nüfusu": 124425,
+    "Erkek Nüfusu": 122754,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 150
+  },
+  "Kilis": {
+    "Nüfus": 155179,
+    "Kadın Nüfusu": 76981,
+    "Erkek Nüfusu": 78198,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 112
+  },
+  "Kocaeli": {
+    "Nüfus": 2102907,
+    "Kadın Nüfusu": 1041616,
+    "Erkek Nüfusu": 1061291,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 218
+  },
+  "Konya": {
+    "Nüfus": 2320241,
+    "Kadın Nüfusu": 1167857,
+    "Erkek Nüfusu": 1152384,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 144
+  },
+  "Kütahya": {
+    "Nüfus": 575674,
+    "Kadın Nüfusu": 291132,
+    "Erkek Nüfusu": 284542,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 177
+  },
+  "Malatya": {
+    "Nüfus": 742725,
+    "Kadın Nüfusu": 369097,
+    "Erkek Nüfusu": 373688,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 167
+  },
+  "Manisa": {
+    "Nüfus": 1475716,
+    "Kadın Nüfusu": 734442,
+    "Erkek Nüfusu": 741274,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 136
+  },
+
+  "Mardin": {
+    "Nüfus": 888874,
+    "Kadın Nüfusu": 442554,
+    "Erkek Nüfusu": 446320,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 172
+  },
+  "Mersin": {
+    "Nüfus": 1938389,
+    "Kadın Nüfusu": 968863,
+    "Erkek Nüfusu": 969526,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 271
+  },
+  "Muğla": {
+    "Nüfus": 1066736,
+    "Kadın Nüfusu": 524866,
+    "Erkek Nüfusu": 541870,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 222
+  },
+  "Muş": {
+    "Nüfus": 399879,
+    "Kadın Nüfusu": 196607,
+    "Erkek Nüfusu": 203272,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 162
+  },
+  "Nevşehir": {
+    "Nüfus": 315994,
+    "Kadın Nüfusu": 160097,
+    "Erkek Nüfusu": 155897,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 120
+  },
+  "Niğde": {
+    "Nüfus": 377080,
+    "Kadın Nüfusu": 188306,
+    "Erkek Nüfusu": 188774,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 198
+  },
+  "Ordu": {
+    "Nüfus": 775800,
+    "Kadın Nüfusu": 389195,
+    "Erkek Nüfusu": 386605,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 193
+  },
+  "Osmaniye": {
+    "Nüfus": 557666,
+    "Kadın Nüfusu": 277216,
+    "Erkek Nüfusu": 280450,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 143
+  },
+
+  "Rize": {
+    "Nüfus": 350506,
+    "Kadın Nüfusu": 175275,
+    "Erkek Nüfusu": 175231,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 134
+  },
+  "Sakarya": {
+    "Nüfus": 1098115,
+    "Kadın Nüfusu": 547631,
+    "Erkek Nüfusu": 550484,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 157
+  },
+  "Samsun": {
+    "Nüfus": 1377546,
+    "Kadın Nüfusu": 695981,
+    "Erkek Nüfusu": 681565,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 198
+  },
+  "Siirt": {
+    "Nüfus": 347412,
+    "Kadın Nüfusu": 166666,
+    "Erkek Nüfusu": 180736,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 109
+  },
+  "Sinop": {
+    "Nüfus": 229716,
+    "Kadın Nüfusu": 115533,
+    "Erkek Nüfusu": 114183,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 167
+  },
+  "Sivas": {
+    "Nüfus": 650401,
+    "Kadın Nüfusu": 325276,
+    "Erkek Nüfusu": 325125,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 183
+  },
+  "Şırnak": {
+    "Nüfus": 570745,
+    "Kadın Nüfusu": 271568,
+    "Erkek Nüfusu": 299177,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 135
+  },
+  "Tekirdağ": {
+    "Nüfus": 1167059,
+    "Kadın Nüfusu": 571926,
+    "Erkek Nüfusu": 595133,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 138
+  },
+
+  "Tokat": {
+    "Nüfus": 606934,
+    "Kadın Nüfusu": 305700,
+    "Erkek Nüfusu": 301234,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 138
+  },
+  "Trabzon": {
+    "Nüfus": 824352,
+    "Kadın Nüfusu": 415312,
+    "Erkek Nüfusu": 409040,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 295
+  },
+  "Tunceli": {
+    "Nüfus": 89317,
+    "Kadın Nüfusu": 42207,
+    "Erkek Nüfusu": 47110,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 189
+  },
+  "Uşak": {
+    "Nüfus": 377001,
+    "Kadın Nüfusu": 189748,
+    "Erkek Nüfusu": 187253,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 125
+  },
+  "Van": {
+    "Nüfus": 1127612,
+    "Kadın Nüfusu": 552619,
+    "Erkek Nüfusu": 574993,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 214
+  },
+  "Yalova": {
+    "Nüfus": 304780,
+    "Kadın Nüfusu": 152680,
+    "Erkek Nüfusu": 152100,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 293
+  },
+  "Yozgat": {
+    "Nüfus": 420699,
+    "Kadın Nüfusu": 210648,
+    "Erkek Nüfusu": 210051,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 146
+  },
+  "Zonguldak": {
+    "Nüfus": 591492,
+    "Kadın Nüfusu": 297491,
+    "Erkek Nüfusu": 294001,
+    "Belediyelerde deşarj edilen kişi başı günlük atıksu miktarı (litre/kişi-gün)": 135
+  }
+}

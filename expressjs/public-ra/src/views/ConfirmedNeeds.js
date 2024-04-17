@@ -5,6 +5,7 @@ import axios from 'axios';
 
 function ConfirmedNeeds() {
     const [confirmedNeeds, setConfirmedNeeds] = useState([]);
+    const [userResponse, setUserResponse] = useState([]);
 
     const showPersonalData = (id) => {
         let myPath = '/data/' + id + '';
@@ -17,7 +18,17 @@ function ConfirmedNeeds() {
     }
 
     useEffect(() => {
-        showConfirmedNeeds()
+        showConfirmedNeeds();
+        fetch("/api/auth")
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          setUserResponse(data.message);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }, []);
 
     function showConfirmedNeeds() {
@@ -63,12 +74,10 @@ function ConfirmedNeeds() {
                                     {confirmedNeeds.map(need =>
                                         <tr key={need[0]}>
                                             <th scope="row">{need[0]}</th>
-                                            <td><Link className="linktext" to={showPersonalData(need[0])}>{need[1].substr(0, 25) + "..."}</Link></td>
+                                            {userResponse === "LOGGED_IN" ? <td><Link to={showPersonalData(need[0])}>{need[1]}</Link></td> : <td>{need[1].charAt(1) + need[1].slice(1,need[1].length - 1)}</td>}
                                             <td>{need[2]}</td>
                                             <td>{need[3]}</td>
-                                            <td>
-                                                <Link to="/" className="mybtn-edit">Düzenle</Link>
-                                            </td>
+                                            {userResponse === "LOGGED_IN" ? <td><Link to={editConfirmedNeed(need[0])} className="btn btn-primary">Düzenle</Link></td> : <td></td>}
                                         </tr>
                                     )}
                                 </tbody>

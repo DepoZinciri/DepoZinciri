@@ -12,7 +12,7 @@ const TrMap = () => {
       );
       
       return (
-        <TurkeyMap onClick={ ({ name }) => history.push("/turkey-map/" + name) }  cityWrapper={renderCity} />
+        <TurkeyMap onClick={ ({ name }) => history.push("/turkey-map/" + name.toLowerCase()) }  cityWrapper={renderCity} />
       )
 };
 

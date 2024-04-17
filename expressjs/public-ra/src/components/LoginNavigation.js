@@ -7,8 +7,8 @@ function LoginNavigation(props) {
     return (
         <Navbar sticky="top" id="navbar" className="mb-1 navbar bg-dblue navbar-expand-lg navbar-dark" collapseOnSelect bg="light" expand="lg">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="container justify-content-none">
+            <Navbar.Collapse id="basic-navbar-nav" className='container d-flex flex-col'>
+                <Nav className=" justify-content-none">
                     <Nav.Link className="nav-item p-1">
                         <Link to="/" className="nav-link" >Anasayfa</Link>
                     </Nav.Link>
@@ -25,9 +25,11 @@ function LoginNavigation(props) {
                         <Link to="/confirmed_supports" className="nav-link" >Onaylanmış Destekler</Link>
                     </Nav.Link>
                     <Nav.Link className="nav-item p-1">
-                        <Link to="/turkey-map" className="nav-link" >Türkiye Haritası</Link>
+                        <Link to="/turkey-map" className="nav-link" >Analiz Haritası</Link>
                     </Nav.Link>
-                    <li className="nav-item mr-3 mt-1 row ml-auto">
+                </Nav>
+                <Nav className="ml-auto">
+                <li className="nav-item mr-1 mt-1 row ml-auto">
                         <span className="navbar-text c-white pr-1">Hoşgeldin,</span>
                         <span className="navbar-text">{props.username}</span>
                     </li>

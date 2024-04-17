@@ -45,7 +45,6 @@ function App() {
   if (userResponse === "LOGGED_IN") {
     return (
       <Router>
-
         <div className="App">
           <LoginNavigation username={username} />
           <Switch>
@@ -78,6 +77,7 @@ function App() {
             <Route path="/need/edit/:id" component={EditNeed}></Route>
             <Route path="/confirmed_support/edit/:id" component={EditConfirmedSupport}></Route>
             <Route path="/confirmed_need/edit/:id" component={EditConfirmedNeed}></Route>
+            <Route path="/turkey-map/:city" component={City}></Route>
           </Switch>
         </div>
 
@@ -88,7 +88,6 @@ function App() {
   } else {
     return (
       <Router>
-
         <div className="App">
           <Navigation />
           <Switch>
@@ -111,10 +110,10 @@ function App() {
               <Home />
             </Route>
             <Route exact path="/confirmed_supports">
-              <Home />
+              <ConfirmedSupports />
             </Route>
             <Route exact path="/confirmed_needs">
-              <Home />
+              <ConfirmedNeeds />
             </Route>
             <Route path="/support/edit/:id" component={EditSupport}></Route>
             <Route path="/need/edit/:id" component={EditNeed}></Route>

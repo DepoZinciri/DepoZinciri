@@ -1,4 +1,5 @@
 const models = require('../models');
+const maps = require('../Data/MapInfo.json');
 
 exports.auth = function (req, res, next) {
     var user = req.user
@@ -34,5 +35,11 @@ exports.getDataHash = function (req, res, next) {
     }).then(datahash => {
         console.log(datahash);
         res.json({ datahash: datahash });
+    })
+}
+
+exports.getMapInfo = function (req, res, next) {
+    return maps.MapInfo.findAll().then(mapinfo => {
+        res.json({ mapinfo: mapinfo });
     })
 }
