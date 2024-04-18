@@ -79,7 +79,7 @@ class City extends React.Component {
               </p>
               <p>
                 <strong>
-                  Günlük kişi başı su ihtiyacı:
+                  Günlük İçme suyu ihtiyacı:
                 </strong> {" "}
                 11.607 m³
               </p>
@@ -93,7 +93,7 @@ class City extends React.Component {
                 <strong>
                   Günlük Mama İhtiyacı:
                 </strong>{" "}
-                696.417 litre
+                591,954 kg
               </p>
               <p>
                 <strong>

@@ -27,7 +27,7 @@ import Warehouse from './views/Warehouse';
 
 function App() {
 
-  const [userResponse, setUserResponse] = useState("TEST");
+  const [userResponse, setUserResponse] = useState([]);
   const [username, setUsername] = useState([]);
 
   useEffect(() => {

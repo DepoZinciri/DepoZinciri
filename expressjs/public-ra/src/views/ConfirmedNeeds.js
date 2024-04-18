@@ -64,10 +64,14 @@ function ConfirmedNeeds() {
                                 <thead className="thead-dark rounded">
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Kişisel Veri Hash Değeri</th>
+                                        <th scope="col">İsim</th>
+                                        <th scope="col">Soyisim</th>
                                         <th scope="col">İhtiyaç Tipi</th>
-                                        <th scope="col">Miktar</th>
-                                        <th scope="col"></th>
+                                        <th scope="col">Detay</th>
+                                        <th scope="col">Telefon</th>
+                                        <th scope="col">Adres</th>
+                                        <th scope="col">İşlemler</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -80,6 +84,56 @@ function ConfirmedNeeds() {
                                             {userResponse === "LOGGED_IN" ? <td><Link to={editConfirmedNeed(need[0])} className="btn btn-primary">Düzenle</Link></td> : <td></td>}
                                         </tr>
                                     )}
+                                    <tr>
+                                        <td>1</td>
+                                        <td>J***</td>
+                                        <td>D**</td>
+                                        <td>Gıda</td>                                       
+                                        <td>30 Ekmek</td>
+                                        <td>**********</td>
+                                        <td>Ankara / Keçiören ****** **** ** ***** *** </td>
+                                        <td><Link to={editConfirmedNeed(1)} className="btn bg-dblue text-white">Destek ol</Link></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>J***</td>
+                                        <td>D**</td>
+                                        <td>Barınma</td>                                       
+                                        <td>2 Konteyner</td>
+                                        <td>**********</td>
+                                        <td>Ankara / Mamak ****** **** **** ** </td>
+                                        <td><Link to={editConfirmedNeed(1)} className="btn bg-dblue text-white">Destek ol</Link></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>J***</td>
+                                        <td>D**</td>
+                                        <td>Barınma</td>                                       
+                                        <td>4 Adet Isıtıcı</td>
+                                        <td>**********</td>
+                                        <td>Ankara / Mamak ****** **** **** ** </td>
+                                        <td><Link to={editConfirmedNeed(1)} className="btn bg-dblue text-white">Destek ol</Link></td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>M******</td>
+                                        <td>C*****</td>
+                                        <td>Gıda</td>                                       
+                                        <td>60 Litre İçme Suyu</td>
+                                        <td>**********</td>
+                                        <td>Ankara / Mamak ****** **** **** ** </td>
+                                        <td><Link to={editConfirmedNeed(1)} className="btn bg-dblue text-white">Destek ol</Link></td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>A***</td>
+                                        <td>D**</td>
+                                        <td>Hijyen</td>                                       
+                                        <td>5 paket Hijyenik ped</td>
+                                        <td>**********</td>
+                                        <td>Ankara / Mamak ****** **** **** ** </td>
+                                        <td><Link to={editConfirmedNeed(1)} className="btn bg-dblue text-white">Destek ol</Link></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
