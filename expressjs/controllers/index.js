@@ -1,5 +1,7 @@
+const fs = require('fs');
+const path = require('path');
 const models = require('../models');
-const maps = require('../Data/MapInfo.json');
+const mapInfoData = JSON.parse(fs.readFileSync(path.join(__dirname, '../Data/MapInfo.json'), 'utf8'));
 
 exports.auth = function (req, res, next) {
     var user = req.user
@@ -39,7 +41,22 @@ exports.getDataHash = function (req, res, next) {
 }
 
 exports.getMapInfo = function (req, res, next) {
-    return maps.MapInfo.findAll().then(mapinfo => {
-        res.json({ mapinfo: mapinfo });
-    })
+    const city = req.params.city;
+    const district = req.query.district;
+    console.log(req.params)
+    if (!city) {
+        return res.status(400).json({ error: 'City parameter is missing' });
+    }
+    console.log(city);
+    const cityInfo = mapInfoData[city];
+
+    if (!cityInfo) {
+        return res.status(404).json({ error: 'City not found' });
+    }
+
+    if (district) {
+        res.json({ city: cityInfo ,});
+    }else {
+        res.json({ city: cityInfo });
+    }
 }

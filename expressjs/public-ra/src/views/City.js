@@ -11,11 +11,18 @@ class City extends React.Component {
             props.match.params.city.slice(1, props.match.params.city.length)
           : props.match.params.city.charAt(0).toUpperCase() +
             props.match.params.city.slice(1, props.match.params.city.length),
-      support: "",
-      user: "",
+      info: '',
     };
   }
+  async componentDidMount() {
+    const url = "/api/getMapInfo/" + this.state.city;
+    fetch(url)
+      .then(async (response) => response.json())
+      .then(async (data)=> this.setState({ info: data.city }))
+  }
   render() {
+    let info = this.state.info;
+    console.log(info)
     const handleHover = (district) => {
       console.log(`${district.name} is hovered!`);
     };
@@ -25,7 +32,6 @@ class City extends React.Component {
         console.log(this.state.city);
         const ComponentName = Turkey[this.state.city];
         console.log(ComponentName);
-
         return (
           <ComponentName
             onHover={handleHover}
@@ -58,6 +64,9 @@ class City extends React.Component {
               <p>
                 <strong>Şehir:</strong> {this.state.city}
               </p>
+              <span>
+                {info["Nüfus"]}
+              </span>
               <p>
                 <strong>Yüz Ölçüm:</strong> 24,521 km²
               </p>
