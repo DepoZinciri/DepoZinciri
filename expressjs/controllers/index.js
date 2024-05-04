@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const models = require('../models');
 const mapInfoData = JSON.parse(fs.readFileSync(path.join(__dirname, '../Data/MapInfo.json'), 'utf8'));
-
+const mysql = require('./mysql');
 exports.auth = function (req, res, next) {
     var user = req.user
     if (user) {
@@ -18,6 +18,13 @@ exports.getUser = function (req, res, next) {
     if (user) {
         return res.json({ user: user });
     }
+}
+
+// new database
+exports.getRequests = function (req, res, next) {
+    mysql.query('SELECT * FROM Requests', function (results) {
+        res.json({ requests: results });
+    });
 }
 
 exports.createDataHash = function (req, res, next) {

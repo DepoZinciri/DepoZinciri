@@ -12,6 +12,7 @@ router.get('/api/logout', user.logout);
 router.get('/api/auth', index.auth);
 router.get('/api/getUser', index.getUser);
 router.get('/api/getMapInfo/:city', index.getMapInfo);
+router.get('/api/getRequests', index.getRequests);
 
 router.post('/api/create-datahash', index.createDataHash);
 router.get('/api/getdatahash/:id', index.getDataHash);  //isLoggedIn eklencek
