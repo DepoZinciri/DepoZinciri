@@ -8,10 +8,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             autoIncrement: true,
         },
-        operationId: {
-            allowNull: false,
-            type: DataTypes.STRING
-        },
         hashValue: {
             allowNull: false,
             type: DataTypes.STRING

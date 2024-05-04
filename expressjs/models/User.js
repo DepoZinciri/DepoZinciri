@@ -28,10 +28,6 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             type: DataTypes.INTEGER
         },
-        stk: {
-            allowNull: false,
-            type: DataTypes.STRING
-        },
         email: {
             allowNull: true,
             type: DataTypes.STRING
