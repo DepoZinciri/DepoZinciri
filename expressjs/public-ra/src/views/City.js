@@ -88,27 +88,27 @@ class City extends React.Component {
               </p>
               <p>
                 <strong>
-                  Günlük İçme suyu ihtiyacı:
+                  Günlük içme suyu ihtiyacı:
                 </strong> {" "}
                 11.607 m³
               </p>
               <p>
                 <strong>
-                  Günlük Hijyenik Ped İhtiyacı:
+                  Günlük hijyenik ped ihtiyacı:
                 </strong>{" "}
                  196.208 paket
               </p>
               <p>
                 <strong>
-                  Günlük Mama İhtiyacı:
+                  Günlük mama ihtiyacı:
                 </strong>{" "}
-                591,954 kg
+                592 kg
               </p>
               <p>
                 <strong>
-                  Tuvalet Sayısı:
+                  Portatif tuvalet ihtiyacı:
                 </strong>{" "}
-                580.348
+                580.348 adet
               </p>
             </div>
             <div className="row">

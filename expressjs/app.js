@@ -17,16 +17,12 @@ var app = express();
 app.set('views', path.join(__dirname, 'public-ra/src/views'));
 app.set('view engine', 'pug');
 
+// This is the build lines
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// Bu linelar build kısmını alıyor.
-// Public react tarafını çalıştırmaya gerek yok, build alınmış react dosyalarını alıp kullanıyor.
-// Ön yüz tarafında değişiklik varsa, tekrardan build almak lazım.
-
-// npm audit fix --force 
 app.use(express.static(path.join(__dirname, '/public-ra/build/')));
 app.use(express.static(path.join(__dirname, '/public-ra/build/', 'index.html')));
 
@@ -41,14 +37,11 @@ app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-// İhtiyaç onaylama kısmını ChatGPT'ye yaptırıp yetkiliye.
-// ChatGPT spamleri ayıklar, filtreleme tarzı.
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
-
 
 // error handler
 app.use(function (err, req, res, next) {

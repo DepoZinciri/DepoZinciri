@@ -4,9 +4,6 @@ const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
 const basename = path.basename(__filename);
-// Test'e al, Docker kur.
-// ENV Dosyası yapılıp oradan çekilebilir (TODO)
-// docker run --name akys -e MYSQL_ALLOW_EMPTY_PASSWORD=1 -e MYSQL_DATABASE=akys -p 3306:3306 -d mysql
 
 const env = "test"; //process.env.NODE_ENV || 'development';
 const config = require(__dirname + "/../config/config.js")[env];
