@@ -1,48 +1,63 @@
 {
     "warehouses": [
       {
-        "name": "Warehouse 1",
-        "address": "123 Main St",
-        "totalCapacity": 1000,
-        "totalRate": 500,
-        "victimNumber": 50,
-        "city": "City A",
+        "name": "Ankara Mamak Deposu",
+        "address": "Harman Mahallesi Ahmet Akbaş Caddesi No1 B Blok",
+        "totalCapacity": 10000,
+        "totalRate": 5000,
+        "victimNumber": 500,
+        "city": "Ankara",
         "orders": 10
       },
       {
-        "name": "Warehouse 2",
-        "address": "456 Elm St",
-        "totalCapacity": 800,
-        "totalRate": 400,
-        "victimNumber": 30,
-        "city": "City B",
+        "name": "İstanbul Fatih Deposu",
+        "address": "Ali Kuşçu Mah. Büyük Karaman Cad. Aslanhane Sok. No1 Fatih/İSTANBUL",
+        "totalCapacity": 8000,
+        "totalRate": 200,
+        "victimNumber": 0,
+        "city": "İstanbul",
         "orders": 8
       }
     ],
     "items": [
       {
-        "type": "Food",
-        "desc": "Canned goods",
-        "quantity": 100,
+        "type": "Gıda",
+        "desc": "Ekmek",
+        "quantity": 200,
         "expirationDate": "2024-06-30"
       },
       {
-        "type": "Clothing",
-        "desc": "Winter jackets",
-        "quantity": 50,
-        "expirationDate": "2024-12-31"
+        "type": "Su",
+        "desc": "İçme Suyu",
+        "quantity": 50
+      },
+      {
+        "type": "Hijyen Malzemeleri",
+        "desc": "Ped",
+        "quantity": 10
+      },
+      {
+        "type": "Kıyafet",
+        "desc": "Mont",
+        "quantity": 5
+      },
+      {
+        "type": "Gıda",
+        "desc": "Konserve",
+        "quantity": 300,
+        "expirationDate": "2026-06-30"
       }
     ],
     "requests": [
       {
         "transactionId": "ABC123",
         "dataHash": 123456,
-        "name": "John",
-        "surname": "Doe",
-        "phone": "123-456-7890",
-        "address": "789 Oak St",
+        "name": "Mehmet",
+        "surname": "Demir",
+        "phone": "555-455-5555",
+        "address": "Ankara Mamak Barış Sk",
         "emergencyStatus": "Urgent",
-        "desc": "Emergency request",
+        "desc": "Gıdaya ihtiyacımız var",
         "confirmed": true,
         "requestType": 1,
         "status": "Pending"
@@ -50,15 +65,15 @@
       {
         "transactionId": "DEF456",
         "dataHash": 789012,
-        "name": "Jane",
-        "surname": "Smith",
-        "phone": "987-654-3210",
-        "address": "321 Maple Ave",
+        "name": "Ahmet",
+        "surname": "Kar",
+        "phone": "555-555-5555",
+        "address": "Ankara Mamak Amaç Sk",
         "emergencyStatus": "Not urgent",
-        "desc": "Regular request",
+        "desc": "Battaniyeye ihtiyacımız var",
         "confirmed": false,
         "requestType": 2,
-        "status": "Processing"
+        "status": "Not Confirmed"
       }
     ]
   }
