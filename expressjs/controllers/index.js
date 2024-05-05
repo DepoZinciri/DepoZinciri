@@ -3,6 +3,26 @@ const path = require('path');
 const models = require('../models');
 const mapInfoData = JSON.parse(fs.readFileSync(path.join(__dirname, '../Data/MapInfo.json'), 'utf8'));
 const mysql = require('./mysql');
+
+// (TODO): Written for to repleace auth function. 
+exports.redirectByUserType = function(req, res, next) {
+    var user = req.user;
+    if (user) {
+        if (user.type === 'warehouse') {
+            // Redirect to warehouse page
+            return res.json({ message: "Redirecting to warehouse page" });
+        } else if (user.type === 'stk') {
+            // Redirect to stk page
+            return res.json({ message: "Redirecting to stk page" });
+        } else {
+            return res.json({ message: "Invalid user type" });
+        }
+    } else {
+        return res.json({ message: "NOT_LOGGED_IN" });
+    }
+};
+
+
 exports.auth = function (req, res, next) {
     var user = req.user
     if (user) {
@@ -26,6 +46,49 @@ exports.getRequests = function (req, res, next) {
         res.json({ requests: results });
     });
 }
+
+const db = require('../models');
+
+exports.getConfirmedRequests = async function(req, res, next) {
+    try {
+        const confirmedRequests = await db.Request.findAll({
+            where: { confirmed: true }
+        });
+
+        return res.json({ confirmedRequests });
+    } catch (error) {
+        console.error('Error retrieving confirmed requests:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+exports.getNotConfirmedRequests = async function(req, res, next) {
+    try {
+        const notConfirmedRequests = await db.Request.findAll({
+            where: { confirmed: false }
+        });
+
+        return res.json({ notConfirmedRequests });
+    } catch (error) {
+        console.error('Error retrieving not confirmed requests:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+// Req must be the status which passed as a URL parameter
+exports.getRequestsByStatus = async function(req, res, next) {
+    try {
+        const status = req.params.status; 
+        const requests = await db.Request.findAll({
+            where: { status: status } // Filter requests by the specified status
+        });
+
+        return res.json({ requests });
+    } catch (error) {
+        console.error('Error retrieving requests by status:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
 
 exports.getRequestsWithWarehouse = async function(req, res, next) {
     try {
