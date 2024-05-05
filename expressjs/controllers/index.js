@@ -4,7 +4,7 @@ const models = require('../models');
 const mapInfoData = JSON.parse(fs.readFileSync(path.join(__dirname, '../Data/MapInfo.json'), 'utf8'));
 const mysql = require('./mysql');
 
-// (TODO): Written for to repleace auth function. 
+// (TODO:DepoZinciri): Written for to repleace auth function. 
 exports.redirectByUserType = function(req, res, next) {
     var user = req.user;
     if (user) {
@@ -47,11 +47,37 @@ exports.getRequests = function (req, res, next) {
     });
 }
 
-const db = require('../models');
+// (TODO:DepoZinciri)
+exports.createRequest = async function(req, res, next) {
+    try {
+        // Request Body
+        const { name, surname, emergencyStatus, description, phone, address, requestType, amount } = req.body;
+        console.log(req.body)
+        // Create the request in the database
+        const newRequest = await models.Request.create({
+            name: name,
+            surname: surname,
+            phone: phone,
+            address: address,
+            emergencyStatus: emergencyStatus,
+            desc: description,
+            confirmed: false, // False by default
+            requestType: requestType,
+            amount: amount,
+            status: 'nonConfirmed', // Set status to 'nonConfirmed' by default
+        });
+
+        // Respond with the newly created request
+        return res.status(201).json({ message: 'Request created successfully', request: newRequest });
+    } catch (error) {
+        console.error('Error creating request:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
 
 exports.getConfirmedRequests = async function(req, res, next) {
     try {
-        const confirmedRequests = await db.Request.findAll({
+        const confirmedRequests = await models.Request.findAll({
             where: { confirmed: true }
         });
 
@@ -64,7 +90,7 @@ exports.getConfirmedRequests = async function(req, res, next) {
 
 exports.getNotConfirmedRequests = async function(req, res, next) {
     try {
-        const notConfirmedRequests = await db.Request.findAll({
+        const notConfirmedRequests = await models.Request.findAll({
             where: { confirmed: false }
         });
 
@@ -79,7 +105,7 @@ exports.getNotConfirmedRequests = async function(req, res, next) {
 exports.getRequestsByStatus = async function(req, res, next) {
     try {
         const status = req.params.status; 
-        const requests = await db.Request.findAll({
+        const requests = await models.Request.findAll({
             where: { status: status } // Filter requests by the specified status
         });
 
