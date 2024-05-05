@@ -8,6 +8,7 @@ const basename = path.basename(__filename);
 const env = "test"; //process.env.NODE_ENV || 'development';
 const config = require(__dirname + "/../config/config.js")[env];
 const db = {};
+const seedData = require('./seedData.json');
 
 let sequelize;
 if (config.use_env_variable) {
@@ -21,6 +22,7 @@ if (config.use_env_variable) {
   );
 }
 
+// Initialize models
 fs.readdirSync(__dirname)
   .filter((file) => {
     return (
@@ -63,6 +65,25 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
+// Define the seedDatabase function
+async function seedDatabase() {
+  try {
+    // This will drop existing tables and recreate them
+    //  But throws an error: Table not exists
+    //await sequelize.sync({ force: true });
+    await db.Warehouse.bulkCreate(seedData.warehouses);
+    await db.Item.bulkCreate(seedData.items);
+    await db.Request.bulkCreate(seedData.requests);
+    console.log('Database seeded successfully');
+  } catch (error) {
+    console.error('Error seeding database:', error);
+  }
+}
+
+// Call seedDatabase function
+seedDatabase();
+
+// Export the db object
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

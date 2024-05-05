@@ -1,0 +1,65 @@
+{
+    "warehouses": [
+      {
+        "name": "Warehouse 1",
+        "address": "123 Main St",
+        "totalCapacity": 1000,
+        "totalRate": 500,
+        "victimNumber": 50,
+        "city": "City A",
+        "orders": 10
+      },
+      {
+        "name": "Warehouse 2",
+        "address": "456 Elm St",
+        "totalCapacity": 800,
+        "totalRate": 400,
+        "victimNumber": 30,
+        "city": "City B",
+        "orders": 8
+      }
+    ],
+    "items": [
+      {
+        "type": "Food",
+        "desc": "Canned goods",
+        "quantity": 100,
+        "expirationDate": "2024-06-30"
+      },
+      {
+        "type": "Clothing",
+        "desc": "Winter jackets",
+        "quantity": 50,
+        "expirationDate": "2024-12-31"
+      }
+    ],
+    "requests": [
+      {
+        "transactionId": "ABC123",
+        "dataHash": 123456,
+        "name": "John",
+        "surname": "Doe",
+        "phone": "123-456-7890",
+        "address": "789 Oak St",
+        "emergencyStatus": "Urgent",
+        "desc": "Emergency request",
+        "confirmed": true,
+        "requestType": 1,
+        "status": "Pending"
+      },
+      {
+        "transactionId": "DEF456",
+        "dataHash": 789012,
+        "name": "Jane",
+        "surname": "Smith",
+        "phone": "987-654-3210",
+        "address": "321 Maple Ave",
+        "emergencyStatus": "Not urgent",
+        "desc": "Regular request",
+        "confirmed": false,
+        "requestType": 2,
+        "status": "Processing"
+      }
+    ]
+  }
+  
