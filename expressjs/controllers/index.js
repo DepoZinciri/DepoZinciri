@@ -27,6 +27,86 @@ exports.getRequests = function (req, res, next) {
     });
 }
 
+exports.getRequestsWithWarehouse = async function(req, res, next) {
+    try {
+        const warehouseId = req.params.warehouseId; // Assuming the warehouse ID is passed as a URL parameter
+        const warehouse = await models.Warehouse.findByPk(warehouseId);
+
+        if (!warehouse) {
+            return res.status(404).json({ error: 'Warehouse not found so no request listed' });
+        }
+
+        const requests = await models.Request.findAll({
+            where: { warehouseId: warehouseId } // Filter requests by the warehouse ID
+        });
+
+        return res.json({ requests });
+    } catch (error) {
+        console.error('Error retrieving requests in warehouse:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+exports.getWarehouse = async function(req, res, next) {
+    try {
+        const warehouseId = req.params.id; // Assuming the ID is passed as a URL parameter
+        const warehouse = await models.Warehouse.findByPk(warehouseId);
+
+        if (!warehouse) {
+            return res.status(404).json({ error: 'Warehouse not found' });
+        }
+
+        return res.json({ warehouse });
+    } catch (error) {
+        console.error('Error retrieving warehouse by ID:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+exports.getItemsInWarehouse = async function(req, res, next) {
+    try {
+        const warehouseId = req.params.warehouseId; // Assuming the warehouse ID is passed as a URL parameter
+        const warehouse = await models.Warehouse.findByPk(warehouseId, {
+            include: [{
+                model: models.Item,
+                through: { attributes: [] } // To exclude the join table attributes from the result
+            }]
+        });
+
+        if (!warehouse) {
+            return res.status(404).json({ error: 'Warehouse not found so no Items listed' });
+        }
+
+        const items = warehouse.Items;
+
+        return res.json({ items });
+    } catch (error) {
+        console.error('Error retrieving items in warehouse:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
+exports.getOrdersInWarehouse = async function(req, res, next) {
+    try {
+        const warehouseId = req.params.warehouseId; // Assuming the warehouse ID is passed as a URL parameter
+        const warehouse = await models.Warehouse.findByPk(warehouseId);
+
+        if (!warehouse) {
+            return res.status(404).json({ error: 'Warehouse not found so no Orders listed' });
+        }
+
+        const orders = await models.Order.findAll({
+            where: { WarehouseId: warehouseId } // Filter orders by the warehouse ID
+        });
+
+        return res.json({ orders });
+    } catch (error) {
+        console.error('Error retrieving orders in warehouse:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 exports.createDataHash = function (req, res, next) {
     return models.DataHash.create({
         hashValue: req.body.params.hashValue,

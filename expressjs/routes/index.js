@@ -13,6 +13,10 @@ router.get('/api/auth', index.auth);
 router.get('/api/getUser', index.getUser);
 router.get('/api/getMapInfo/:city', index.getMapInfo);
 router.get('/api/getRequests', index.getRequests);
+router.get('/api/getRequestsWithWarehouse/:warehouseid', index.getRequestsWithWarehouse);
+router.get('/api/getWarehouse/:id', index.getWarehouse);
+router.get('/api/getItemsInWarehouse/:id', index.getItemsInWarehouse);
+router.get('/api/getOrdersInWarehouse/:id', index.getOrdersInWarehouse);
 
 router.post('/api/create-datahash', index.createDataHash);
 router.get('/api/getdatahash/:id', index.getDataHash);  //isLoggedIn eklencek
