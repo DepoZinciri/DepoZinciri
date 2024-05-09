@@ -3,26 +3,7 @@ const path = require('path');
 const models = require('../models');
 const mapInfoData = JSON.parse(fs.readFileSync(path.join(__dirname, '../Data/MapInfo.json'), 'utf8'));
 const mysql = require('./mysql');
-
-// (TODO:DepoZinciri): Written for to repleace auth function. 
-exports.redirectByUserType = function(req, res, next) {
-    var user = req.user;
-    if (user) {
-        if (user.type === 'warehouse') {
-            // Redirect to warehouse page
-            return res.json({ message: "Redirecting to warehouse page" });
-        } else if (user.type === 'stk') {
-            // Redirect to stk page
-            return res.json({ message: "Redirecting to stk page" });
-        } else {
-            return res.json({ message: "Invalid user type" });
-        }
-    } else {
-        return res.json({ message: "NOT_LOGGED_IN" });
-    }
-};
-
-
+const { INTEGER } = require('sequelize');
 exports.auth = function (req, res, next) {
     var user = req.user
     if (user) {
@@ -41,160 +22,46 @@ exports.getUser = function (req, res, next) {
 }
 
 // new database
-exports.getRequests = function (req, res, next) {
+exports.getRequests = function c(req, res, next) {
     mysql.query('SELECT * FROM Requests', function (results) {
         res.json({ requests: results });
     });
 }
-
-// (TODO:DepoZinciri)
-exports.createRequest = async function(req, res, next) {
-    try {
-        // Request Body
-        const { name, surname, emergencyStatus, description, phone, address, requestType, amount } = req.body;
-        console.log(req.body)
-        // Create the request in the database
-        const newRequest = await models.Request.create({
-            name: name,
-            surname: surname,
-            phone: phone,
-            address: address,
-            emergencyStatus: emergencyStatus,
-            desc: description,
-            confirmed: false, // False by default
-            requestType: requestType,
-            amount: amount,
-            status: 'nonConfirmed', // Set status to 'nonConfirmed' by default
-        });
-
-        // Respond with the newly created request
-        return res.status(201).json({ message: 'Request created successfully', request: newRequest });
-    } catch (error) {
-        console.error('Error creating request:', error);
-        return res.status(500).json({ error: 'Internal Server Error' });
+createItem = async function (item) {
+    const { itemtype, desc, quantity, expirationDate } = item;
+    if (!itemtype || !desc || !quantity || !expirationDate) {
+        return 0;
     }
-};
-
-exports.getConfirmedRequests = async function(req, res, next) {
     try {
-        const confirmedRequests = await models.Request.findAll({
-            where: { confirmed: true }
-        });
-
-        return res.json({ confirmedRequests });
-    } catch (error) {
-        console.error('Error retrieving confirmed requests:', error);
-        return res.status(500).json({ error: 'Internal Server Error' });
+        console.log("itemType: ", itemtype, "desc: ", desc, "quantity: ", quantity, "expirationDate: ", expirationDate);
+        const result = await mysql.query("INSERT INTO `Items` (type, `desc`, quantity) VALUES (?, ?, ?);", ["a", desc, parseInt(quantity)]);
+        console.log("1 record inserted");
+        return result.id; // Assuming id is auto-generated
+    } catch (err) {
+        console.error('Error inserting record:', err);
+        return 0;
     }
-};
-
-exports.getNotConfirmedRequests = async function(req, res, next) {
-    try {
-        const notConfirmedRequests = await models.Request.findAll({
-            where: { confirmed: false }
-        });
-
-        return res.json({ notConfirmedRequests });
-    } catch (error) {
-        console.error('Error retrieving not confirmed requests:', error);
-        return res.status(500).json({ error: 'Internal Server Error' });
+}
+// TO DO it doesn't work
+exports.createRequest = function (req, res, next) {
+    const { name, surname, phone, address, emergencyStatus, description, requestType, amount } = req.body;
+    if (!name || !surname || !phone || !address || !emergencyStatus || !description || !requestType || !amount) {
+        return res.status(400).json({ error: 'Missing required fields' });
     }
-};
-
-// Req must be the status which passed as a URL parameter
-exports.getRequestsByStatus = async function(req, res, next) {
-    try {
-        const status = req.params.status; 
-        const requests = await models.Request.findAll({
-            where: { status: status } // Filter requests by the specified status
-        });
-
-        return res.json({ requests });
-    } catch (error) {
-        console.error('Error retrieving requests by status:', error);
-        return res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
-
-exports.getRequestsWithWarehouse = async function(req, res, next) {
-    try {
-        const warehouseId = req.params.warehouseId; // Assuming the warehouse ID is passed as a URL parameter
-        const warehouse = await models.Warehouse.findByPk(warehouseId);
-
-        if (!warehouse) {
-            return res.status(404).json({ error: 'Warehouse not found so no request listed' });
+    createItem({ itemtype: requestType, desc: description, quantity: amount, expirationDate: new Date() }).then((itemId) => {
+        if (itemId === 0) {
+            return res.status(500).json({ error: 'Error creating item' });
         }
-
-        const requests = await models.Request.findAll({
-            where: { warehouseId: warehouseId } // Filter requests by the warehouse ID
+        mysql.query("INSERT INTO `requests` (transactionId , dataHash,name, surname, phone, address, emergencyStatus, desc, confirmed,requestType,status,warehouseId itemid) VALUES (?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,?)", [,null,null,name, surname, phone, address, emergencyStatus, description, false,1,"Not approved", 0, itemId], function(err, result){
+            if(err) {
+                console.error('Error inserting record:', err);
+                return res.status(500).json({ error: 'Error creating request' });
+            }
+            return res.json({ request: result });
         });
+    });
+}
 
-        return res.json({ requests });
-    } catch (error) {
-        console.error('Error retrieving requests in warehouse:', error);
-        return res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
-
-exports.getWarehouse = async function(req, res, next) {
-    try {
-        const warehouseId = req.params.id; // Assuming the ID is passed as a URL parameter
-        const warehouse = await models.Warehouse.findByPk(warehouseId);
-
-        if (!warehouse) {
-            return res.status(404).json({ error: 'Warehouse not found' });
-        }
-
-        return res.json({ warehouse });
-    } catch (error) {
-        console.error('Error retrieving warehouse by ID:', error);
-        return res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
-
-exports.getItemsInWarehouse = async function(req, res, next) {
-    try {
-        const warehouseId = req.params.warehouseId; // Assuming the warehouse ID is passed as a URL parameter
-        const warehouse = await models.Warehouse.findByPk(warehouseId, {
-            include: [{
-                model: models.Item,
-                through: { attributes: [] } // To exclude the join table attributes from the result
-            }]
-        });
-
-        if (!warehouse) {
-            return res.status(404).json({ error: 'Warehouse not found so no Items listed' });
-        }
-
-        const items = warehouse.Items;
-
-        return res.json({ items });
-    } catch (error) {
-        console.error('Error retrieving items in warehouse:', error);
-        return res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
-
-
-exports.getOrdersInWarehouse = async function(req, res, next) {
-    try {
-        const warehouseId = req.params.warehouseId; // Assuming the warehouse ID is passed as a URL parameter
-        const warehouse = await models.Warehouse.findByPk(warehouseId);
-
-        if (!warehouse) {
-            return res.status(404).json({ error: 'Warehouse not found so no Orders listed' });
-        }
-
-        const orders = await models.Order.findAll({
-            where: { WarehouseId: warehouseId } // Filter orders by the warehouse ID
-        });
-
-        return res.json({ orders });
-    } catch (error) {
-        console.error('Error retrieving orders in warehouse:', error);
-        return res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
 
 exports.createDataHash = function (req, res, next) {
     return models.DataHash.create({
