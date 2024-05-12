@@ -14,6 +14,7 @@ import ConfirmedNeeds from './views/ConfirmedNeeds';
 import EditConfirmedSupport from './views/EditConfirmedSupport';
 import EditConfirmedNeed from './views/EditConfirmedNeed';
 import Home from './views/Home';
+import Item from './views/Item';
 import Login from './views/Login';
 import Register from './views/Register';
 import TurkeyMap from './views/TrMap';
@@ -68,6 +69,9 @@ function App() {
             <Route exact path="/needs">
               <Needs />
             </Route>
+            <Route exact path="/item">
+              <Item />
+            </Route>
             <Route exact path="/confirmed_supports">
               <ConfirmedSupports />
             </Route>
@@ -107,6 +111,9 @@ function App() {
             </Route>
             <Route exact path="/warehouse">
               <Warehouse />
+            </Route>
+            <Route exact path="/item">
+              <Item />
             </Route>
             <Route exact path="/supports">
               <Home />
@@ -156,6 +163,9 @@ function App() {
             </Route>
             <Route exact path="/confirmed_supports">
               <ConfirmedSupports />
+            </Route>
+            <Route exact path="/item">
+              <Item />
             </Route>
             <Route exact path="/confirmed_needs">
               <ConfirmedNeeds />

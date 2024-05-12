@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
             autoIncrement: true,
             type: DataTypes.INTEGER
         },
-        type: DataTypes.STRING,
-        desc: DataTypes.STRING,
+        itemType: DataTypes.STRING,
+        itemDescription: DataTypes.STRING,
         quantity: DataTypes.INTEGER,
         expirationDate: DataTypes.DATE,
     });

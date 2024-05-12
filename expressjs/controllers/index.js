@@ -27,32 +27,42 @@ exports.getRequests = function c(req, res, next) {
         res.json({ requests: results });
     });
 }
-createItem = async function (item) {
-    const { itemtype, desc, quantity, expirationDate } = item;
-    if (!itemtype || !desc || !quantity || !expirationDate) {
-        return 0;
+
+exports.createItem = async function (req, res, next) {
+    const { itemType, itemDescription, quantity } = req.body;
+    if (!itemType || !itemDescription || !quantity) {
+        return res.status(400).json({ error: "Missing required fields" });
     }
     try {
-        console.log("itemType: ", itemtype, "desc: ", desc, "quantity: ", quantity, "expirationDate: ", expirationDate);
-        const result = await mysql.query("INSERT INTO `Items` (type, `desc`, quantity) VALUES (?, ?, ?);", ["a", desc, parseInt(quantity)]);
+        const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        console.log(itemType)
+        console.log(itemDescription)
+        console.log(quantity)
+        console.log(now)
+        console.log(now)
         console.log("1 record inserted");
-        return result.id; // Assuming id is auto-generated
+        const query = `INSERT INTO Items (itemType, itemDescription, quantity, createdAt, updatedAt) 
+               VALUES ('${itemType}', '${itemDescription}', ${quantity}, '${now}', '${now}')`;
+        const result = await mysql.query(query);
+        console.log(result)
+        return res.status(201).json({ id: result[0].insertId})
     } catch (err) {
         console.error('Error inserting record:', err);
-        return 0;
+        return res.status(500).json({ error: "Internal Server Error" });
     }
 }
+
 // TO DO it doesn't work
 exports.createRequest = function (req, res, next) {
     const { name, surname, phone, address, emergencyStatus, description, requestType, amount } = req.body;
     if (!name || !surname || !phone || !address || !emergencyStatus || !description || !requestType || !amount) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
-    createItem({ itemtype: requestType, desc: description, quantity: amount, expirationDate: new Date() }).then((itemId) => {
+    createItem({ itemtype: requestType, itemDescription: description, quantity: amount, expirationDate: new Date() }).then((itemId) => {
         if (itemId === 0) {
             return res.status(500).json({ error: 'Error creating item' });
         }
-        mysql.query("INSERT INTO `requests` (transactionId , dataHash,name, surname, phone, address, emergencyStatus, desc, confirmed,requestType,status,warehouseId itemid) VALUES (?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,?)", [,null,null,name, surname, phone, address, emergencyStatus, description, false,1,"Not approved", 0, itemId], function(err, result){
+        mysql.query("INSERT INTO `requests` (transactionId , dataHash,name, surname, phone, address, emergencyStatus, itemDescription, confirmed,requestType,status,warehouseId itemid) VALUES (?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,?)", [,null,null,name, surname, phone, address, emergencyStatus, description, false,1,"Not approved", 0, itemId], function(err, result){
             if(err) {
                 console.error('Error inserting record:', err);
                 return res.status(500).json({ error: 'Error creating request' });

@@ -19,7 +19,7 @@ function LoginNavigation(props) {
       >
         <Nav className=" justify-content-none">
           <Nav.Link className="nav-item p-1">
-            <Link to="/"  className="nav-link d-inline-flex flex-row align-items-center">
+            <Link to="/item"  className="nav-link d-inline-flex flex-row align-items-center">
               {" "}
               <svg
                 className="mr-1"
