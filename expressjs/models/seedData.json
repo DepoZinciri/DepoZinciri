@@ -1,6 +1,7 @@
 {
     "warehouses": [
       {
+        "id": 0,
         "name": "Ankara Mamak Deposu",
         "address": "Harman Mahallesi Ahmet Akbaş Caddesi No1 B Blok",
         "totalCapacity": 10000,

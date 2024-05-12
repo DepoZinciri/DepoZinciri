@@ -8,12 +8,12 @@ function NeedForm() {
         phone: '',
         address: '',
         emergencyStatus: '',
-        description: '',
+        itemDescription: '',
         requestType: '',
         amount: ''
     });
 
-    const { name, surname, emergencyStatus, description, phone, address, requestType, amount } = formData;
+    const { name, surname, emergencyStatus, itemDescription, phone, address, requestType, amount } = formData;
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -96,8 +96,8 @@ function NeedForm() {
                 {}
                 <input
                     type="text"
-                    name="description"
-                    value={description}
+                    name="itemDescription"
+                    value={itemDescription}
                     onChange={handleChange}
                     placeholder="Aciliyet için kısa açıklama*"
                     required
