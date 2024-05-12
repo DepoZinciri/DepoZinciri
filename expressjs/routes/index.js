@@ -23,6 +23,7 @@ router.get('/api/getRequests', index.getRequests);
 
 router.post('/api/create-datahash', index.createDataHash);
 router.post('/api/create-request', index.createRequest);
+router.post('/api/create-item', index.createItem);
 router.get('/api/getdatahash/:id', index.getDataHash);  //isLoggedIn eklencek
 
 module.exports = router;

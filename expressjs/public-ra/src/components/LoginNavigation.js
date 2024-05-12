@@ -10,7 +10,7 @@ function LoginNavigation(props) {
             <Navbar.Collapse id="basic-navbar-nav" className='container d-flex flex-col'>
                 <Nav className=" justify-content-none">
                     <Nav.Link className="nav-item p-1">
-                        <Link to="/" className="nav-link" >Anasayfa</Link>
+                        <Link to="/item" className="nav-link" >Anasayfa</Link>
                     </Nav.Link>
                     <Nav.Link className="nav-item p-1">
                         <Link to="/needs" className="nav-link" >İhtiyaçlar</Link>

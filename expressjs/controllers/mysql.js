@@ -6,10 +6,9 @@ const connection = mysql.createConnection({
       })
       connection.connect()
 
-exports.query = function (query, callback) {
-    connection.query(query, function (error, results, fields) {
-        if (error) throw error;
-        callback(results);
-    });
-}
-
+     exports.query = async function (query) {
+        return await connection.promise().query(query).then((data) => {
+           return data;
+        });
+        
+    }
