@@ -8,12 +8,20 @@ var app = require('../app');
 var debug = require('debug')('dmrg:server');
 var http = require('http');
 let models = require('../models');
+var cors = require('cors');
 /**
  * Get port from environment and store in Express.
  */
 
+let corsOptions = { 
+  origin : ['http://localhost:3000'], 
+} 
+ 
+app.use(cors(corsOptions)) 
+
 var port = normalizePort(process.env.PORT || "8080");
 app.set('port', port);
+
 
 /**
  * Create HTTP server.

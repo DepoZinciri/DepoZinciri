@@ -14,11 +14,11 @@ import ConfirmedNeeds from './views/ConfirmedNeeds';
 import EditConfirmedSupport from './views/EditConfirmedSupport';
 import EditConfirmedNeed from './views/EditConfirmedNeed';
 import Home from './views/Home';
-import Item from './views/Item';
 import Login from './views/Login';
 import Register from './views/Register';
 import TurkeyMap from './views/TrMap';
 import City from './views/City';
+import NotConfirmedNeeds from './views/NotConfirmedNeeds';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
@@ -28,7 +28,7 @@ import Warehouse from './views/Warehouse';
 
 function App() {
 
-  const [userResponse, setUserResponse] = useState('TEST');
+  const [userResponse, setUserResponse] = useState([]);
   const [username, setUsername] = useState([]);
 
   useEffect(() => {
@@ -69,11 +69,11 @@ function App() {
             <Route exact path="/needs">
               <Needs />
             </Route>
-            <Route exact path="/item">
-              <Item />
-            </Route>
             <Route exact path="/confirmed_supports">
               <ConfirmedSupports />
+            </Route>
+            <Route exact path="/not_confirmed_needs">
+              <NotConfirmedNeeds />
             </Route>
             <Route exact path="/confirmed_needs">
               <ConfirmedNeeds />
@@ -111,9 +111,6 @@ function App() {
             </Route>
             <Route exact path="/warehouse">
               <Warehouse />
-            </Route>
-            <Route exact path="/item">
-              <Item />
             </Route>
             <Route exact path="/supports">
               <Home />
@@ -163,9 +160,6 @@ function App() {
             </Route>
             <Route exact path="/confirmed_supports">
               <ConfirmedSupports />
-            </Route>
-            <Route exact path="/item">
-              <Item />
             </Route>
             <Route exact path="/confirmed_needs">
               <ConfirmedNeeds />

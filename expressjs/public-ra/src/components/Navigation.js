@@ -18,7 +18,7 @@ function Navigation() {
         <Nav className="container justify-content-none">
           <Nav.Link className="nav-item p-1 ">
             <Link
-              to="/item"
+              to="/"
               className="nav-link d-inline-flex flex-row align-items-center"
             >
               <svg

@@ -22,17 +22,17 @@ exports.getUser = function (req, res, next) {
 }
 
 // new database
-exports.getRequests = function () {
+exports.getRequests = function (req, res, next) {
     mysql.query('SELECT * FROM Requests', function (results) {
         res.json({ requests: results });
     });
 }
-exports.getConfirmedRequests = function () {
+exports.getConfirmedRequests = function (req, res, next) {
     mysql.query('SELECT * FROM Requests WHERE confirmed = true', function (results) {
         res.json({ requests: results });
     });
 }
-exports.getNotConfirmedRequests = function () {
+exports.getNotConfirmedRequests = function (req, res, next) {
     mysql.query('SELECT * FROM Requests WHERE confirmed = false', function (results) {
         res.json({ requests: results });
     });

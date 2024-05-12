@@ -7,16 +7,19 @@ function LoginNavigation(props) {
     return (
         <Navbar sticky="top" id="navbar" className="mb-1 navbar bg-dblue navbar-expand-lg navbar-dark" collapseOnSelect bg="light" expand="lg">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav" className='container d-flex flex-col'>
+            <Navbar.Collapse id="basic-navbar-nav" className=' d-flex flex-col'>
                 <Nav className=" justify-content-none">
                     <Nav.Link className="nav-item p-1">
-                        <Link to="/item" className="nav-link" >Anasayfa</Link>
+                        <Link to="/" className="nav-link" >Anasayfa</Link>
                     </Nav.Link>
                     <Nav.Link className="nav-item p-1">
                         <Link to="/needs" className="nav-link" >İhtiyaçlar</Link>
                     </Nav.Link>
                     <Nav.Link className="nav-item p-1">
                         <Link to="/supports" className="nav-link" >Destekler</Link>
+                    </Nav.Link>
+                    <Nav.Link className="nav-item p-1">
+                        <Link to="/not_confirmed_needs" className="nav-link" >Onaylanmamış İhtiyaçlar</Link>
                     </Nav.Link>
                     <Nav.Link className="nav-item p-1">
                         <Link to="/confirmed_needs" className="nav-link" >Onaylanmış İhtiyaçlar</Link>

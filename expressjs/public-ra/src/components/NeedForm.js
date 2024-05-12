@@ -32,6 +32,16 @@ function NeedForm() {
             console.error('Error creating request:', error);
             
         }
+        setFormData({
+            name: '',
+            surname: '',
+            phone: '',
+            address: '',
+            emergencyStatus: '',
+            itemDescription: '',
+            requestType: '',
+            amount: ''
+        });
     };
 
     return (
@@ -105,7 +115,7 @@ function NeedForm() {
                 />
                 {}
                 <input
-                    type="number"
+                    type="phone"
                     name="phone"
                     value={phone}
                     onChange={handleChange}
