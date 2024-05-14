@@ -13,16 +13,13 @@ function LoginNavigation(props) {
                         <Link to="/" className="nav-link" >Anasayfa</Link>
                     </Nav.Link>
                     <Nav.Link className="nav-item p-1">
-                        <Link to="/needs" className="nav-link" >İhtiyaçlar</Link>
-                    </Nav.Link>
-                    <Nav.Link className="nav-item p-1">
-                        <Link to="/supports" className="nav-link" >Destekler</Link>
-                    </Nav.Link>
-                    <Nav.Link className="nav-item p-1">
                         <Link to="/not_confirmed_needs" className="nav-link" >Onaylanmamış İhtiyaçlar</Link>
                     </Nav.Link>
                     <Nav.Link className="nav-item p-1">
                         <Link to="/confirmed_needs" className="nav-link" >Onaylanmış İhtiyaçlar</Link>
+                    </Nav.Link>
+                    <Nav.Link className="nav-item p-1">
+                        <Link to="/not_confirmed_supports" className="nav-link" >Onaylanmamış Destekler</Link>
                     </Nav.Link>
                     <Nav.Link className="nav-item p-1">
                         <Link to="/confirmed_supports" className="nav-link" >Onaylanmış Destekler</Link>

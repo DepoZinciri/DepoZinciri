@@ -26,7 +26,7 @@ function NotConfirmedNeeds() {
         });
     }, []);
     function showNotConfirmedNeeds() {
-        fetch("/api/getNotConfirmedNeedRequests")
+        fetch("/api/getNotConfirmedSupportRequests")
         .then((res) => {
             return res.json();
         })
@@ -44,7 +44,7 @@ function NotConfirmedNeeds() {
         return (
             <div className="container text-center" >
                 <div className="bg-dblue rounded">
-                    <h1 className="mt-5 c-white p-3">Onaylanmamış İhtiyaçlar</h1>
+                    <h1 className="mt-5 c-white p-3">Onaylanmamış Yardımlar</h1>
                 </div>
                 <div className="bg-blue p-2 mt-2 rounded border">
                     <div className="bg-white rounded">

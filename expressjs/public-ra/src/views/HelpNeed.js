@@ -12,6 +12,22 @@ class EditNeed extends React.Component {
         }
     }
 
+    delNeed(id) {
+        const apiKey = '04cbdab3-90e1-4bed-8d6e-ccfce0fa894c'
+
+        axios.post('https://devservice-dot-dynamic-sun-260208.appspot.com/int/da124c9f1a874fe2/cancelNeed', {
+            args: [id],
+            account: "0xDd87F4bb1CB761eD3aEA8A1C1500cD71A23500ff"
+        }, {
+            headers: {
+                ApiKey: apiKey,
+            },
+        }).then((response) => {
+            const transaction = response.data;
+            console.log(transaction);
+        });
+    }
+
     async getUserData() {
         const url = '/api/getUser';
         fetch(url)
@@ -21,10 +37,16 @@ class EditNeed extends React.Component {
 
     componentDidMount() {
 
+        const apiKey = '04cbdab3-90e1-4bed-8d6e-ccfce0fa894c'
 
-        axios.get(`/api/getRequestById/ + '${this.state.id}'`, {
+        axios.get('https://devservice-dot-dynamic-sun-260208.appspot.com/int/da124c9f1a874fe2/showNeed', {
+            params: { args: [this.state.id] },
+            headers: {
+                ApiKey: apiKey,
+            },
         }).then(async (response) => {
-            this.setState({ need: response.request[0] })
+            const result = response.data.data;
+            this.setState({ need: result })
             await this.getUserData()
         }).catch(err => {
             console.error(err)
@@ -56,7 +78,7 @@ class EditNeed extends React.Component {
     render() {
         let need = this.state.need;
         let user = this.state.user;
-        // TO DO modify need values according to /api/getRequestById/:id values
+
         return (
             <div className="container">
                 <div className="row">

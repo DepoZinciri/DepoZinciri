@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import CryptoJS from 'crypto-js';
 
 class PersonalData extends React.Component {
@@ -54,7 +53,6 @@ class PersonalData extends React.Component {
                                     <input type="text" name="expUr" placeholder="" required="true" value={this.state.data.expUr} readonly="true" className="form-control mb-4"></input>
                                 </div>
                             </div>
-                            <Link to="/needs" className="btn btn-danger btn-block mt-3 w-50 mx-auto">Geri</Link>
                         </form>
                     </div>
                 </div>

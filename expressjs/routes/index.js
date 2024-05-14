@@ -14,12 +14,14 @@ router.get('/api/auth', index.auth);
 router.get('/api/getMapInfo/:city', index.getMapInfo);
 router.get('/api/getRequests', index.getRequests);
 router.get('/api/getConfirmedRequests', index.getConfirmedRequests);
-router.get('/api/getNotConfirmedRequests', index.getNotConfirmedRequests);
+router.get('/api/getNotConfirmedNeedRequests', index.getNotConfirmedNeedRequests);
+router.get('/api/getNotConfirmedSupportRequests', index.getNotConfirmedSupportRequests);
 router.get('/api/getRequestsByStatus/:status', index.getRequestsByStatus);
 router.get('/api/getRequestsWithWarehouse/:warehouseid', index.getRequestsWithWarehouse);
 router.get('/api/getWarehouse/:id', index.getWarehouse);
 router.get('/api/getItemsInWarehouse/:id', index.getItemsInWarehouse);
 router.get('/api/getOrdersInWarehouse/:id', index.getOrdersInWarehouse);
+router.get('/api/getRequestById/:id', index.getRequestById);
 router.post('/api/create-datahash', index.createDataHash);
 router.post('/api/create-request', index.createRequest);
 router.post('/api')

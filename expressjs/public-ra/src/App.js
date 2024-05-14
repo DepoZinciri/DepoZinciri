@@ -5,8 +5,6 @@ import Footer from './components/Footer';
 import Navigation from './components/Navigation';
 import WRoleNavigation from './components/WRoleNavigation';
 import LoginNavigation from './components/LoginNavigation';
-import Supports from './views/Supports';
-import Needs from './views/Needs';
 import EditSupport from './views/EditSupport';
 import EditNeed from './views/EditNeed';
 import ConfirmedSupports from './views/ConfirmedSupports';
@@ -19,6 +17,7 @@ import Register from './views/Register';
 import TurkeyMap from './views/TrMap';
 import City from './views/City';
 import NotConfirmedNeeds from './views/NotConfirmedNeeds';
+import NotConfirmedSupports from './views/NotConfirmedSupports';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
@@ -63,17 +62,14 @@ function App() {
             <Route exact path="/turkey-map">
               <TurkeyMap />
             </Route>
-            <Route exact path="/supports">
-              <Supports />
-            </Route>
-            <Route exact path="/needs">
-              <Needs />
-            </Route>
             <Route exact path="/confirmed_supports">
               <ConfirmedSupports />
             </Route>
             <Route exact path="/not_confirmed_needs">
               <NotConfirmedNeeds />
+            </Route>
+            <Route exact path="/not_confirmed_supports">
+              <NotConfirmedSupports />
             </Route>
             <Route exact path="/confirmed_needs">
               <ConfirmedNeeds />
@@ -112,13 +108,10 @@ function App() {
             <Route exact path="/warehouse">
               <Warehouse />
             </Route>
-            <Route exact path="/supports">
-              <Home />
-            </Route>
-            <Route exact path="/needs">
-              <Home />
-            </Route>
             <Route exact path="/confirmed_supports">
+              <Home />
+            </Route>
+            <Route exact path="/not_confirmed_supports">
               <Home />
             </Route>
             <Route exact path="/confirmed_needs">
@@ -152,14 +145,11 @@ function App() {
             <Route exact path="/turkey-map">
               <TurkeyMap />
             </Route>
-            <Route exact path="/supports">
-              <Home />
-            </Route>
-            <Route exact path="/needs">
-              <Home />
-            </Route>
             <Route exact path="/confirmed_supports">
               <ConfirmedSupports />
+            </Route>
+            <Route exact path="/not_confirmed_supports">
+              <Home />
             </Route>
             <Route exact path="/confirmed_needs">
               <ConfirmedNeeds />

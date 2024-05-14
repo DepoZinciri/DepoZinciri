@@ -42,13 +42,24 @@ exports.getRequests = function (req, res, next) {
         res.json({ requests: results });
     });
 }
+exports.getRequestById = function (req, res, next) {
+    const id = req.params.id;
+    mysql.query(`SELECT * FROM Requests WHERE id = ${id}`, function (results) {
+        res.json({ request: results });
+    });
+}
 exports.getConfirmedRequests = function (req, res, next) {
     mysql.query('SELECT * FROM Requests WHERE confirmed = true', function (results) {
         res.json({ requests: results });
     });
 }
-exports.getNotConfirmedRequests = function (req, res, next) {
-    mysql.query('SELECT * FROM Requests WHERE confirmed = false', function (results) {
+exports.getNotConfirmedNeedRequests = function (req, res, next) {
+    mysql.query('SELECT * FROM Requests WHERE confirmed = false AND requestType = 1', function (results) {
+        res.json({ requests: results });
+    });
+}
+exports.getNotConfirmedSupportRequests = function (req, res, next) {
+    mysql.query('SELECT * FROM Requests WHERE confirmed = false AND requestType = 2', function (results) {
         res.json({ requests: results });
     });
 }
@@ -107,12 +118,12 @@ const createItem = async function (itemType, itemDescription, quantity) {
 
 // TO DO it doesn't work
 exports.createRequest = async function (req, res, next) {
-    const { name, surname, phone, address, emergencyStatus, requestType, amount , itemDescription } = req.body;
+    const { name, surname, phone, address, emergencyStatus, requestType, itemType, amount , itemDescription } = req.body;
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    if (!name || !surname || !phone || !address || !emergencyStatus || !requestType || !amount || !itemDescription) {
+    if (!name || !surname || !phone || !address || !emergencyStatus || !requestType || !itemType || !amount || !itemDescription) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
-    const itemId = await createItem(requestType, itemDescription, amount);
+    const itemId = await createItem(itemType, itemDescription, amount);
     if (itemId === 0) {
         return res.status(500).json({ error: 'Error creating item' });
     }

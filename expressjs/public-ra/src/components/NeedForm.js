@@ -9,11 +9,12 @@ function NeedForm() {
         address: '',
         emergencyStatus: '',
         itemDescription: '',
-        requestType: '',
+        requestType: 1, // HELP_REQUEST
+        itemType: '',
         amount: ''
     });
 
-    const { name, surname, emergencyStatus, itemDescription, phone, address, requestType, amount } = formData;
+    const { name, surname, emergencyStatus, itemDescription, phone, address, itemType ,amount } = formData;
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,7 +40,8 @@ function NeedForm() {
             address: '',
             emergencyStatus: '',
             itemDescription: '',
-            requestType: '',
+            requestType: 1,
+            itemType: '',
             amount: ''
         });
     };
@@ -69,8 +71,8 @@ function NeedForm() {
                 />
                 {}
                 <select
-                    name="requestType"
-                    value={requestType}
+                    name="itemType"
+                    value={itemType}
                     onChange={handleChange}
                     className="browser-default custom-select mb-4"
                     required
