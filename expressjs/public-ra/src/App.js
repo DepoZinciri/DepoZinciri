@@ -91,11 +91,11 @@ function App() {
 
       </Router>
     );
-  } else if(userResponse === "TEST") {
+  } else if(userResponse === "LOGGED_IN_WAREHOUSE") {
     return (
       <Router>
         <div className="App">
-          <WRoleNavigation />
+          <WRoleNavigation username={username} />
           <Switch>
             <Route exact path="/">
               <Home />

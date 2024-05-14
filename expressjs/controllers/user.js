@@ -1,10 +1,9 @@
 
 let models = require('../models');
 let bcrypt = require('bcryptjs');
+const mysql = require('./mysql');
 const passport = require('passport');
 const myPassport = require('../passport_setup')(passport);
-let flash = require('connect-flash');
-
 //const { validateUser } = require('../validators/signup');
 //const { isEmpty } = require('lodash');
 
@@ -12,21 +11,26 @@ const generateHash = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
 }
 
-exports.signup = function (req, res, next) {
-    const newUser = models.User.build({
-        username: req.body.username,
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        stk: req.body.stk,
-        phone: req.body.phone,
-        email: req.body.email,
-        password: generateHash(req.body.password)
+
+const createUser = async function (user) {
+    const { username, firstname, lastname,password,phone, email,warehouse } = user;
+    const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    if (!username || !firstname || !lastname || !phone || !email || !password) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+    const encPassword = generateHash(password)
+    var query = `INSERT INTO Users (username, firstname, lastname,password,phone, email,createdAt,updatedAt,isWarehouser) VALUES ('${username}' ,'${firstname}', '${lastname}', '${encPassword}','${phone}', '${email}','${now}','${now}','${warehouse == 'no' ? 0:1}')`;
+    mysql.postquery(query, function (results) {
+        res.json({ message: 'User created' });
     });
-    return newUser.save().then(result => {
+}
+
+
+exports.signup = async function (req, res, next) {
+    await createUser(req.body).then(result => {
         passport.authenticate('local', {
             successRedirect: '/',
             failuredRedirect: "/signup",
-            failureFlash: true
         })(req, res, next);
     })
 }
@@ -35,7 +39,6 @@ exports.login = function (req, res, next) {
     passport.authenticate('local', {
         successRedirect: '/',
         failuredRedirect: "/login",
-        failureFlash: true,
     })(req, res, next);
 }
 

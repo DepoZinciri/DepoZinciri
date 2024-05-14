@@ -26,12 +26,16 @@ module.exports = (sequelize, DataTypes) => {
         },
         phone: {
             allowNull: false,
-            type: DataTypes.INTEGER
+            type: DataTypes.STRING
         },
         email: {
             allowNull: true,
             type: DataTypes.STRING
         },
+        isWarehouser:{
+            allowNull: true,
+            type: DataTypes.BOOLEAN
+        }
     });
     return User;
 }

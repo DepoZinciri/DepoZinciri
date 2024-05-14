@@ -1,7 +1,7 @@
 let LocalStrategy = require('passport-local').Strategy;
-
+const { isEmpty } = require('lodash');
+let myUser = require('./controllers/index')
 let bcrypt = require('bcryptjs')
-let models = require('./models')
 
 const validPassword = function(user,password){
     return bcrypt.compareSync(password,user.password);
@@ -11,16 +11,12 @@ module.exports = function(passport){
     passport.serializeUser(function(user,done){
         done(null,user.id)
     });
-    passport.deserializeUser(function(id,done){
-        models.User.findOne({
-            where: {
-                'id':id
-            }
-        }).then(user => {
+    passport.deserializeUser(async function(id,done){
+        await myUser.findUserbyId(id).then(user => {
             if (user == null){
                 done(new Error('Wrong user id'))
             }
-            done(null,user);
+            done(null,user[0][0]);
         })
     });
     passport.use(new LocalStrategy({
@@ -28,12 +24,12 @@ module.exports = function(passport){
         passwordField: 'password',
         passReqToCallback: true
     },
-    function(req,username,password,done){
-        return models.User.findOne({
-            where: {
-                'username': username
-            },
-        }).then(user => {
+    async function(req,username,password,done){
+        return await myUser.findUserbyUsername(username).then((result) => {
+            if(isEmpty(result[0])){
+                    return done(null, false, { message: 'Incorrect credentials.' })
+                }
+            let user = result[0][0]
             if (user == null){
                 return done(null, false, { message: 'Incorrect credentials.' })
             }else if (user.password == null || user.password == undefined){

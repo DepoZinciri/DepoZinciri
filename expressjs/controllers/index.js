@@ -3,25 +3,40 @@ const path = require('path');
 const models = require('../models');
 const mapInfoData = JSON.parse(fs.readFileSync(path.join(__dirname, '../Data/MapInfo.json'), 'utf8'));
 const mysql = require('./mysql');
-const { INTEGER } = require('sequelize');
 exports.auth = function (req, res, next) {
     var user = req.user
     if (user) {
         var username = user.firstname + " " + user.lastname;
-        return res.json({ message: "LOGGED_IN", username: username });
+        if(user.isWarehouser){
+            return res.json({ message: "LOGGED_IN_WAREHOUSE", username: username });
+        }else{
+            return res.json({ message: "LOGGED_IN", username: username });
+        }
     } else {
         return res.json({ message: "NOT_LOGGED_IN" });
     }
 }
 
-exports.getUser = function (req, res, next) {
-    var user = req.user
-    if (user) {
-        return res.json({ user: user });
-    }
+
+exports.findUser = function(req,res,next) {
+    const password = req.body.password;
+    const user = req.body.username;
+    mysql.query(`SELECT * FROM Users WHERE username = '${user}' AND password = '${password} '`, function (results) {
+        res.json({ user: results });
+    });
+}
+exports.findUserbyUsername = async function(username){
+    return await mysql.postquery(`SELECT * FROM Users WHERE username = '${username}'`, async function (results) {
+        return  {user : results}
+    })
+}
+exports.findUserbyId = async function(id){
+    return mysql.postquery(`SELECT * FROM Users WHERE id = '${id}'`, async function (results) {
+        return { user: results };
+    });
 }
 
-// new database
+
 exports.getRequests = function (req, res, next) {
     mysql.query('SELECT * FROM Requests', function (results) {
         res.json({ requests: results });

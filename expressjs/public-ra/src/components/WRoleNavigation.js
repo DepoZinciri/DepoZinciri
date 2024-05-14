@@ -97,7 +97,7 @@ function LoginNavigation(props) {
           <li className="nav-item mr-1 mt-1 row ml-auto">
             <span className="navbar-text c-white pr-1">Hoşgeldin,</span>
             <span className="navbar-text text-weigth-bold">
-              {props.username} Depo Yöneticisi
+              {props.username}
             </span>
           </li>
           <li className="nav-item p-1 lognav ">

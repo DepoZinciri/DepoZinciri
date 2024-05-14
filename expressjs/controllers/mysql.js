@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
       exports.query = function (query, callback) {
          connection.query(query, function (error, results, fields) {
              if (error) throw error;
-             callback(results);
+            callback(results);
          });
      }
     exports.postquery = async function (query) {
