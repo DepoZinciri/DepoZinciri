@@ -28,8 +28,7 @@ import Warehouse from './views/Warehouse';
 function App() {
 
   const [userResponse, setUserResponse] = useState([]);
-  const [username, setUsername] = useState([]);
-
+  const [user, setUser] = useState([]);
   useEffect(() => {
     fetch("/api/auth")
       .then((res) => {
@@ -37,7 +36,7 @@ function App() {
       })
       .then((data) => {
         setUserResponse(data.message);
-        setUsername(data.username);
+        setUser(data.user);
       })
       .catch((err) => {
         console.log(err);
@@ -48,7 +47,7 @@ function App() {
     return (
       <Router>
         <div className="App">
-          <LoginNavigation username={username} />
+          <LoginNavigation username={user.firstname + " " + user.lastname} />
           <Switch>
             <Route exact path="/">
               <Home />
@@ -76,9 +75,9 @@ function App() {
             </Route>
             <Route path="/data/:id" component={PersonalData}></Route>
             <Route path="/support/edit/:id" component={EditSupport}></Route>
-            <Route path="/need/edit/:id" component={EditNeed}></Route>
+            <Route path="/need/edit/:id" render={(props) => <EditNeed {...props} user={user} />}></Route>
             <Route path="/confirmed_support/edit/:id" component={EditConfirmedSupport}></Route>
-            <Route path="/confirmed_need/edit/:id" component={EditConfirmedNeed}></Route>
+            <Route path="/confirmed_need/edit/:id" render={(props) => <EditConfirmedNeed {...props} user={user} />}></Route>
             <Route path="/turkey-map/:city" component={City}></Route>
           </Switch>
         </div>
@@ -91,7 +90,7 @@ function App() {
     return (
       <Router>
         <div className="App">
-          <WRoleNavigation username={username} />
+          <WRoleNavigation username={user.firstname + " " + user.lastname} />
           <Switch>
             <Route exact path="/">
               <Home />

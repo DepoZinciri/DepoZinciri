@@ -22,6 +22,8 @@ router.get('/api/getWarehouse/:id', index.getWarehouse);
 router.get('/api/getItemsInWarehouse/:id', index.getItemsInWarehouse);
 router.get('/api/getOrdersInWarehouse/:id', index.getOrdersInWarehouse);
 router.get('/api/getRequestById/:id', index.getRequestById);
+router.get('/api/getItemById/:id', index.getItemById)
+router.post('/api/confirmRequest', index.confirmRequest);
 router.post('/api/create-datahash', index.createDataHash);
 router.post('/api/create-request', index.createRequest);
 router.post('/api')

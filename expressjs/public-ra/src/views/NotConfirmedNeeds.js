@@ -8,7 +8,7 @@ function NotConfirmedNeeds() {
     const [userResponse, setUserResponse] = useState([]);
 
     const editNotConfirmedNeed = (id) => {
-        let myPath = '/confirmed_need/edit/' + id + '';
+        let myPath = '/need/edit/' + id + '';
         return myPath;
     }
 

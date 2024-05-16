@@ -7,15 +7,8 @@ class EditNeed extends React.Component {
         this.state = {
             id: props.match.params.id,
             need: '',
-            user: ''
+            user: props.user
         }
-    }
-
-    async getUserData() {
-        const url = '/api/getUser';
-        fetch(url)
-            .then((response) => response.json())
-            .then((data) => this.setState({ user: data.user }))
     }
 
     componentDidMount() {

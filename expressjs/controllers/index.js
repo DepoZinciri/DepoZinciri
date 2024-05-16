@@ -8,9 +8,9 @@ exports.auth = function (req, res, next) {
     if (user) {
         var username = user.firstname + " " + user.lastname;
         if(user.isWarehouser){
-            return res.json({ message: "LOGGED_IN_WAREHOUSE", username: username });
+            return res.json({ message: "LOGGED_IN_WAREHOUSE", user: user });
         }else{
-            return res.json({ message: "LOGGED_IN", username: username });
+            return res.json({ message: "LOGGED_IN", user: user });
         }
     } else {
         return res.json({ message: "NOT_LOGGED_IN" });
@@ -44,6 +44,7 @@ exports.getRequests = function (req, res, next) {
 }
 exports.getRequestById = function (req, res, next) {
     const id = req.params.id;
+    if(!id) return;
     mysql.query(`SELECT * FROM Requests WHERE id = ${id}`, function (results) {
         res.json({ request: results });
     });
@@ -81,10 +82,24 @@ exports.getWarehouse = function (req, res, next) {
         res.json({ warehouse: results });
     });
 }
+exports.getItemById = function (req, res, next) {
+    const id = req.params.id;
+    if(!id) return;
+    mysql.query(`SELECT * FROM Items WHERE id = ${id}`, function (results) {
+        res.json({ items: results });
+    });
+}
 exports.getItemsInWarehouse = function (req, res, next) {
     const id = req.params.id;
-    mysql.query(`SELECT * FROM Items WHERE warehouseId = ${id}`, function (results) {
+    mysql.query(`SELECT * FROM Items WHERE id = ${id}`, function (results) {
         res.json({ items: results });
+    });
+}
+exports.confirmRequest = function (req, res, next) {
+    const id = req.body.id;
+    if(!id) return;
+    mysql.query(`UPDATE Requests SET status = Confirmed WHERE id = ${id}`, function (results) {
+        res.json({ message: "Success"});
     });
 }
 exports.getOrdersInWarehouse = function (req, res, next) {
@@ -116,7 +131,6 @@ const createItem = async function (itemType, itemDescription, quantity) {
     }
 }
 
-// TO DO it doesn't work
 exports.createRequest = async function (req, res, next) {
     const { name, surname, phone, address, emergencyStatus, requestType, itemType, amount , itemDescription } = req.body;
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
