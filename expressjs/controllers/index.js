@@ -54,6 +54,23 @@ exports.getConfirmedRequests = function (req, res, next) {
         res.json({ requests: results });
     });
 }
+exports.getConfirmedRequestById = function (req, res, next) {
+    const id = req.params.id;
+    if(!id) return res.json({ error: 'Missing required fields' });
+    mysql.query(`SELECT * FROM Requests WHERE id = ${id} AND confirmed = true`, function (results) {
+        res.json({ request: results });
+    });
+}
+exports.editConfirmNeed = function (req, res, next) {
+    const {id, name, surname, requestType, amount, phone, address, emergencyStatus, status } = req.body;
+    const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    if (!name || !surname || !requestType || !amount || !phone || !address || !emergencyStatus || !status) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+    mysql.query(`UPDATE Requests SET name = '${name}', surname = '${surname}', requestType = '${requestType}', amount = ${amount}, phone = '${phone}', address = '${address}', emergencyStatus = '${emergencyStatus}', status = '${status}', updatedAt = '${now}' WHERE id = ${id}`, function (results) {
+        res.json({ message: 'Request updated' });
+    });
+}
 exports.getNotConfirmedNeedRequests = function (req, res, next) {
     mysql.query('SELECT * FROM Requests WHERE confirmed = false AND requestType = 1', function (results) {
         res.json({ requests: results });
@@ -98,8 +115,8 @@ exports.getItemsInWarehouse = function (req, res, next) {
 exports.confirmRequest = function (req, res, next) {
     const id = req.body.id;
     if(!id) return;
-    mysql.query(`UPDATE Requests SET status = Confirmed WHERE id = ${id}`, function (results) {
-        res.json({ message: "Success"});
+    mysql.query(`UPDATE Requests SET status = 'Confirmed', confirmed = true WHERE id = ${id}`, function (results) {
+        res.json({ message: "Success" });
     });
 }
 exports.getOrdersInWarehouse = function (req, res, next) {

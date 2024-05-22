@@ -19,63 +19,6 @@
         "city": "İstanbul",
         "orders": 8
       }
-    ],
-    "items": [
-      {
-        "itemType": "Gıda",
-        "itemDescription": "Ekmek",
-        "quantity": 200,
-        "expirationDate": "2024-06-30"
-      },
-      {
-        "itemType": "Su",
-        "itemDescription": "İçme Suyu",
-        "quantity": 50
-      },
-      {
-        "itemType": "Hijyen Malzemeleri",
-        "itemDescription": "Ped",
-        "quantity": 10
-      },
-      {
-        "itemType": "Kıyafet",
-        "itemDescription": "Mont",
-        "quantity": 5
-      },
-      {
-        "itemType": "Gıda",
-        "itemDescription": "Konserve",
-        "quantity": 300,
-        "expirationDate": "2026-06-30"
-      }
-    ],
-    "requests": [
-      {
-        "transactionId": "ABC123",
-        "dataHash": 123456,
-        "name": "Mehmet",
-        "surname": "Demir",
-        "phone": "555-455-5555",
-        "address": "Ankara Mamak Barış Sk",
-        "emergencyStatus": "Urgent",
-        "itemDescription": "Gıdaya ihtiyacımız var",
-        "confirmed": true,
-        "requestType": 1,
-        "status": "Pending"
-      },
-      {
-        "transactionId": "DEF456",
-        "dataHash": 789012,
-        "name": "Ahmet",
-        "surname": "Kar",
-        "phone": "555-555-5555",
-        "address": "Ankara Mamak Amaç Sk",
-        "emergencyStatus": "Not urgent",
-        "itemDescription": "Battaniyeye ihtiyacımız var",
-        "confirmed": false,
-        "requestType": 2,
-        "status": "Not Confirmed"
-      }
     ]
   }
   

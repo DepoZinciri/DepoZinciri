@@ -1,11 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import axios from 'axios';
 
 function NotConfirmedNeeds() {
     const [notConfirmedNeeds, setnotConfirmedNeeds] = useState([]);
-    const [userResponse, setUserResponse] = useState([]);
 
     const editNotConfirmedNeed = (id) => {
         let myPath = '/need/edit/' + id + '';
@@ -14,16 +12,6 @@ function NotConfirmedNeeds() {
 
     useEffect(() => {
         showNotConfirmedNeeds();
-        fetch("/api/auth")
-        .then((res) => {
-          return res.json();
-        })
-        .then((data) => {
-          setUserResponse(data.message);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
     }, []);
     function showNotConfirmedNeeds() {
         fetch("/api/getNotConfirmedNeedRequests")

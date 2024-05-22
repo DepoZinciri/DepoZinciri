@@ -14,6 +14,7 @@ router.get('/api/auth', index.auth);
 router.get('/api/getMapInfo/:city', index.getMapInfo);
 router.get('/api/getRequests', index.getRequests);
 router.get('/api/getConfirmedRequests', index.getConfirmedRequests);
+router.get('/api/getConfirmedRequestById/:id', index.getConfirmedRequestById);
 router.get('/api/getNotConfirmedNeedRequests', index.getNotConfirmedNeedRequests);
 router.get('/api/getNotConfirmedSupportRequests', index.getNotConfirmedSupportRequests);
 router.get('/api/getRequestsByStatus/:status', index.getRequestsByStatus);
@@ -26,6 +27,7 @@ router.get('/api/getItemById/:id', index.getItemById)
 router.post('/api/confirmRequest', index.confirmRequest);
 router.post('/api/create-datahash', index.createDataHash);
 router.post('/api/create-request', index.createRequest);
+router.post('/api/editConfirmNeed', index.editConfirmNeed);
 router.post('/api')
 //router.post('/api/create-item', index.createItem);
 router.get('/api/getdatahash/:id', index.getDataHash);  //isLoggedIn eklencek

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import hand from '../public/images/hand.png';
 // (TODO:DepoZinciri)
 function NeedForm() {
     const [formData, setFormData] = useState({
@@ -49,7 +50,8 @@ function NeedForm() {
     return (
         <div className="col-lg-6 mt-3 mx-auto">
             <form onSubmit={handleSubmit} method="POST" className="text-center border border-light p-5 rounded bg-blue">
-                {}
+            <img src={hand} className="mb-4"></img>
+            <p className="h1 mb-4">İhtiyaç Oluştur</p>
                 <input
                     type="text"
                     name="name"
