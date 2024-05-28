@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
-import hand from '../public/images/hand.png';
+import hand from '../public/images/hand2.png';
 // (TODO:DepoZinciri)
 function NeedForm() {
     const [formData, setFormData] = useState({
@@ -80,7 +80,7 @@ function NeedForm() {
                     required
                 >
                     <option className="d-none" defaultValue>İhtiyaç Tipi*</option>
-                    <option value="Maddi Destek">Maddi Destek</option>
+                    <option value="Maddi Yardım">Maddi Yardım</option>
                     <option value="Taşıma">Taşıma</option>
                     <option value="Eşya">Eşya</option>
                     <option value="Konaklama">Konaklama</option>

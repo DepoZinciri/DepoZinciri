@@ -179,9 +179,8 @@ class EditNeed extends React.Component {
                     className="browser-default custom-select mb-4"
                   >
                     <option selected className="d-none"></option>
-                    <option value="Onaylandı">Onaylandı</option>
-                    <option value="Ulaşım Aşaması">Ulaşım Aşaması</option>
-                    <option value="Kullanımda">Kullanımda</option>
+                    <option value="Confirm">Onaylandı</option>
+                    <option value="Cancel">İptal</option>
                   </select>
                 </div>
               </div>

@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import { add } from 'lodash';
 
 class EditConfirmedNeed extends React.Component {
     constructor(props) {
@@ -83,7 +82,6 @@ class EditConfirmedNeed extends React.Component {
                                 <div className="col-lg-6 mt-3">
                                     <p className="m-0 p-0">İsim</p>
                                     <input onChange={OnChange} type="text" name="name" placeholder="Name*" required="true" value={name}  className="form-control mb-4"></input>
-                                    <input onChange={OnChange} type="text" name="id" placeholder="" required="true" value={need.id} className="d-none form-control mb-4"></input>
                                     <p className="m-0 p-0">Soyisim</p>
                                     <input onChange={OnChange} type="text" name="surname" placeholder="Surname*" required="true" value={surname} className="form-control mb-4"></input>
                                     <p className="m-0 p-0">İhtiyaç Tipi</p>

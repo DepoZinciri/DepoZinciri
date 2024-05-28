@@ -79,7 +79,7 @@ function Navigation() {
           </Nav.Link>
           <Nav.Link className="nav-item p-1">
             <Link
-              to="/confirmed_needs"
+              to="/create-support"
               className="nav-link d-inline-flex flex-row align-items-center"
             >
               <svg

@@ -19,10 +19,10 @@ function LoginNavigation(props) {
                         <Link to="/confirmed_needs" className="nav-link" >Onaylanmış İhtiyaçlar</Link>
                     </Nav.Link>
                     <Nav.Link className="nav-item p-1">
-                        <Link to="/not_confirmed_supports" className="nav-link" >Onaylanmamış Destekler</Link>
+                        <Link to="/not_confirmed_supports" className="nav-link" >Onaylanmamış Yardımlar</Link>
                     </Nav.Link>
                     <Nav.Link className="nav-item p-1">
-                        <Link to="/confirmed_supports" className="nav-link" >Onaylanmış Destekler</Link>
+                        <Link to="/confirmed_supports" className="nav-link" >Onaylanmış Yardımlar</Link>
                     </Nav.Link>
                     <Nav.Link className="nav-item p-1">
                         <Link to="/turkey-map" className="nav-link" >Analiz Haritası</Link>

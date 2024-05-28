@@ -26,7 +26,8 @@ router.get('/api/getRequestById/:id', index.getRequestById);
 router.get('/api/getItemById/:id', index.getItemById)
 router.post('/api/confirmRequest', index.confirmRequest);
 router.post('/api/create-datahash', index.createDataHash);
-router.post('/api/create-request', index.createRequest);
+router.post('/api/createNeedRequest', index.createNeedRequest);
+router.post('/api/createSupportRequest',index.createSupportRequest)
 router.post('/api/editConfirmNeed', index.editConfirmNeed);
 router.post('/api')
 //router.post('/api/create-item', index.createItem);

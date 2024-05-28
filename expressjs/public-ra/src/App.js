@@ -12,6 +12,7 @@ import EditConfirmedSupport from './views/EditConfirmedSupport';
 import EditConfirmedNeed from './views/EditConfirmedNeed';
 import Home from './views/Home';
 import Login from './views/Login';
+import SupportForm from './components/SupportForm';
 import Register from './views/Register';
 import TurkeyMap from './views/TrMap';
 import City from './views/City';

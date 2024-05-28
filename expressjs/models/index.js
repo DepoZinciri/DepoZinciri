@@ -72,8 +72,6 @@ async function seedDatabase() {
     //  But throws an error: Table not exists
     //await sequelize.sync({ force: true });
     await db.Warehouse.bulkCreate(seedData.warehouses);
-    await db.Item.bulkCreate(seedData.items);
-    await db.Request.bulkCreate(seedData.requests);
     console.log('Database seeded successfully');
   } catch (error) {
     console.error('Error seeding database:', error);
