@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import Footer from './components/Footer';
 import Navigation from './components/Navigation';
 import WRoleNavigation from './components/WRoleNavigation';
@@ -26,147 +25,52 @@ import PersonalData from './views/PersonalData';
 import Warehouse from './views/Warehouse';
 
 function App() {
-
   const [userResponse, setUserResponse] = useState([]);
   const [user, setUser] = useState([]);
+  
   useEffect(() => {
     fetch("/api/auth")
-      .then((res) => {
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((data) => {
         setUserResponse(data.message);
         setUser(data.user);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   }, []);
 
+  const renderRoutes = (navigationComponent) => (
+    <Router>
+      <div className="App">
+        {navigationComponent}
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Register} />
+          <Route exact path="/turkey-map" component={TurkeyMap} />
+          <Route exact path="/confirmed_supports" component={ConfirmedSupports} />
+          <Route exact path="/not_confirmed_needs" component={NotConfirmedNeeds} />
+          <Route exact path="/not_confirmed_supports" component={NotConfirmedSupports} />
+          <Route exact path="/confirmed_needs" component={ConfirmedNeeds} />
+          <Route path="/data/:id" component={PersonalData} />
+          <Route path="/support/edit/:id" component={EditSupport} />
+          <Route path="/need/edit/:id" render={(props) => <EditNeed {...props} user={user} />} />
+          <Route path="/confirmed_support/edit/:id" component={EditConfirmedSupport} />
+          <Route path="/confirmed_need/edit/:id" render={(props) => <EditConfirmedNeed {...props} user={user} />} />
+          <Route path="/turkey-map/:city" component={City} />
+          <Route exact path="/warehouse" component={Warehouse} />
+        </Switch>
+      </div>
+      <Footer />
+    </Router>
+  );
+
   if (userResponse === "LOGGED_IN") {
-    return (
-      <Router>
-        <div className="App">
-          <LoginNavigation username={user.firstname + " " + user.lastname} />
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/signup">
-              <Register />
-            </Route>
-            <Route exact path="/turkey-map">
-              <TurkeyMap />
-            </Route>
-            <Route exact path="/confirmed_supports">
-              <ConfirmedSupports />
-            </Route>
-            <Route exact path="/not_confirmed_needs">
-              <NotConfirmedNeeds />
-            </Route>
-            <Route exact path="/not_confirmed_supports">
-              <NotConfirmedSupports />
-            </Route>
-            <Route exact path="/confirmed_needs">
-              <ConfirmedNeeds />
-            </Route>
-            <Route path="/data/:id" component={PersonalData}></Route>
-            <Route path="/support/edit/:id" component={EditSupport}></Route>
-            <Route path="/need/edit/:id" render={(props) => <EditNeed {...props} user={user} />}></Route>
-            <Route path="/confirmed_support/edit/:id" component={EditConfirmedSupport}></Route>
-            <Route path="/confirmed_need/edit/:id" render={(props) => <EditConfirmedNeed {...props} user={user} />}></Route>
-            <Route path="/turkey-map/:city" component={City}></Route>
-          </Switch>
-        </div>
-
-        <Footer />
-
-      </Router>
-    );
-  } else if(userResponse === "LOGGED_IN_WAREHOUSE") {
-    return (
-      <Router>
-        <div className="App">
-          <WRoleNavigation username={user.firstname + " " + user.lastname} />
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/signup">
-              <Register />
-            </Route>
-            <Route exact path="/turkey-map">
-              <TurkeyMap />
-            </Route>
-            <Route exact path="/warehouse">
-              <Warehouse />
-            </Route>
-            <Route exact path="/confirmed_supports">
-              <Home />
-            </Route>
-            <Route exact path="/not_confirmed_supports">
-              <Home />
-            </Route>
-            <Route exact path="/confirmed_needs">
-              <Home />
-            </Route>
-            <Route path="/support/edit/:id" component={EditSupport}></Route>
-            <Route path="/need/edit/:id" component={EditNeed}></Route>
-            <Route path="/confirmed_support/edit/:id" component={EditConfirmedSupport}></Route>
-            <Route path="/confirmed_need/edit/:id" component={EditConfirmedNeed}></Route>
-            <Route path="/turkey-map/:city" component={City}></Route>
-          </Switch>
-        </div>
-        <Footer />
-      </Router>
-    );
+    return renderRoutes(<LoginNavigation username={user.firstname + " " + user.lastname} />);
+  } else if (userResponse === "LOGGED_IN_WAREHOUSE") {
+    return renderRoutes(<WRoleNavigation username={user.firstname + " " + user.lastname} />);
   } else {
-    return (
-      <Router>
-        <div className="App">
-          <Navigation />
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/signup">
-              <Register />
-            </Route>
-            <Route exact path="/turkey-map">
-              <TurkeyMap />
-            </Route>
-            <Route exact path="/confirmed_supports">
-              <ConfirmedSupports />
-            </Route>
-            <Route exact path="/not_confirmed_supports">
-              <Home />
-            </Route>
-            <Route exact path="/confirmed_needs">
-              <ConfirmedNeeds />
-            </Route>
-            <Route path="/support/edit/:id" component={EditSupport}></Route>
-            <Route path="/need/edit/:id" component={EditNeed}></Route>
-            <Route path="/confirmed_support/edit/:id" component={EditConfirmedSupport}></Route>
-            <Route path="/confirmed_need/edit/:id" component={EditConfirmedNeed}></Route>
-            <Route path="/turkey-map/:city" component={City}></Route>
-          </Switch>
-        </div>
-
-        <Footer />
-
-      </Router>
-    );
+    return renderRoutes(<Navigation />);
   }
-
 }
 
 export default App;
