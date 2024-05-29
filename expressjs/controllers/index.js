@@ -54,6 +54,11 @@ exports.getConfirmedRequests = function (req, res, next) {
         res.json({ requests: results });
     });
 }
+exports.getConfirmedSupportRequests = function (req, res, next) {
+    mysql.query('SELECT * FROM Requests WHERE confirmed = true AND requestType = 2', function (results) {
+        res.json({ requests: results });
+    });
+}
 exports.getConfirmedRequestById = function (req, res, next) {
     const id = req.params.id;
     if(!id) return res.json({ error: 'Missing required fields' });
@@ -99,11 +104,26 @@ exports.getWarehouse = function (req, res, next) {
         res.json({ warehouse: results });
     });
 }
+exports.getWarehouses = function (req, res, next) {
+    mysql.query('SELECT * FROM Warehouses', function (results) {
+        res.json({ warehouses: results });
+    });
+}
 exports.getItemById = function (req, res, next) {
     const id = req.params.id;
     if(!id) return;
     mysql.query(`SELECT * FROM Items WHERE id = ${id}`, function (results) {
         res.json({ items: results });
+    });
+}
+exports.updateSupportRequest = function (req, res, next) {
+    const { id, name, surname, phone, address, requestType, amount, itemDescription,warehouseId } = req.body;
+    const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    if (!name || !surname || !phone || !address || !requestType || !amount || !itemDescription || !warehouseId) {
+        return res.status(400).json({ error: ` missing field is ` });
+    }
+    mysql.query(`UPDATE Requests SET name = '${name}', surname = '${surname}', phone = '${phone}', address = '${address}', requestType = '${requestType}', amount = ${amount}, itemDescription = '${itemDescription}', updatedAt = '${now}', warehouseId = '${warehouseId}' WHERE id = ${id}`, function (results) {
+        res.json({ message: 'Support Request updated' });
     });
 }
 exports.getItemsInWarehouse = function (req, res, next) {
@@ -123,6 +143,12 @@ exports.getOrdersInWarehouse = function (req, res, next) {
     const id = req.params.id;
     mysql.query(`SELECT * FROM Orders WHERE warehouseId = ${id}`, function (results) {
         res.json({ orders: results });
+    });
+}
+exports.getIncomingSupports = function (req, res, next) {
+    const warehouseId = req.params.id;
+    mysql.query(`SELECT * FROM Requests WHERE warehouseId = ${warehouseId} AND requestType = 2 AND status = 'Confirmed'`, function (results) {
+        res.json({ requests: results });
     });
 }
 

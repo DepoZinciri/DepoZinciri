@@ -13,13 +13,13 @@ const generateHash = function (password) {
 
 
 const createUser = async function (user) {
-    const { username, firstname, lastname,password,phone, email,warehouse } = user;
+    const { username, firstname, lastname,password,phone, email,warehouse,warehouseId } = user;
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
     if (!username || !firstname || !lastname || !phone || !email || !password) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
     const encPassword = generateHash(password)
-    var query = `INSERT INTO Users (username, firstname, lastname,password,phone, email,createdAt,updatedAt,isWarehouser) VALUES ('${username}' ,'${firstname}', '${lastname}', '${encPassword}','${phone}', '${email}','${now}','${now}','${warehouse == 'no' ? 0:1}')`;
+    var query = `INSERT INTO Users (username, firstname, lastname,password,phone, email,createdAt,updatedAt,isWarehouser,warehouseId) VALUES ('${username}' ,'${firstname}', '${lastname}', '${encPassword}','${phone}', '${email}','${now}','${now}','${warehouse == 'no' ? 0:1}' ,'${warehouseId}')`;
     mysql.postquery(query, function (results) {
         res.json({ message: 'User created' });
     });

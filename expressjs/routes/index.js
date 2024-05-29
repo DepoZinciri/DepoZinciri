@@ -24,6 +24,10 @@ router.get('/api/getItemsInWarehouse/:id', index.getItemsInWarehouse);
 router.get('/api/getOrdersInWarehouse/:id', index.getOrdersInWarehouse);
 router.get('/api/getRequestById/:id', index.getRequestById);
 router.get('/api/getItemById/:id', index.getItemById)
+router.get('/api/getConfirmedSupportRequests', index.getConfirmedSupportRequests);
+router.get('/api/getWarehouses', index.getWarehouses);
+router.get('/api/getIncomingSupports/:id', index.getIncomingSupports);
+router.post('/api/updateSupportRequest', index.updateSupportRequest);
 router.post('/api/confirmRequest', index.confirmRequest);
 router.post('/api/create-datahash', index.createDataHash);
 router.post('/api/createNeedRequest', index.createNeedRequest);

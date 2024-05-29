@@ -9,45 +9,71 @@ class EditSupport extends React.Component {
       support: "",
       item: "",
       user: props.user,
+      warehouses: [],
+      formData: {
+        status: "",
+        warehouseId: "",
+      },
     };
   }
 
-  delSupport(id) {
-  }
+  delSupport(id) {}
 
   componentDidMount() {
     axios
-    .get(`/api/getRequestById/${this.state.id}`, {})
-    .then(async (response) => {
-      this.setState({ support: response.data.request[0] });
-      axios
-        .get(`/api/getItemById/${response.data.request[0].itemId}`)
-        .then((response) => {
-          this.setState({ item: response.data.items[0] });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+      .get(`/api/getRequestById/${this.state.id}`, {})
+      .then(async (response) => {
+        this.setState({ support: response.data.request[0] });
+        this.setState({ formData: response.data.request[0] });
+        axios
+          .get(`/api/getItemById/${response.data.request[0].itemId}`)
+          .then((response) => {
+            this.setState({ item: response.data.items[0] });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    axios
+      .get("/api/getWarehouses")
+      .then((response) => {
+        this.setState({ warehouses: response.data.warehouses });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
+  onChange = (e) => {
+    this.setState({
+      formData: {
+        ...this.state.formData,
+        [e.target.name]: e.target.value,
+      },
+    });
+  };
+
+
 
   handleSubmit(id) {
     return (event) => {
       event.preventDefault();
 
-      axios
-      .post(`/api/confirmRequest`, {
-        id: id,
-      })
-      .then(() => {
-        console.log("Request confirmed");
+      axios.post(`/api/updateSupportRequest`, this.state.formData).then(() => {
+        console.log("Request update");
       });
-    
+        axios
+          .post(`/api/confirmRequest`, {
+            id: id,
+          })
+          .then(() => {
+            console.log("Request confirmed");
+          });
+    };
   }
-}
+
 
   render() {
     let support = this.state.support;
@@ -59,7 +85,7 @@ class EditSupport extends React.Component {
         <div className="row">
           <div className="col-lg-12 mt-3 mx-auto">
             <form
-              onSubmit={this.handleSubmit(support[0])}
+              onSubmit={this.handleSubmit(support.id)}
               method="POST"
               className="text-center border border-light p-5 rounded bg-blue"
             >
@@ -170,12 +196,27 @@ class EditSupport extends React.Component {
                   <select
                     name="status"
                     required="true"
+                    onChange={this.onChange}
                     className="browser-default custom-select mb-4"
                   >
                     <option selected className="d-none"></option>
                     <option value="Onaylandı">Onaylandı</option>
                     <option value="Beklemede">Beklemede</option>
                     <option value="Kullanıldı">Kullanıldı</option>
+                  </select>
+                  <p className="m-0 p-0">Gidicek Depo*</p>
+                  <select
+                    name="warehouseId"
+                    required="true"
+                    onChange={this.onChange}
+                    className="browser-default custom-select mb-4"
+                  >
+                    <option selected className="d-none"></option>
+                    {this.state.warehouses.map((warehouse) => {
+                      return (
+                        <option value={warehouse.id}>{warehouse.name}</option>
+                      );
+                    })}
                   </select>
                 </div>
               </div>

@@ -13,6 +13,7 @@ import EditConfirmedNeed from './views/EditConfirmedNeed';
 import Home from './views/Home';
 import Login from './views/Login';
 import SupportForm from './components/SupportForm';
+import IncomingSupports from './views/IncomingSupport';
 import Register from './views/Register';
 import TurkeyMap from './views/TrMap';
 import City from './views/City';
@@ -24,6 +25,7 @@ import 'mdbreact/dist/css/mdb.css';
 import "./public/css/style.css";
 import PersonalData from './views/PersonalData';
 import Warehouse from './views/Warehouse';
+import CreateSupport from './views/CreateSupport';
 
 function App() {
   const [userResponse, setUserResponse] = useState([]);
@@ -52,10 +54,12 @@ function App() {
           <Route exact path="/not_confirmed_needs" component={NotConfirmedNeeds} />
           <Route exact path="/not_confirmed_supports" component={NotConfirmedSupports} />
           <Route exact path="/confirmed_needs" component={ConfirmedNeeds} />
+          <Route exact path="/create-support" component={CreateSupport} />
           <Route path="/data/:id" component={PersonalData} />
-          <Route path="/support/edit/:id" component={EditSupport} />
+          <Route path="/incoming-supports" render={(props) => <IncomingSupports {...props} warehouseId={user.warehouseId} />} />
+          <Route path="/support/edit/:id" render={(props) => <EditSupport {...props} user={user} />} />
           <Route path="/need/edit/:id" render={(props) => <EditNeed {...props} user={user} />} />
-          <Route path="/confirmed_support/edit/:id" component={EditConfirmedSupport} />
+          <Route path="/confirmed_support/edit/:id" render={(props) => <EditConfirmedSupport {...props} user={user} />} />
           <Route path="/confirmed_need/edit/:id" render={(props) => <EditConfirmedNeed {...props} user={user} />} />
           <Route path="/turkey-map/:city" component={City} />
           <Route exact path="/warehouse" component={Warehouse} />

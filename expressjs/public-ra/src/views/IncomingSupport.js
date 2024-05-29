@@ -2,48 +2,42 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
-import { Button } from "react-bootstrap";
 
-function NotConfirmedSupports() {
-  const [NotConfirmedSupports, setNotConfirmedSupports] = useState([]);
-  const [userResponse, setUserResponse] = useState([]);
-  const [reload, setReload] = useState(false);
-  const editNotConfirmedNeed = (id) => {
-    let myPath = "/support/edit/" + id + "";
+function IncomingSupports(props) {
+  const [IncomingSupports, setIncomingSupports] = useState([]);
+  const showPersonalData = (id) => {
+    let myPath = "/data/" + id + "";
     return myPath;
   };
+
+  const editConfirmedSupport = (id) => {
+    let myPath = "/confirmed_need/edit/" + id + "";
+    return myPath;
+  };
+
   useEffect(() => {
-    showNotConfirmedSupports();
-    fetch("/api/auth")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setUserResponse(data.message);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [reload]);
-  function showNotConfirmedSupports() {
-    fetch("/api/getNotConfirmedSupportRequests")
+    showIncomingSupports();
+  }, []);
+
+  function showIncomingSupports() {
+    fetch("/api/getIncomingSupports/" + props.warehouseId)
       .then((res) => {
         return res.json();
       })
       .then((data) => {
         console.log(data.requests);
-        setNotConfirmedSupports(data.requests);
+        setIncomingSupports(data.requests);
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
-  if (NotConfirmedSupports) {
+  if (IncomingSupports) {
     return (
       <div className="container text-center">
         <div className="bg-dblue rounded">
-          <h1 className="mt-5 c-white p-3">Onaylanmamış Yardımlar</h1>
+          <h1 className="mt-5 c-white p-3">Gelen  Yardımlar</h1>
         </div>
         <div className="bg-blue p-2 mt-2 rounded border">
           <div className="bg-white rounded">
@@ -62,7 +56,7 @@ function NotConfirmedSupports() {
                   </tr>
                 </thead>
                 <tbody>
-                  {NotConfirmedSupports.map((need) => (
+                  {IncomingSupports.map((need) => (
                     <tr key={need.id}>
                       <th scope="row">{need.id}</th>
                       <td>{need.name}</td>
@@ -73,8 +67,8 @@ function NotConfirmedSupports() {
                       <td>{need.address}</td>
                       <td>
                         <div className="d-inline-flex flex-row align-items-center">
-                         <Link to={editNotConfirmedNeed(need.id)} className="btn btn-primary m-1">
-                              ONAYLA
+                          <Link to={editConfirmedSupport(need.id)} className="btn btn-primary m-1">
+                            Düzenle
                             </Link>
                         </div>
                       </td>
@@ -92,4 +86,4 @@ function NotConfirmedSupports() {
   }
 }
 
-export default NotConfirmedSupports;
+export default IncomingSupports;

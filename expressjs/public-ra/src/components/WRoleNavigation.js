@@ -19,7 +19,10 @@ function LoginNavigation(props) {
       >
         <Nav className=" justify-content-none">
           <Nav.Link className="nav-item p-1">
-            <Link to="/"  className="nav-link d-inline-flex flex-row align-items-center">
+            <Link
+              to="/"
+              className="nav-link d-inline-flex flex-row align-items-center"
+            >
               {" "}
               <svg
                 className="mr-1"
@@ -37,7 +40,10 @@ function LoginNavigation(props) {
             </Link>
           </Nav.Link>
           <Nav.Link className="nav-item p-1">
-            <Link to="/turkey-map"  className="nav-link d-inline-flex flex-row align-items-center">
+            <Link
+              to="/turkey-map"
+              className="nav-link d-inline-flex flex-row align-items-center"
+            >
               {" "}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +81,10 @@ function LoginNavigation(props) {
             </Link>
           </Nav.Link>
           <Nav.Link className="nav-item p-1">
-            <Link to="/warehouse"  className="nav-link d-inline-flex flex-row align-items-center">
+            <Link
+              to="/warehouse"
+              className="nav-link d-inline-flex flex-row align-items-center"
+            >
               {" "}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -90,6 +99,26 @@ function LoginNavigation(props) {
                 />
               </svg>
               Depo Yönetimi
+            </Link>
+          </Nav.Link>
+          <Nav.Link className="nav-item p-1">
+            <Link
+              to="/incoming-supports"
+              className="nav-link d-inline-flex flex-row align-items-center"
+            >
+              {" "}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="2em"
+                height="2em"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="currentColor"
+                  d="M4 20V7.1L2.05 2.85L3.85 2L6.2 7.05h11.6L20.15 2l1.8.85L20 7.1V20zm6-7h4q.425 0 .713-.288T15 12t-.288-.712T14 11h-4q-.425 0-.712.288T9 12t.288.713T10 13m-4 5h12V9.05H6zm0 0V9.05z"
+                />
+              </svg>
+              Gelen Yardımlar
             </Link>
           </Nav.Link>
         </Nav>
