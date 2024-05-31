@@ -19,7 +19,12 @@ const createUser = async function (user) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
     const encPassword = generateHash(password)
-    var query = `INSERT INTO Users (username, firstname, lastname,password,phone, email,createdAt,updatedAt,isWarehouser,warehouseId) VALUES ('${username}' ,'${firstname}', '${lastname}', '${encPassword}','${phone}', '${email}','${now}','${now}','${warehouse == 'no' ? 0:1}' ,'${warehouseId}')`;
+    var query = '';
+    if(warehouse == 'yes' && !warehouseId){
+        query = `INSERT INTO Users (username, firstname, lastname,password,phone, email,createdAt,updatedAt,isWarehouser,warehouseId) VALUES ('${username}' ,'${firstname}', '${lastname}', '${encPassword}','${phone}', '${email}','${now}','${now}','${1}' ,'${warehouseId }')`;
+    }else{
+        query = `INSERT INTO Users (username, firstname, lastname,password,phone, email,createdAt,updatedAt,isWarehouser) VALUES ('${username}' ,'${firstname}', '${lastname}', '${encPassword}','${phone}', '${email}','${now}','${now}','${0}')`;
+    }
     mysql.postquery(query, function (results) {
         res.json({ message: 'User created' });
     });

@@ -200,9 +200,9 @@ class EditSupport extends React.Component {
                     className="browser-default custom-select mb-4"
                   >
                     <option selected className="d-none"></option>
-                    <option value="Onaylandı">Onaylandı</option>
-                    <option value="Beklemede">Beklemede</option>
-                    <option value="Kullanıldı">Kullanıldı</option>
+                    <option value="Confirmed">Onaylandı</option>
+                    <option value="Pending">Depoya Gönderildi</option>
+                    <option value="On Warehouse">Depoda</option>
                   </select>
                   <p className="m-0 p-0">Gidicek Depo*</p>
                   <select

@@ -12,6 +12,7 @@ import EditConfirmedSupport from './views/EditConfirmedSupport';
 import EditConfirmedNeed from './views/EditConfirmedNeed';
 import Home from './views/Home';
 import Login from './views/Login';
+import EditIncomingSupport from './views/EditIncomingSupport';
 import SupportForm from './components/SupportForm';
 import IncomingSupports from './views/IncomingSupport';
 import Register from './views/Register';
@@ -57,12 +58,13 @@ function App() {
           <Route exact path="/create-support" component={CreateSupport} />
           <Route path="/data/:id" component={PersonalData} />
           <Route path="/incoming-supports" render={(props) => <IncomingSupports {...props} warehouseId={user.warehouseId} />} />
+          <Route path="/EditIncomingSupport/:id" render={(props) => <EditIncomingSupport {...props} user={user} />} />
           <Route path="/support/edit/:id" render={(props) => <EditSupport {...props} user={user} />} />
           <Route path="/need/edit/:id" render={(props) => <EditNeed {...props} user={user} />} />
           <Route path="/confirmed_support/edit/:id" render={(props) => <EditConfirmedSupport {...props} user={user} />} />
           <Route path="/confirmed_need/edit/:id" render={(props) => <EditConfirmedNeed {...props} user={user} />} />
           <Route path="/turkey-map/:city" component={City} />
-          <Route exact path="/warehouse" component={Warehouse} />
+          <Route path="/warehouse" render={(props) => <Warehouse {...props} warehouseId={user.warehouseId} />} />
         </Switch>
       </div>
       <Footer />

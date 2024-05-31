@@ -11,7 +11,7 @@ function IncomingSupports(props) {
   };
 
   const editConfirmedSupport = (id) => {
-    let myPath = "/confirmed_need/edit/" + id + "";
+    let myPath = "/EditIncomingSupport/" + id + "";
     return myPath;
   };
 

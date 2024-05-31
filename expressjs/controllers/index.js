@@ -76,6 +76,16 @@ exports.editConfirmNeed = function (req, res, next) {
         res.json({ message: 'Request updated' });
     });
 }
+exports.editConfirmSupport = function (req, res, next) {
+    const {id, name, surname, requestType, amount, phone, address, emergencyStatus, status } = req.body;
+    const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    if (!name || !surname || !requestType || !amount || !phone || !address || !emergencyStatus || !status) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+    mysql.query(`UPDATE Requests SET name = '${name}', surname = '${surname}', requestType = '${requestType}', amount = ${amount}, phone = '${phone}', address = '${address}', emergencyStatus = '${emergencyStatus}', status = '${status}', updatedAt = '${now}' WHERE id = ${id}`, function (results) {
+        res.json({ message: 'Request updated' });
+    });
+}
 exports.getNotConfirmedNeedRequests = function (req, res, next) {
     mysql.query('SELECT * FROM Requests WHERE confirmed = false AND requestType = 1', function (results) {
         res.json({ requests: results });
@@ -87,8 +97,14 @@ exports.getNotConfirmedSupportRequests = function (req, res, next) {
     });
 }
 exports.getRequestsByStatus = function (req, res, next) {
-    const status = req.params.status;
+    const status = req.body.status;
     mysql.query(`SELECT * FROM Requests WHERE status = '${status}'`, function (results) {
+        res.json({ requests: results });
+    });
+}
+exports.getWarehousePendingRequests = function (req, res, next) {
+    const warehouseId = req.body.warehouseId;
+    mysql.query(`SELECT * FROM Requests WHERE status = 'Pending' AND warehouseId = ${warehouseId}`, function (results) {
         res.json({ requests: results });
     });
 }
@@ -97,6 +113,23 @@ exports.getRequestsWithWarehouse = function (req, res, next) {
     mysql.query(`SELECT * FROM Requests WHERE warehouseId = ${warehouseid}`, function (results) {
         res.json({ requests: results });
     });
+}
+exports.getWarehouseItems = async function (req, res, next) {
+    const getRequestsWithWarehouse = async function (warehouseId) {
+       return await mysql.postquery(`SELECT * FROM Requests WHERE warehouseId = ${warehouseId}`, function (results) {
+            return results;
+        });
+    }
+    const items = await getRequestsWithWarehouse(req.body.warehouseId).then((results) => {
+        console.log(results[0]);
+        return results[0].map((result) => {
+            return result.itemId;
+        });
+    });
+    const sql = `SELECT * FROM Items WHERE id IN (${items.toString()})`;
+    console.log(items)
+    const results = await mysql.postquery(sql, items);
+    res.json({ items: results[0] });
 }
 exports.getWarehouse = function (req, res, next) {
     const id = req.params.id;
