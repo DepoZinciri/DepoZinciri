@@ -58,7 +58,7 @@ function NotConfirmedNeeds() {
                                             <td>{need.name}</td>
                                             <td>{need.surname}</td>
                                             <td>{need.requestType == 2 ? "Gıda" : "Diğer"}</td>
-                                            <td>{need.confirmed}</td>
+                                            <td>{need.itemDescription}</td>
                                             <td>{need.phone}</td>
                                             <td>{need.address}</td>
                                             <td><Link to={editNotConfirmedNeed(need.id)} className="btn bg-dblue text-white">Onayla</Link></td>
