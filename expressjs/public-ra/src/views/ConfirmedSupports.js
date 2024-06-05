@@ -1,15 +1,9 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
-// import axios from "axios";
 
 function ConfirmedSupports() {
   const [confirmedSupports, setConfirmedSupports] = useState([]);
-// 
-  // const showPersonalData = (id) => {
-  //   let myPath = "/data/" + id + "";
-  //   return myPath;
-  // };
+  const [userResponse, setUserResponse] = useState([]);
 
   const editConfirmedSupport = (id) => {
     let myPath = "/confirmed_support/edit/" + id + "";
@@ -18,20 +12,20 @@ function ConfirmedSupports() {
 
   useEffect(() => {
     showConfirmedSupports();
+    fetch("/api/auth")
+      .then((res) => res.json())
+      .then((data) => setUserResponse(data.message))
+      .catch((err) => console.log(err));
   }, []);
 
   function showConfirmedSupports() {
     fetch("/api/getConfirmedSupportRequests")
-      .then((res) => {
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((data) => {
         console.log(data.requests);
         setConfirmedSupports(data.requests);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   }
 
   if (confirmedSupports) {
@@ -53,26 +47,51 @@ function ConfirmedSupports() {
                     <th scope="col">Detay</th>
                     <th scope="col">Telefon</th>
                     <th scope="col">Adres</th>
-                    <th scope="col">İşlemler</th>
+                    {userResponse === "LOGGED_IN" && (
+                      <th scope="col">İşlemler</th>
+                    )}
                   </tr>
                 </thead>
                 <tbody>
                   {confirmedSupports.map((need) => (
                     <tr key={need.id}>
                       <th scope="row">{need.id}</th>
-                      <td>{need.name}</td>
-                      <td>{need.surname}</td>
+                      <td>
+                        {userResponse === "LOGGED_IN"
+                          ? need.name
+                          : `${need.name.charAt(0)}${"*".repeat(
+                              need.name.length - 1
+                            )}`}
+                      </td>
+                      <td>
+                        {userResponse === "LOGGED_IN"
+                          ? need.surname
+                          : `${need.surname.charAt(0)}${"*".repeat(
+                              need.surname.length - 1
+                            )}`}
+                      </td>
                       <td>{need.requestType === 2 ? "Gıda" : "Diğer"}</td>
                       <td>{need.confirmed}</td>
-                      <td>{need.phone}</td>
-                      <td>{need.address}</td>
                       <td>
-                        <div className="d-inline-flex flex-row align-items-center">
-                          <Link to={editConfirmedSupport(need.id)} className="btn btn-primary m-1">
-                            Düzenle
-                            </Link>
-                        </div>
+                        {userResponse === "LOGGED_IN"
+                          ? need.phone
+                          : need.phone.slice(0, 4) + "*******"}
                       </td>
+                      <td>
+                        {userResponse === "LOGGED_IN"
+                          ? need.address
+                          : need.address.split(" ")[0] + " ****************"}
+                      </td>
+                      {userResponse === "LOGGED_IN" && (
+                        <td>
+                          <Link
+                            to={editConfirmedSupport(need.id)}
+                            className="btn btn-primary m-1"
+                          >
+                            Düzenle
+                          </Link>
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>
