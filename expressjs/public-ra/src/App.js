@@ -13,7 +13,7 @@ import EditConfirmedNeed from './views/EditConfirmedNeed';
 import Home from './views/Home';
 import Login from './views/Login';
 import EditIncomingSupport from './views/EditIncomingSupport';
-import SupportForm from './components/SupportForm';
+// import SupportForm from './components/SupportForm';
 import IncomingSupports from './views/IncomingSupport';
 import Register from './views/Register';
 import TurkeyMap from './views/TrMap';
@@ -44,7 +44,7 @@ function App() {
 
   const renderRoutes = (navigationComponent) => (
     <Router>
-      <div className="App">
+      <div className="App" style={{ minHeight: '88vh' }}>
         {navigationComponent}
         <Switch>
           <Route exact path="/" component={Home} />

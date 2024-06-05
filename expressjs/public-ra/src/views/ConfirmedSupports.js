@@ -1,15 +1,15 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 
 function ConfirmedSupports() {
   const [confirmedSupports, setConfirmedSupports] = useState([]);
-
-  const showPersonalData = (id) => {
-    let myPath = "/data/" + id + "";
-    return myPath;
-  };
+// 
+  // const showPersonalData = (id) => {
+  //   let myPath = "/data/" + id + "";
+  //   return myPath;
+  // };
 
   const editConfirmedSupport = (id) => {
     let myPath = "/confirmed_support/edit/" + id + "";
@@ -62,7 +62,7 @@ function ConfirmedSupports() {
                       <th scope="row">{need.id}</th>
                       <td>{need.name}</td>
                       <td>{need.surname}</td>
-                      <td>{need.requestType == 2 ? "Gıda" : "Diğer"}</td>
+                      <td>{need.requestType === 2 ? "Gıda" : "Diğer"}</td>
                       <td>{need.confirmed}</td>
                       <td>{need.phone}</td>
                       <td>{need.address}</td>

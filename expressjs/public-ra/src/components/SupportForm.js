@@ -2,8 +2,8 @@ import React from "react";
 import amb from '../public/images/amb.png';
 import axios from 'axios';
 import { useState } from 'react';
-import CryptoJS from 'crypto-js';
-import { add } from "lodash";
+// import CryptoJS from 'crypto-js';
+// import { add } from "lodash";
 
 function SupportForm() {
     const [formData, setFormData] = useState({

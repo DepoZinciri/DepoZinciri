@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Nav, Navbar } from "react-bootstrap";
-import turkey from "../public/images/turkey.svg";
+// import turkey from "../public/images/turkey.svg";
 
 function Navigation() {
   return (

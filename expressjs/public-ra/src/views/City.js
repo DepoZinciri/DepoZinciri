@@ -22,6 +22,7 @@ class City extends React.Component {
   }
   render() {
     let info = this.state.info;
+    // TODO: Edit these
     console.log(info)
     const handleHover = (district) => {
       console.log(`${district.name} is hovered!`);

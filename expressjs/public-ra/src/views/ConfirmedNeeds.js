@@ -66,7 +66,7 @@ function ConfirmedNeeds() {
                     <tr key={need.id}>
                       <th scope="row">{need.id}</th>
                       <td>
-                        {userResponse == "LOGGED_IN"
+                        {userResponse === "LOGGED_IN"
                           ? `${need.name} ${need.surname}`
                           : `${need.name.charAt(0)}${"*".repeat(
                               need.name.length - 1
@@ -74,19 +74,19 @@ function ConfirmedNeeds() {
                               need.surname.length - 1
                             )}`}{" "}
                       </td>
-                      <td>{need.requestType == 2 ? "Gıda" : "Diğer"}</td>
+                      <td>{need.requestType === 2 ? "Gıda" : "Diğer"}</td>
                       <td>{need.itemDescription}</td>
                       <td>
-                        {userResponse == "LOGGED_IN"
+                        {userResponse === "LOGGED_IN"
                           ? need.phone
                           : need.phone.slice(0, 4) + "*******"}
                       </td>
                       <td>
-                        {userResponse == "LOGGED_IN"
+                        {userResponse === "LOGGED_IN"
                           ? need.address
                           : need.address.split(' ')[0] + " ****************"}
                       </td>
-                      {userResponse =="LOGGED_IN" ? (
+                      {userResponse ==="LOGGED_IN" ? (
                         <td>
                           <Link
                             to={editConfirmedNeed(need.id)}
