@@ -15,9 +15,10 @@ function RegisterForm() {
         .get("/api/getWarehouses")
         .then((response) => {
           setWarehouses(response.data.warehouses);
+          console.log("Warehouses fetched:", response.data.warehouses); // Log fetched warehouses
         })
         .catch((err) => {
-          console.log(err);
+          console.error("Error fetching warehouses:", err); // Log any errors
         });
     }
   }, [isWarehouser]);
@@ -92,9 +93,7 @@ function RegisterForm() {
           <label htmlFor="warehouse">Depo kullanıcısı mı?</label>
           <select
             onChange={(event) => {
-              event.target.value === "yes"
-                ? setIsWarehouser(true)
-                : setIsWarehouser(false);
+              setIsWarehouser(event.target.value === "yes");
             }}
             name="warehouse"
             className="p-2"
@@ -106,7 +105,7 @@ function RegisterForm() {
             </option>
           </select>
         </span>
-        {isWarehouser ? (
+        {isWarehouser && warehouses.length > 0 && (
           <span className="d-flex flex-column mb-3">
             <label htmlFor="warehouse">Depo seçiniz</label>
             <select name="warehouseId" className="p-2" id="warehouseId">
@@ -117,8 +116,6 @@ function RegisterForm() {
               ))}
             </select>
           </span>
-        ) : (
-          <span></span>
         )}
         <input
           type="email"
