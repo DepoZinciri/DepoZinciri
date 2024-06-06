@@ -5,7 +5,6 @@ import { Tooltip } from "antd";
 class City extends React.Component {
   constructor(props) {
     super(props);
-    // (TODO): Fix "I" city map show issue
     this.state = {
       city: this.formatCityName(decodeURIComponent(props.match.params.city)),
       info: {},
@@ -14,9 +13,9 @@ class City extends React.Component {
 
   formatCityName(city) {
     if (city.charAt(0) === "i") {
-      return "I" + city.slice(1, city.length);
+      return "I" + city.slice(1);
     } else {
-      return city.charAt(0).toUpperCase() + city.slice(1, city.length);
+      return city.charAt(0).toUpperCase() + city.slice(1);
     }
   }
 
@@ -25,27 +24,53 @@ class City extends React.Component {
     const url = `/api/getMapInfo/${encodedCity}`;
     fetch(url)
       .then(async (response) => response.json())
-      .then(async (data) => this.setState({ info: data.city }));
+      .then(async (data) => {
+        this.setState({ info: data.city });
+      })
+      .catch((err) => {
+        console.error("Error fetching city data:", err);
+      });
+  }
+
+  calculateNeeds(info) {
+    const parseNumber = (value) => {
+      return parseInt(value.replace(/\D/g, ""), 10) || 0;
+    };
+
+    const nufus = parseNumber(info.nufus);
+    const kadin_nufus = parseNumber(info.kadin_nufus);
+
+    const dailyWaterNeed = nufus * 15; // litre
+    const dailyDrinkingWaterNeed = nufus * 2; // litre
+    const dailyHygienicPadNeed = Math.ceil(kadin_nufus * 0.25); // paket
+    const dailyBabyFormulaNeed = Math.ceil(nufus * 0.05) * 0.2; // kg
+    const portableToiletNeed = Math.ceil(nufus / 50); // adet
+
+    return {
+      dailyWaterNeed,
+      dailyDrinkingWaterNeed,
+      dailyHygienicPadNeed,
+      dailyBabyFormulaNeed,
+      portableToiletNeed,
+    };
   }
 
   render() {
     const info = this.state.info;
-    console.log(info);
+    const needs = info.nufus ? this.calculateNeeds(info) : {};
 
     const handleHover = (district) => {
-      console.log(info);
+      console.log(district);
     };
 
     const renderCityComponents = () => {
       try {
-        console.log(this.state.city);
         const ComponentName = Turkey[this.state.city];
 
         if (!ComponentName) {
           throw new Error(`Component for ${this.state.city} is not found`);
         }
 
-        console.log(ComponentName);
         return (
           <ComponentName
             onHover={handleHover}
@@ -57,7 +82,7 @@ class City extends React.Component {
           />
         );
       } catch (error) {
-        console.log(error);
+        console.error("Error rendering city component:", error);
         return (
           <div>
             <h1>City not found</h1>
@@ -95,26 +120,20 @@ class City extends React.Component {
                 Bölgesel İhtiyaç Analizi Sonuçları
               </h5>
               <p>
-                {" "}
-                <strong>Günlük su ihtiyacı:</strong> 87.000 m³
+                <strong>Günlük su ihtiyacı:</strong> {needs.dailyWaterNeed} litre
               </p>
               <p>
-                <strong>Günlük içme suyu ihtiyacı:</strong> 11.607 m³
+                <strong>Günlük içme suyu ihtiyacı:</strong> {needs.dailyDrinkingWaterNeed} litre
               </p>
               <p>
-                <strong>Günlük hijyenik ped ihtiyacı:</strong> 196.208 paket
+                <strong>Günlük hijyenik ped ihtiyacı:</strong> {needs.dailyHygienicPadNeed} paket
               </p>
               <p>
-                <strong>Günlük mama ihtiyacı:</strong> 592 kg
+                <strong>Günlük bebek maması ihtiyacı:</strong> {needs.dailyBabyFormulaNeed} kg
               </p>
               <p>
-                <strong>Portatif tuvalet ihtiyacı:</strong> 580.348 adet
+                <strong>Portatif tuvalet ihtiyacı:</strong> {needs.portableToiletNeed} adet
               </p>
-            </div>
-            <div className="row">
-              <div className="col-12">
-                <div className="col-8"></div>
-              </div>
             </div>
           </div>
         </div>
