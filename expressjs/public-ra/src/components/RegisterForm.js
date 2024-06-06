@@ -1,30 +1,58 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
+
 function RegisterForm() {
   const [warehouses, setWarehouses] = useState([]);
   const [isWarehouser, setIsWarehouser] = useState(false);
+  const [message, setMessage] = useState("");
+  const [isError, setIsError] = useState(false);
+  const history = useHistory();
+
   useEffect(() => {
-    if(isWarehouser){
+    if (isWarehouser) {
       axios
-      .get("/api/getWarehouses")
-      .then((response) => {
-        setWarehouses(response.data.warehouses);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .get("/api/getWarehouses")
+        .then((response) => {
+          setWarehouses(response.data.warehouses);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, [isWarehouser]);
-    
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = {};
+    formData.forEach((value, key) => {
+      data[key] = value;
+    });
+    try {
+      const response = await axios.post("/api/signup", data);
+      if (response.status === 201) {
+        setMessage("Başarıyla kayıt oldunuz.");
+        setIsError(false);
+        setTimeout(() => {
+          history.push("/");
+        }, 2000); // Redirect after 2 seconds
+      }
+    } catch (error) {
+      setMessage(error.response.data.error);
+      setIsError(true);
+    }
+  };
+
   return (
     <div className="col-lg-6 mx-auto">
-      <form
-        action="/api/signup"
-        method="POST"
-        className="text-center border border-light p-5 rounded bg-grey"
-      >
+      <form onSubmit={handleSubmit} className="text-center border border-light p-5 rounded bg-grey">
         <p className="h2.mb-4">Kayıt Ol</p>
+        {message && (
+          <div className={`alert ${isError ? "alert-danger" : "alert-success"}`} role="alert">
+            {message}
+          </div>
+        )}
         <input
           type="text"
           name="username"
@@ -61,26 +89,37 @@ function RegisterForm() {
           className="form-control mb-4"
         ></input>
         <span className="d-flex flex-column mb-3">
-          <label for="warehouse">Depo kullanıcısı mı?</label>
-          <select onChange={(event)=>{
-            event.target.value === "yes" ? setIsWarehouser(true) : setIsWarehouser(false);
-          }} name="warehouse" className="p-2" id="warehouse">
+          <label htmlFor="warehouse">Depo kullanıcısı mı?</label>
+          <select
+            onChange={(event) => {
+              event.target.value === "yes"
+                ? setIsWarehouser(true)
+                : setIsWarehouser(false);
+            }}
+            name="warehouse"
+            className="p-2"
+            id="warehouse"
+          >
             <option value="yes">Evet </option>
-            <option value="no" selected> Hayır</option>
+            <option value="no" selected>
+              Hayır
+            </option>
           </select>
         </span>
-        { isWarehouser ?
+        {isWarehouser ? (
           <span className="d-flex flex-column mb-3">
-            <label for="warehouse">Depo seçiniz</label>
+            <label htmlFor="warehouse">Depo seçiniz</label>
             <select name="warehouseId" className="p-2" id="warehouseId">
               {warehouses.map((warehouse) => (
-                <option value={warehouse.id}>{warehouse.name}</option>
+                <option key={warehouse.id} value={warehouse.id}>
+                  {warehouse.name}
+                </option>
               ))}
             </select>
           </span>
-          : 
-            <span></span>
-        }
+        ) : (
+          <span></span>
+        )}
         <input
           type="email"
           name="email"

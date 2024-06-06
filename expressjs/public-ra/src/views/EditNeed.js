@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { withRouter } from "react-router-dom";
 
 class EditNeed extends React.Component {
   constructor(props) {
@@ -30,15 +31,47 @@ class EditNeed extends React.Component {
         console.error(err);
       });
   }
-  // TO DO send transaction to blockchain
-  async handleSubmit(id) {
-    axios
-      .post(`/api/confirmRequest`, {
-        id: id,
-      })
-      .then(() => {
-        console.log("Request confirmed");
+
+  // (TODO) send transaction to blockchain
+  async handleSubmit(id, status) {
+    try {
+      await axios.post(`/api/confirmRequest`, { id: id, status: status });
+      console.log("Request confirmed");
+      const { need } = this.state;
+      const message =
+        status === "Confirm"
+          ? `${need.name} ${need.surname}'ne ait ${need.itemType} isteğini kabul ettiniz`
+          : `${need.name} ${need.surname}'ne ait ${need.itemType} isteğini reddettiniz`;
+      this.props.history.push({
+        pathname: "/not_confirmed_needs",
+        state: { successMessage: message },
       });
+    } catch (error) {
+      console.error("Error confirming request:", error);
+      this.setState({
+        statusMessage: "İşlem sırasında bir hata oluştu, lütfen tekrar deneyiniz.",
+        isError: true,
+      });
+    }
+  }
+
+  async delNeed(id) {
+    try {
+      await axios.delete(`/api/deleteRequest/${id}`);
+      console.log("Request deleted");
+      const { need } = this.state;
+      const message = `${need.name} ${need.surname}'ne ait ${need.itemType} isteğini reddettiniz`;
+      this.props.history.push({
+        pathname: "/not_confirmed_needs",
+        state: { successMessage: message },
+      });
+    } catch (error) {
+      console.error("Error deleting request:", error);
+      this.setState({
+        statusMessage: "Silme işlemi sırasında bir hata oluştu, lütfen tekrar deneyiniz.",
+        isError: true,
+      });
+    }
   }
 
   render() {
@@ -47,7 +80,8 @@ class EditNeed extends React.Component {
     let item = this.state.item;
     const handle = async (e) => {
       e.preventDefault();
-      await this.handleSubmit(need.id);
+      const status = e.target.elements.status.value;
+      await this.handleSubmit(need.id, status);
     };
     return (
       <div className="container">
@@ -68,7 +102,7 @@ class EditNeed extends React.Component {
                     placeholder="Name*"
                     required="true"
                     value={need.id}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4"
                   ></input>
                   <p className="m-0 p-0">Tam İsmi</p>
@@ -78,7 +112,7 @@ class EditNeed extends React.Component {
                     placeholder="Surname*"
                     required="true"
                     value={need.name + " " + need.surname}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4"
                   ></input>
                   <p className="m-0 p-0">Telefonu</p>
@@ -88,7 +122,7 @@ class EditNeed extends React.Component {
                     placeholder="Need Type*"
                     required="true"
                     value={need.phone}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4"
                   ></input>
                   <p className="m-0 p-0">İhtiyaç Tipi</p>
@@ -98,7 +132,7 @@ class EditNeed extends React.Component {
                     placeholder="Need Type*"
                     required="true"
                     value={item.itemType}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4"
                   ></input>
                   <p className="m-0 p-0">Açıklaması</p>
@@ -108,7 +142,7 @@ class EditNeed extends React.Component {
                     placeholder="Need Type*"
                     required="true"
                     value={item.itemDescription}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4"
                   ></input>
                   <p className="m-0 p-0">Miktar</p>
@@ -118,7 +152,7 @@ class EditNeed extends React.Component {
                     placeholder="Amount*"
                     required="true"
                     value={need.amount}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4"
                   ></input>
                 </div>
@@ -130,7 +164,7 @@ class EditNeed extends React.Component {
                     placeholder=""
                     required="true"
                     value={user.firstname + " " + user.lastname}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4"
                   ></input>
                   <input
@@ -139,7 +173,7 @@ class EditNeed extends React.Component {
                     placeholder=""
                     required="true"
                     value={user.firstname}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4 d-none"
                   ></input>
                   <input
@@ -148,7 +182,7 @@ class EditNeed extends React.Component {
                     placeholder=""
                     required="true"
                     value={user.lastname}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4 d-none"
                   ></input>
                   <p className="m-0 p-0">Onaylayan STK</p>
@@ -158,7 +192,7 @@ class EditNeed extends React.Component {
                     placeholder=""
                     required="true"
                     value={user.stk}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4"
                   ></input>
                   <p className="m-0 p-0">Aciliyet Durumu*</p>
@@ -184,21 +218,27 @@ class EditNeed extends React.Component {
                   </select>
                 </div>
               </div>
-              <button
-                type="submit"
-                className="btn btn-success btn-block mt-3 w-50 mx-auto"
-              >
-                Onayla
-              </button>
+              <div className="d-flex justify-content-between">
+                <button
+                  type="submit"
+                  className="btn btn-success mt-3 w-50 mx-1"
+                >
+                  Onayla
+                </button>
+                <button
+                  type="button"
+                  onClick={() => this.delNeed(need.id)}
+                  className="btn btn-danger mt-3 w-50 mx-1"
+                >
+                  Sil
+                </button>
+              </div>
             </form>
-            <a
-              onClick={() => {
-                this.delNeed(need[0]);
-              }}
-              className="btn btn-danger btn-block mt-3 w-50 mx-auto"
-            >
-              Sil
-            </a>
+            {this.state.statusMessage && (
+              <div className={`alert mt-4 ${this.state.isError ? "alert-danger" : "alert-success"}`}>
+                {this.state.statusMessage}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -206,4 +246,4 @@ class EditNeed extends React.Component {
   }
 }
 
-export default EditNeed;
+export default withRouter(EditNeed);

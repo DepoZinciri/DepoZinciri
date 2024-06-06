@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { withRouter } from "react-router-dom";
 
 class EditSupport extends React.Component {
   constructor(props) {
@@ -14,10 +15,10 @@ class EditSupport extends React.Component {
         status: "",
         warehouseId: "",
       },
+      statusMessage: '',
+      isError: false
     };
   }
-
-  delSupport(id) {}
 
   componentDidMount() {
     axios
@@ -46,6 +47,7 @@ class EditSupport extends React.Component {
         console.log(err);
       });
   }
+
   onChange = (e) => {
     this.setState({
       formData: {
@@ -55,25 +57,43 @@ class EditSupport extends React.Component {
     });
   };
 
-
-
-  handleSubmit(id) {
-    return (event) => {
+  handleSubmit = (id) => {
+    return async (event) => {
       event.preventDefault();
-
-      axios.post(`/api/updateSupportRequest`, this.state.formData).then(() => {
-        console.log("Request update");
-      });
-        axios
-          .post(`/api/confirmRequest`, {
-            id: id,
-          })
-          .then(() => {
-            console.log("Request confirmed");
-          });
+      try {
+        await axios.post(`/api/updateSupportRequest`, this.state.formData);
+        await axios.post(`/api/confirmRequest`, { id: id });
+        const successMessage = `${this.state.support.name} ${this.state.support.surname}'ne ait olan yardım isteğini güncellediniz.`;
+        this.props.history.push({
+          pathname: '/confirmed_supports',
+          state: { successMessage }
+        });
+      } catch (error) {
+        console.error("Error confirming request:", error);
+        this.setState({
+          statusMessage: 'Yardım isteği güncellenirken bir hata oluştu, lütfen tekrar deneyiniz.',
+          isError: true
+        });
+      }
     };
-  }
+  };
 
+  handleDelete = async (id) => {
+    try {
+      await axios.delete(`/api/deleteRequest/${id}`);
+      const message = `${this.state.support.name} ${this.state.support.surname}'ne ait olan yardım isteğini sildiniz.`;
+      this.props.history.push({
+        pathname: '/confirmed_supports',
+        state: { successMessage: message }
+      });
+    } catch (error) {
+      console.error('Error deleting request:', error);
+      this.setState({
+        statusMessage: 'Silme işlemi sırasında bir hata oluştu, lütfen tekrar deneyiniz.',
+        isError: true
+      });
+    }
+  };
 
   render() {
     let support = this.state.support;
@@ -90,6 +110,11 @@ class EditSupport extends React.Component {
               className="text-center border border-light p-5 rounded bg-blue"
             >
               <p className="h1 mb-4">Yardım Formu</p>
+              {this.state.statusMessage && (
+                <div className={`alert ${this.state.isError ? 'alert-danger' : 'alert-success'}`} role="alert">
+                  {this.state.statusMessage}
+                </div>
+              )}
               <div className="row">
                 <div className="col-lg-6 mt-3">
                   <p className="m-0 p-0">ID</p>
@@ -99,9 +124,9 @@ class EditSupport extends React.Component {
                     placeholder="Name*"
                     required="true"
                     value={support.id}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4"
-                  ></input>
+                  />
                   <p className="m-0 p-0">Tam İsmi</p>
                   <input
                     type="text"
@@ -109,9 +134,9 @@ class EditSupport extends React.Component {
                     placeholder="Surname*"
                     required="true"
                     value={support.name + " " + support.surname}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4"
-                  ></input>
+                  />
                   <p className="m-0 p-0">Telefonu</p>
                   <input
                     type="text"
@@ -119,9 +144,9 @@ class EditSupport extends React.Component {
                     placeholder="Need Type*"
                     required="true"
                     value={support.phone}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4"
-                  ></input>
+                  />
                   <p className="m-0 p-0">İhtiyaç Tipi</p>
                   <input
                     type="text"
@@ -129,9 +154,9 @@ class EditSupport extends React.Component {
                     placeholder="Need Type*"
                     required="true"
                     value={item.itemType}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4"
-                  ></input>
+                  />
                   <p className="m-0 p-0">Gönderim Şekli</p>
                   <input
                     type="text"
@@ -139,9 +164,9 @@ class EditSupport extends React.Component {
                     placeholder="Need Type*"
                     required="true"
                     value={item.itemDescription}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4"
-                  ></input>
+                  />
                   <p className="m-0 p-0">Miktar</p>
                   <input
                     type="number"
@@ -149,9 +174,9 @@ class EditSupport extends React.Component {
                     placeholder="Amount*"
                     required="true"
                     value={support.amount}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4"
-                  ></input>
+                  />
                 </div>
                 <div className="col-lg-6 mt-3">
                   <p className="m-0 p-0">Onaylayan İsim Soyisim</p>
@@ -161,27 +186,27 @@ class EditSupport extends React.Component {
                     placeholder=""
                     required="true"
                     value={user.firstname + " " + user.lastname}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4"
-                  ></input>
+                  />
                   <input
                     type="text"
                     name="confirmName"
                     placeholder=""
                     required="true"
                     value={user.firstname}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4 d-none"
-                  ></input>
+                  />
                   <input
                     type="text"
                     name="confirmSurname"
                     placeholder=""
                     required="true"
                     value={user.lastname}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4 d-none"
-                  ></input>
+                  />
                   <p className="m-0 p-0">Onaylayan STK</p>
                   <input
                     type="text"
@@ -189,9 +214,9 @@ class EditSupport extends React.Component {
                     placeholder=""
                     required="true"
                     value={user.stk}
-                    readonly="true"
+                    readOnly="true"
                     className="form-control mb-4"
-                  ></input>
+                  />
                   <p className="m-0 p-0">Durum*</p>
                   <select
                     name="status"
@@ -214,27 +239,35 @@ class EditSupport extends React.Component {
                     <option selected className="d-none"></option>
                     {this.state.warehouses.map((warehouse) => {
                       return (
-                        <option value={warehouse.id}>{warehouse.name}</option>
+                        <option key={warehouse.id} value={warehouse.id}>
+                          {warehouse.name}
+                        </option>
                       );
                     })}
                   </select>
                 </div>
               </div>
-              <button
-                type="submit"
-                className="btn btn-success btn-block mt-3 w-50 mx-auto"
-              >
-                Onayla
-              </button>
+              <div className="d-flex justify-content-between">
+                <button
+                  type="submit"
+                  className="btn btn-success mt-3 w-50 mx-1"
+                >
+                  Onayla
+                </button>
+                <button
+                  type="button"
+                  onClick={() => this.handleDelete(support.id)}
+                  className="btn btn-danger mt-3 w-50 mx-1"
+                >
+                  Sil
+                </button>
+              </div>
             </form>
-            <a
-              onClick={() => {
-                this.delSupport(support[0]);
-              }}
-              className="btn btn-danger btn-block mt-3 w-50 mx-auto"
-            >
-              Sil
-            </a>
+            {this.state.statusMessage && (
+              <div className={`alert mt-4 ${this.state.isError ? "alert-danger" : "alert-success"}`}>
+                {this.state.statusMessage}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -242,4 +275,4 @@ class EditSupport extends React.Component {
   }
 }
 
-export default EditSupport;
+export default withRouter(EditSupport);

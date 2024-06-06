@@ -1,9 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, useLocation, Redirect } from 'react-router-dom';
 
 function NotConfirmedNeeds() {
     const [notConfirmedNeeds, setnotConfirmedNeeds] = useState([]);
+    const location = useLocation();
+    const successMessage = location.state && location.state.successMessage;
 
     const editNotConfirmedNeed = (id) => {
         let myPath = '/need/edit/' + id + '';
@@ -13,6 +15,7 @@ function NotConfirmedNeeds() {
     useEffect(() => {
         showNotConfirmedNeeds();
     }, []);
+
     function showNotConfirmedNeeds() {
         fetch("/api/getNotConfirmedNeedRequests")
         .then((res) => {
@@ -27,10 +30,10 @@ function NotConfirmedNeeds() {
         });
     }
 
-
     if (notConfirmedNeeds) {
         return (
             <div className="container text-center" >
+                {successMessage && <div className="alert alert-success mt-4">{successMessage}</div>}
                 <div className="bg-dblue rounded">
                     <h1 className="mt-5 c-white p-3">Onaylanmamış İhtiyaçlar</h1>
                 </div>
@@ -48,7 +51,6 @@ function NotConfirmedNeeds() {
                                         <th scope="col">Telefon</th>
                                         <th scope="col">Adres</th>
                                         <th scope="col">İşlemler</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -57,7 +59,7 @@ function NotConfirmedNeeds() {
                                             <th scope="row">{need.id}</th>
                                             <td>{need.name}</td>
                                             <td>{need.surname}</td>
-                                            <td>{need.requestType = 2 ? "Gıda" : "Diğer"}</td>
+                                            <td>{need.requestType === 2 ? "Gıda" : "Diğer"}</td>
                                             <td>{need.itemDescription}</td>
                                             <td>{need.phone}</td>
                                             <td>{need.address}</td>

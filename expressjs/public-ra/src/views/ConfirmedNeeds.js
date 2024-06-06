@@ -1,11 +1,12 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { Link, Redirect } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import axios from 'axios';
 
 function ConfirmedNeeds() {
+  const location = useLocation();
   const [confirmedNeeds, setConfirmedNeeds] = useState([]);
-  const [userResponse, setUserResponse] = useState([]);
-
+  const [userResponse, setUserResponse] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const editConfirmedNeed = (id) => {
     let myPath = "/confirmed_need/edit/" + id + "";
@@ -15,36 +16,40 @@ function ConfirmedNeeds() {
   useEffect(() => {
     showConfirmedNeeds();
     fetch("/api/auth")
-      .then((res) => {
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((data) => {
         setUserResponse(data.message);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
 
-  function showConfirmedNeeds() {
-    fetch("/api/getConfirmedRequests")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data.requests);
-        setConfirmedNeeds(data.requests);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+    if (location.state && location.state.successMessage) {
+      setSuccessMessage(location.state.successMessage);
+      // Clear the success message from history state after displaying it
+      window.history.replaceState({}, document.title);
+    }
+  }, [location]);
+
+  const showConfirmedNeeds = async () => {
+    try {
+      const response = await axios.get("/api/getConfirmedRequests");
+      setConfirmedNeeds(response.data.requests);
+    } catch (error) {
+      console.error('Error fetching confirmed needs:', error);
+    }
+  };
 
   return (
     <div className="container text-center">
       <div className="bg-dblue rounded">
         <h1 className="mt-5 c-white p-3">Onaylanan İhtiyaçlar</h1>
       </div>
+      {successMessage && (
+        <div className="alert alert-success mt-4">
+          {successMessage}
+        </div>
+      )}
       <div className="bg-blue p-2 mt-2 rounded border">
         <div className="bg-white rounded">
           <div className="table-responsive">

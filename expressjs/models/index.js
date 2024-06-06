@@ -68,11 +68,9 @@ Object.keys(db).forEach((modelName) => {
 // Define the seedDatabase function
 async function seedDatabase() {
   try {
-    // This will drop existing tables and recreate them
-    //  But throws an error: Table not exists
-    //await sequelize.sync({ force: true });
-    await db.Warehouse.bulkCreate(seedData.warehouses);
-    console.log('Database seeded successfully');
+    // (TODO): This will create the warehouses after each backend start.
+    // await db.Warehouse.bulkCreate(seedData.warehouses);
+    // console.log('Database seeded successfully');
   } catch (error) {
     console.error('Error seeding database:', error);
   }

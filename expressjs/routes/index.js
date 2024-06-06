@@ -39,6 +39,7 @@ router.post('/api/editConfirmNeed', index.editConfirmNeed);
 router.post('/api')
 //router.post('/api/create-item', index.createItem);
 router.get('/api/getdatahash/:id', index.getDataHash);  //isLoggedIn eklencek
+router.delete('/api/deleteRequest/:id', index.deleteRequestById);
 
 module.exports = router;
 

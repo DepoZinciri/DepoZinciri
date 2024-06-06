@@ -275,3 +275,23 @@ exports.getMapInfo = function (req, res, next) {
   
     res.json({ city: cityData });
   };
+
+  exports.deleteRequestById = async function (req, res, next) {
+    const id = req.params.id;
+    if (!id) return res.status(400).json({ error: 'Missing required fields' });
+
+    try {
+        const result = await models.Request.destroy({
+            where: { id: id }
+        });
+
+        if (result === 0) {
+            return res.status(404).json({ message: 'Request not found' });
+        }
+
+        res.json({ message: 'Request deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting request:', error);
+        res.status(500).json({ error: 'Error deleting request' });
+    }
+};
