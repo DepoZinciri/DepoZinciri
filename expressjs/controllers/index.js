@@ -260,20 +260,18 @@ exports.getDataHash = function (req, res, next) {
 exports.getMapInfo = function (req, res, next) {
     const city = req.params.city;
     const district = req.query.district;
-    console.log(req.params)
+    console.log(req.params);
+  
     if (!city) {
-        return res.status(400).json({ error: 'City parameter is missing' });
+      return res.status(400).json({ error: 'City parameter is missing' });
     }
     console.log(city);
-    const cityInfo = mapInfoData[city];
-
-    if (!cityInfo) {
-        return res.status(404).json({ error: 'City not found' });
+  
+    const cityData = mapInfoData.data.find((item) => item.il_adi.toLowerCase() === city.toLowerCase());
+  
+    if (!cityData) {
+      return res.status(404).json({ error: 'City not found' });
     }
-
-    if (district) {
-        res.json({ city: cityInfo ,});
-    }else {
-        res.json({ city: cityInfo });
-    }
-}
+  
+    res.json({ city: cityData });
+  };
