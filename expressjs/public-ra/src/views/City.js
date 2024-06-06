@@ -5,19 +5,24 @@ import { Tooltip } from "antd";
 class City extends React.Component {
   constructor(props) {
     super(props);
+    // (TODO): Fix "I" city map show issue
     this.state = {
-      city:
-        props.match.params.city.charAt(0) === "i"
-          ? "I" +
-            props.match.params.city.slice(1, props.match.params.city.length)
-          : props.match.params.city.charAt(0).toUpperCase() +
-            props.match.params.city.slice(1, props.match.params.city.length),
+      city: this.formatCityName(decodeURIComponent(props.match.params.city)),
       info: {},
     };
   }
 
+  formatCityName(city) {
+    if (city.charAt(0) === "i") {
+      return "I" + city.slice(1, city.length);
+    } else {
+      return city.charAt(0).toUpperCase() + city.slice(1, city.length);
+    }
+  }
+
   async componentDidMount() {
-    const url = "/api/getMapInfo/" + this.state.city;
+    const encodedCity = encodeURIComponent(this.state.city);
+    const url = `/api/getMapInfo/${encodedCity}`;
     fetch(url)
       .then(async (response) => response.json())
       .then(async (data) => this.setState({ info: data.city }));
@@ -35,6 +40,11 @@ class City extends React.Component {
       try {
         console.log(this.state.city);
         const ComponentName = Turkey[this.state.city];
+
+        if (!ComponentName) {
+          throw new Error(`Component for ${this.state.city} is not found`);
+        }
+
         console.log(ComponentName);
         return (
           <ComponentName
