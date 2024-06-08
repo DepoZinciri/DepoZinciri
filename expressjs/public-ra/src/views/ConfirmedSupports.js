@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, Redirect, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function ConfirmedSupports() {
   const [confirmedSupports, setConfirmedSupports] = useState([]);
@@ -21,14 +21,15 @@ function ConfirmedSupports() {
       .catch((err) => console.log(err));
   }, []);
 
-  function showConfirmedSupports() {
-    fetch("/api/getConfirmedSupportRequests")
-      .then((res) => res.json())
-      .then((data) => {
-        setConfirmedSupports(data.requests);
-      })
-      .catch((err) => console.log(err));
-  }
+  const showConfirmedSupports = async () => {
+    try {
+      const response = await fetch("/api/getConfirmedSupportRequests");
+      const data = await response.json();
+      setConfirmedSupports(data.requests.map((support, index) => ({ ...support, displayId: index + 1 })));
+    } catch (error) {
+      console.error('Error fetching confirmed supports:', error);
+    }
+  };
 
   return (
     <div className="container text-center">
@@ -48,6 +49,7 @@ function ConfirmedSupports() {
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">İsim</th>
+                  {/* <th scope="col">Aciliyet Durumu</th> */}
                   <th scope="col">Soyisim</th>
                   <th scope="col">Yardım Tipi</th>
                   <th scope="col">Detay</th>
@@ -57,34 +59,35 @@ function ConfirmedSupports() {
                 </tr>
               </thead>
               <tbody>
-                {confirmedSupports.map((need) => (
-                  <tr key={need.id}>
-                    <th scope="row">{need.id}</th>
+                {confirmedSupports.map((support) => (
+                  <tr key={support.id}>
+                    <th scope="row">{support.displayId}</th>
                     <td>
                       {userResponse === "LOGGED_IN"
-                        ? need.name
-                        : `${need.name.charAt(0)}${"*".repeat(need.name.length - 1)}`}
+                        ? support.name
+                        : `${support.name.charAt(0)}${"*".repeat(support.name.length - 1)}`}
+                    </td>
+                    {/* <td>{support.emergencyStatus}</td> */}
+                    <td>
+                      {userResponse === "LOGGED_IN"
+                        ? support.surname
+                        : `${support.surname.charAt(0)}${"*".repeat(support.surname.length - 1)}`}
+                    </td>
+                    <td>{support.itemType}</td>
+                    <td>{support.itemDescription}</td>
+                    <td>
+                      {userResponse === "LOGGED_IN"
+                        ? support.phone
+                        : support.phone.slice(0, 4) + "*******"}
                     </td>
                     <td>
                       {userResponse === "LOGGED_IN"
-                        ? need.surname
-                        : `${need.surname.charAt(0)}${"*".repeat(need.surname.length - 1)}`}
-                    </td>
-                    <td>{need.itemType}</td>
-                    <td>{need.itemDescription}</td>
-                    <td>
-                      {userResponse === "LOGGED_IN"
-                        ? need.phone
-                        : need.phone.slice(0, 4) + "*******"}
-                    </td>
-                    <td>
-                      {userResponse === "LOGGED_IN"
-                        ? need.address
-                        : need.address.split(" ")[0] + " ****************"}
+                        ? support.address
+                        : support.address.split(" ")[0] + " ****************"}
                     </td>
                     {userResponse === "LOGGED_IN" && (
                       <td>
-                        <Link to={editConfirmedSupport(need.id)} className="btn btn-primary m-1">
+                        <Link to={editConfirmedSupport(support.id)} className="btn btn-primary m-1">
                           Düzenle
                         </Link>
                       </td>

@@ -50,7 +50,7 @@ exports.getRequestById = function (req, res, next) {
     });
 }
 exports.getConfirmedRequests = function (req, res, next) {
-    mysql.query('SELECT * FROM Requests WHERE confirmed = true', function (results) {
+    mysql.query('SELECT * FROM Requests WHERE confirmed = true AND requestType = 1', function (results) {
         res.json({ requests: results });
     });
 }
@@ -88,9 +88,10 @@ exports.editConfirmSupport = function (req, res, next) {
 }
 exports.getNotConfirmedNeedRequests = function (req, res, next) {
     mysql.query('SELECT * FROM Requests WHERE confirmed = false AND requestType = 1', function (results) {
+        res.setHeader('Cache-Control', 'no-store');
         res.json({ requests: results });
     });
-}
+};
 exports.getNotConfirmedSupportRequests = function (req, res, next) {
     mysql.query('SELECT * FROM Requests WHERE confirmed = false AND requestType = 2', function (results) {
         res.json({ requests: results });

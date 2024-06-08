@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, Redirect, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function NotConfirmedSupports() {
   const [notConfirmedSupports, setNotConfirmedSupports] = useState([]);
@@ -21,14 +21,15 @@ function NotConfirmedSupports() {
       .catch((err) => console.log(err));
   }, []);
 
-  function showNotConfirmedSupports() {
-    fetch("/api/getNotConfirmedSupportRequests")
-      .then((res) => res.json())
-      .then((data) => {
-        setNotConfirmedSupports(data.requests);
-      })
-      .catch((err) => console.log(err));
-  }
+  const showNotConfirmedSupports = async () => {
+    try {
+      const response = await fetch("/api/getNotConfirmedSupportRequests");
+      const data = await response.json();
+      setNotConfirmedSupports(data.requests.map((support, index) => ({ ...support, displayId: index + 1 })));
+    } catch (error) {
+      console.error('Error fetching not confirmed supports:', error);
+    }
+  };
 
   return (
     <div className="container text-center">
@@ -48,6 +49,7 @@ function NotConfirmedSupports() {
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">İsim</th>
+                  {/* <th scope="col">Aciliyet Durumu</th> */}
                   <th scope="col">Soyisim</th>
                   <th scope="col">Yardım Tipi</th>
                   <th scope="col">Detay</th>
@@ -57,17 +59,18 @@ function NotConfirmedSupports() {
                 </tr>
               </thead>
               <tbody>
-                {notConfirmedSupports.map((need) => (
-                  <tr key={need.id}>
-                    <th scope="row">{need.id}</th>
-                    <td>{need.name}</td>
-                    <td>{need.surname}</td>
-                    <td>{need.itemType}</td>
-                    <td>{need.itemDescription}</td>
-                    <td>{need.phone}</td>
-                    <td>{need.address}</td>
+                {notConfirmedSupports.map((support) => (
+                  <tr key={support.id}>
+                    <th scope="row">{support.displayId}</th>
+                    <td>{support.name}</td>
+                    {/* <td>{support.emergencyStatus}</td> */}
+                    <td>{support.surname}</td>
+                    <td>{support.itemType}</td>
+                    <td>{support.itemDescription}</td>
+                    <td>{support.phone}</td>
+                    <td>{support.address}</td>
                     <td>
-                      <Link to={editNotConfirmedSupport(need.id)} className="btn btn-primary m-1">
+                      <Link to={editNotConfirmedSupport(support.id)} className="btn btn-primary m-1">
                         ONAYLA
                       </Link>
                     </td>

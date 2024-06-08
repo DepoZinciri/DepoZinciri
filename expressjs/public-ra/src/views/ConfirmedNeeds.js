@@ -26,7 +26,6 @@ function ConfirmedNeeds() {
 
     if (location.state && location.state.successMessage) {
       setSuccessMessage(location.state.successMessage);
-      // Clear the success message from history state after displaying it
       window.history.replaceState({}, document.title);
     }
   }, [location]);
@@ -34,7 +33,7 @@ function ConfirmedNeeds() {
   const showConfirmedNeeds = async () => {
     try {
       const response = await axios.get("/api/getConfirmedRequests");
-      setConfirmedNeeds(response.data.requests);
+      setConfirmedNeeds(response.data.requests.map((need, index) => ({ ...need, displayId: index + 1 })));
     } catch (error) {
       console.error('Error fetching confirmed needs:', error);
     }
@@ -58,6 +57,7 @@ function ConfirmedNeeds() {
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Tam İsim</th>
+                  <th scope="col">Aciliyet Durumu</th>
                   <th scope="col">İhtiyaç Tipi</th>
                   <th scope="col">Detay</th>
                   <th scope="col">Telefon</th>
@@ -67,10 +67,9 @@ function ConfirmedNeeds() {
               </thead>
               <tbody>
                 {confirmedNeeds.map((need) => {
-                  console.log(need); // Log the need object
                   return (
                     <tr key={need.id}>
-                      <th scope="row">{need.id}</th>
+                      <th scope="row">{need.displayId}</th>
                       <td>
                         {userResponse === "LOGGED_IN"
                           ? `${need.name} ${need.surname}`
@@ -78,8 +77,9 @@ function ConfirmedNeeds() {
                               need.name.length - 1
                             )} ${need.surname.charAt(0)}${"*".repeat(
                               need.surname.length - 1
-                            )}`}{" "}
+                            )}`}
                       </td>
+                      <td>{need.emergencyStatus}</td>
                       <td>{need.itemType}</td>
                       <td>{need.itemDescription}</td>
                       <td>
@@ -92,7 +92,9 @@ function ConfirmedNeeds() {
                           ? need.address
                           : need.address.split(" ")[0] + " ****************"}
                       </td>
-                      {/* <td>{JSON.stringify(need)}</td> Display the entire need object */}
+                      {/* Don't remove this, this is for debugging purposes */}
+                      {/*  Display the entire need object */}
+                      {/* <td>{JSON.stringify(need)}</td> */}
                       {userResponse === "LOGGED_IN" && (
                         <td>
                           <Link
