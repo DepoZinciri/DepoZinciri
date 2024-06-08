@@ -1,5 +1,18 @@
 {
+  "name": "depozinciri",
+  "version": "1.0.0",
+  "description": "A disaster management system with warehouse management features.",
   "dependencies": {
-    "truffle": "^5.11.5"
-  }
+    "truffle": "^5.11.5",
+    "concurrently": "^7.0.0"
+  },
+  "scripts": {
+    "start": "npm run build:frontend && npm run start:all",
+    "build:frontend": "cd expressjs/public-ra && npm run build",
+    "start:frontend": "cd expressjs/public-ra && npm start",
+    "start:backend": "cd expressjs && npm start",
+    "start:all": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
+  },
+  "author": "DepoZinciri",
+  "license": "MIT"
 }
