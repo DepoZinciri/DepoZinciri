@@ -115,22 +115,40 @@ exports.getRequestsWithWarehouse = function (req, res, next) {
     });
 }
 exports.getWarehouseItems = async function (req, res, next) {
-    const getRequestsWithWarehouse = async function (warehouseId) {
-       return await mysql.postquery(`SELECT * FROM Requests WHERE warehouseId = ${warehouseId}`, function (results) {
-            return results;
-        });
+    const warehouseId = req.body.warehouseId;
+    
+    console.log("Warehouse ID:", warehouseId);  // Debugging statement
+  
+    if (!warehouseId) {
+      return res.status(400).json({ error: 'Invalid warehouse ID' });
     }
-    const items = await getRequestsWithWarehouse(req.body.warehouseId).then((results) => {
-        console.log(results[0]);
-        return results[0].map((result) => {
-            return result.itemId;
-        });
+  
+    const getRequestsWithWarehouse = async function (warehouseId) {
+      return await mysql.postquery(`SELECT * FROM Requests WHERE warehouseId = ${warehouseId}`, function (results) {
+        return results;
+      });
+    };
+  
+    const items = await getRequestsWithWarehouse(warehouseId).then((results) => {
+      if (results.length === 0) {
+        return []; // Return an empty array if no results
+      }
+      return results[0].map((result) => {
+        return result.itemId;
+      });
     });
+  
+    if (items.length === 0) {
+      return res.json({ items: [] }); // Return empty result if items array is empty
+    }
+  
     const sql = `SELECT * FROM Items WHERE id IN (${items.toString()})`;
-    console.log(items)
+    console.log(items);
     const results = await mysql.postquery(sql, items);
     res.json({ items: results[0] });
-}
+  };
+  
+  
 exports.getWarehouse = function (req, res, next) {
     const id = req.params.id;
     mysql.query(`SELECT * FROM Warehouses WHERE id = ${id}`, function (results) {
