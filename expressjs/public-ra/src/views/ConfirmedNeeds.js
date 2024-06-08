@@ -78,7 +78,7 @@ function ConfirmedNeeds() {
                             need.surname.length - 1
                           )}`}{" "}
                     </td>
-                    <td>{need.requestType === 2 ? "Gıda" : "Diğer"}</td>
+                    <td>{need.requestType } </td> {/* === 2 ? "Gıda" : "Diğer"}</td> */}
                     <td>{need.itemDescription}</td>
                     <td>
                       {userResponse === "LOGGED_IN"

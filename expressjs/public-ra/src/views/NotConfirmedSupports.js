@@ -62,7 +62,7 @@ function NotConfirmedSupports() {
                     <th scope="row">{need.id}</th>
                     <td>{need.name}</td>
                     <td>{need.surname}</td>
-                    <td>{need.requestType === 2 ? "Gıda" : "Diğer"}</td>
+                    <td>{need.requestType} </td> {/* } </td> {/* === 2 ? "Gıda" : "Diğer"}</td> */}
                     <td>{need.itemDescription}</td>
                     <td>{need.phone}</td>
                     <td>{need.address}</td>

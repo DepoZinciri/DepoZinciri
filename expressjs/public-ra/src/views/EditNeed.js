@@ -40,8 +40,8 @@ class EditNeed extends React.Component {
       const { need } = this.state;
       const message =
         status === "Confirm"
-          ? `${need.name} ${need.surname}'ne ait ${need.itemType} isteğini kabul ettiniz`
-          : `${need.name} ${need.surname}'ne ait ${need.itemType} isteğini reddettiniz`;
+          ? `${need.name} ${need.surname}'ne ait ${need.itemDescription} isteğini kabul ettiniz`
+          : `${need.name} ${need.surname}'ne ait ${need.itemDescription} isteğini reddettiniz`;
       this.props.history.push({
         pathname: "/not_confirmed_needs",
         state: { successMessage: message },
@@ -60,7 +60,7 @@ class EditNeed extends React.Component {
       await axios.delete(`/api/deleteRequest/${id}`);
       console.log("Request deleted");
       const { need } = this.state;
-      const message = `${need.name} ${need.surname}'ne ait ${need.itemType} isteğini reddettiniz`;
+      const message = `${need.name} ${need.surname}'ne ait ${need.itemDescription} isteğini reddettiniz`;
       this.props.history.push({
         pathname: "/not_confirmed_needs",
         state: { successMessage: message },
