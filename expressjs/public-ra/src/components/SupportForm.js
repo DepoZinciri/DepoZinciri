@@ -26,13 +26,9 @@ function SupportForm() {
         event.preventDefault();
         try {
             const response = await axios.post('/api/createSupportRequest', formData);
-            // Handle success
-            console.log(response.data);
-            setStatusMessage('Destek verme talebiniz başarıyla oluşturuldu. En kısa sürede yetkililer sizinle iletişime geçecektir. ');
+            setStatusMessage('Destek verme talebiniz başarıyla oluşturuldu. En kısa sürede yetkililer sizinle iletişime geçecektir.');
             setIsError(false);
         } catch (error) {
-            // Handle error
-            console.error('Error creating request:', error);
             setStatusMessage('Destek talebi oluşturulurken bir hata oluştu, lütfen tekrar deneyiniz.');
             setIsError(true);
         }
@@ -42,17 +38,10 @@ function SupportForm() {
             phone: '',
             address: '',
             itemDescription: '',
-            requestType: 2, // SUPPORT_Request
+            requestType: 2,
             itemType: '',
             amount: ''
         });
-
-        // let text = JSON.stringify(personalData)
-        // let b64 = CryptoJS.AES.encrypt(text, SECRET).toString();
-        // let e64 = await CryptoJS.enc.Base64.parse(b64);
-        // let eHex = await e64.toString(CryptoJS.enc.Hex);
-        // let hashValue = eHex
-        
     }
 
     return (
@@ -70,10 +59,13 @@ function SupportForm() {
                 <input onChange={handleChange} type="text" name="address" value={address} placeholder="Adres*" required className="form-control mb-4" />
                 <select name="itemType" onChange={handleChange} value={itemType} className="browser-default custom-select mb-4" required>
                     <option className="d-none" value="">Destek Tipi*</option>
-                    <option value="Maddi Destek">Maddi Destek</option>
+                    <option value="Maddi Yardım">Maddi Yardım</option>
                     <option value="Taşıma">Taşıma</option>
                     <option value="Eşya">Eşya</option>
                     <option value="Konaklama">Konaklama</option>
+                    <option value="Gıda">Gıda</option>
+                    <option value="Sağlık">Sağlık</option>
+                    <option value="Barınma">Barınma</option>
                 </select>
                 <input onChange={handleChange} type="number" name="amount" value={amount} placeholder="Miktar*" required className="form-control mb-4" />
                 <input onChange={handleChange} type="text" name="phone" value={phone} placeholder="Telefon*" required className="form-control mb-4" />

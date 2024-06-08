@@ -85,7 +85,7 @@ class EditIncomingSupport extends React.Component {
                                     <p className="m-0 p-0">Soyisim</p>
                                     <input onChange={OnChange} type="text" name="surname" placeholder="Surname*" required="true" value={surname} className="form-control mb-4"></input>
                                     <p className="m-0 p-0">İhtiyaç Tipi</p>
-                                    <input onChange={OnChange} type="text" name="requestType" placeholder="Need Type*" required="true" readonly="true" value={need.requestType === 2 ? "Gıda" : "Diğer"} className="form-control mb-4"></input>
+                                    <input onChange={OnChange} type="text" name="requestType" placeholder="Need Type*" required="true" readonly="true" value={need.itemType} className="form-control mb-4"></input>
                                     <p className="m-0 p-0">Miktar</p>
                                     <input onChange={OnChange} type="text" name="amount" placeholder="Amount*" required="true" value={amount} className="form-control mb-4"></input>
                                     <p className="m-0 p-0">Telefon</p>

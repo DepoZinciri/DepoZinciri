@@ -61,7 +61,7 @@ function IncomingSupports(props) {
                       <th scope="row">{need.id}</th>
                       <td>{need.name}</td>
                       <td>{need.surname}</td>
-                      <td>{need.requestType } </td> {/* === 2 ? "Gıda" : "Diğer"}</td> */}
+                      <td>{need.itemType}</td>
                       <td>{need.confirmed}</td>
                       <td>{need.phone}</td>
                       <td>{need.address}</td>

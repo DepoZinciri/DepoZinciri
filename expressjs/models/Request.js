@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         requestType: DataTypes.STRING,
         amount: DataTypes.STRING,
         status: DataTypes.STRING,
+        itemType: DataTypes.STRING,
     });
     return Request;
 }

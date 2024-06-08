@@ -29,13 +29,9 @@ function NeedForm() {
         console.log(formData)
         try {
             const response = await axios.post('/api/createNeedRequest', formData);
-            // Handle success
-            console.log(response.data);
             setSuccessMessage('İhtiyacınız oluşturuldu, en kısa sürede yetkili sizinle iletişime geçecektir.');
             setErrorMessage('');
         } catch (error) {
-            // Handle error
-            console.error('Error creating request:', error);
             setErrorMessage('İhtiyaç oluştururken hata, lütfen daha sonra tekrar deneyiniz.');
             setSuccessMessage('');
         }
@@ -87,6 +83,9 @@ function NeedForm() {
                     <option value="Taşıma">Taşıma</option>
                     <option value="Eşya">Eşya</option>
                     <option value="Konaklama">Konaklama</option>
+                    <option value="Gıda">Gıda</option>
+                    <option value="Sağlık">Sağlık</option>
+                    <option value="Barınma">Barınma</option>
                 </select>
                 <input
                     type="number"

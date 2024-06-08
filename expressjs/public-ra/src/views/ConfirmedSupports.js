@@ -70,7 +70,7 @@ function ConfirmedSupports() {
                         ? need.surname
                         : `${need.surname.charAt(0)}${"*".repeat(need.surname.length - 1)}`}
                     </td>
-                    <td>{need.requestType } </td> {/* === 2 ? "Gıda" : "Diğer"}</td> */}
+                    <td>{need.itemType}</td>
                     <td>{need.itemDescription}</td>
                     <td>
                       {userResponse === "LOGGED_IN"

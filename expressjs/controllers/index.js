@@ -226,7 +226,7 @@ const createItem = async function (itemType, itemDescription, quantity) {
 }
 
 exports.createNeedRequest = async function (req, res, next) {
-    const { name, surname, phone, address, emergencyStatus, requestType, itemType, amount , itemDescription } = req.body;
+    const { name, surname, phone, address, emergencyStatus, requestType, itemType, amount, itemDescription } = req.body;
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
     if (!name || !surname || !phone || !address || !emergencyStatus || !requestType || !itemType || !amount || !itemDescription) {
         return res.status(400).json({ error: 'Missing required fields' });
@@ -235,26 +235,28 @@ exports.createNeedRequest = async function (req, res, next) {
     if (itemId === 0) {
         return res.status(500).json({ error: 'Error creating item' });
     }
-    const query = `INSERT INTO Requests (transactionId,dataHash,name, surname, phone, address, emergencyStatus, itemDescription, confirmed, requestType, amount,status,createdAt,updatedAt, itemId,warehouseId) VALUES ("transactionId", '${123}' ,'${name}', '${surname}', '${phone}', '${address}', '${emergencyStatus}', '${itemDescription}', '${false}','${requestType}', ${amount}, "not Approved", '${now}','${now}', ${itemId}, '${1}')`;
+    const query = `INSERT INTO Requests (transactionId, dataHash, name, surname, phone, address, emergencyStatus, itemDescription, confirmed, requestType, amount, status, createdAt, updatedAt, itemId, warehouseId, itemType) VALUES ("transactionId", '123', '${name}', '${surname}', '${phone}', '${address}', '${emergencyStatus}', '${itemDescription}', '${false}', '${requestType}', ${amount}, "not Approved", '${now}', '${now}', ${itemId}, '1', '${itemType}')`;
     mysql.query(query, function (results) {
         res.json({ message: 'Need Request created' });
     });
 }
+
 exports.createSupportRequest = async function (req, res, next) {
-    const { name, surname, phone, address , requestType, itemType, amount,itemDescription } = req.body; 
+    const { name, surname, phone, address, requestType, itemType, amount, itemDescription } = req.body;
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    if(!name || !surname || !phone || !address || !requestType || !itemType || !amount || !itemDescription){
+    if (!name || !surname || !phone || !address || !requestType || !itemType || !amount || !itemDescription) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
     const itemId = await createItem(itemType, itemDescription, amount);
     if (itemId === 0) {
         return res.status(500).json({ error: 'Error creating item' });
     }
-    const query = `INSERT INTO Requests (transactionId,dataHash,name, surname, phone, address, emergencyStatus, itemDescription, confirmed, requestType, amount,status,createdAt,updatedAt, itemId,warehouseId) VALUES ("transactionId", '${123}' ,'${name}', '${surname}', '${phone}', '${address}', '${"-"}', 'Gönderim şekli: ${itemDescription}', '${false}','${requestType}', ${amount}, "not Approved", '${now}','${now}', ${itemId}, '${2}')`;
-    mysql.query(query,function(results){
-        res.json({message: 'Support Request create'})
-    })
+    const query = `INSERT INTO Requests (transactionId, dataHash, name, surname, phone, address, emergencyStatus, itemDescription, confirmed, requestType, amount, status, createdAt, updatedAt, itemId, warehouseId, itemType) VALUES ("transactionId", '123', '${name}', '${surname}', '${phone}', '${address}', '${"-"}', 'Gönderim şekli: ${itemDescription}', '${false}', '${requestType}', ${amount}, "not Approved", '${now}', '${now}', ${itemId}, '2', '${itemType}')`;
+    mysql.query(query, function (results) {
+        res.json({ message: 'Support Request created' });
+    });
 }
+
 exports.createDataHash = function (req, res, next) {
     return models.DataHash.create({
         hashValue: req.body.params.hashValue,
