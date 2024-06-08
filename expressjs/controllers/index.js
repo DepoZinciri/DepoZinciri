@@ -251,7 +251,7 @@ exports.createSupportRequest = async function (req, res, next) {
     if (itemId === 0) {
         return res.status(500).json({ error: 'Error creating item' });
     }
-    const query = `INSERT INTO Requests (transactionId, dataHash, name, surname, phone, address, emergencyStatus, itemDescription, confirmed, requestType, amount, status, createdAt, updatedAt, itemId, warehouseId, itemType) VALUES ("transactionId", '123', '${name}', '${surname}', '${phone}', '${address}', '${"-"}', 'Gönderim şekli: ${itemDescription}', '${false}', '${requestType}', ${amount}, "not Approved", '${now}', '${now}', ${itemId}, '2', '${itemType}')`;
+    const query = `INSERT INTO Requests (transactionId, dataHash, name, surname, phone, address, emergencyStatus, itemDescription, confirmed, requestType, amount, status, createdAt, updatedAt, itemId, warehouseId, itemType) VALUES ("transactionId", '123', '${name}', '${surname}', '${phone}', '${address}', '${"-"}', '${itemDescription}', '${false}', '${requestType}', ${amount}, "not Approved", '${now}', '${now}', ${itemId}, '2', '${itemType}')`;
     mysql.query(query, function (results) {
         res.json({ message: 'Support Request created' });
     });

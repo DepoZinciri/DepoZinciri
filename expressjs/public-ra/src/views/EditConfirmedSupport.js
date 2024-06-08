@@ -156,7 +156,7 @@ class EditConfirmedSupport extends React.Component {
                     readOnly="true"
                     className="form-control mb-4"
                   />
-                  <p className="m-0 p-0">Gönderim Şekli</p>
+                  <p className="m-0 p-0">Detay</p>
                   <input
                     type="text"
                     name="sendType"

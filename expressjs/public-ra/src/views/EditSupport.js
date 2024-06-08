@@ -83,7 +83,7 @@ class EditSupport extends React.Component {
       await axios.delete(`/api/deleteRequest/${id}`);
       const message = `${this.state.support.name} ${this.state.support.surname}'ne ait olan yardım isteğini sildiniz.`;
       this.props.history.push({
-        pathname: '/confirmed_supports',
+        pathname: '/not_confirmed_supports',
         state: { successMessage: message }
       });
     } catch (error) {
@@ -157,7 +157,7 @@ class EditSupport extends React.Component {
                     readOnly="true"
                     className="form-control mb-4"
                   />
-                  <p className="m-0 p-0">Gönderim Şekli</p>
+                  <p className="m-0 p-0">Detay</p>
                   <input
                     type="text"
                     name="needType"
@@ -259,7 +259,7 @@ class EditSupport extends React.Component {
                   onClick={() => this.handleDelete(support.id)}
                   className="btn btn-danger mt-3 w-50 mx-1"
                 >
-                  Sil
+                  Reddet
                 </button>
               </div>
             </form>

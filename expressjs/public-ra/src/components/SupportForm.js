@@ -69,7 +69,7 @@ function SupportForm() {
                 </select>
                 <input onChange={handleChange} type="number" name="amount" value={amount} placeholder="Miktar*" required className="form-control mb-4" />
                 <input onChange={handleChange} type="text" name="phone" value={phone} placeholder="Telefon*" required className="form-control mb-4" />
-                <input onChange={handleChange} type="text" name="itemDescription" value={itemDescription} placeholder="Gönderim Şekli*" required className="form-control mb-4" />
+                <input onChange={handleChange} type="text" name="itemDescription" value={itemDescription} placeholder="Detay" required className="form-control mb-4" />
                 <input type="text" className="form-control mb-4 vis-hid" />
                 <button type="submit" className="btn bg-dblue btn-block mt-3 c-white">Destek Ol</button>
             </form>
