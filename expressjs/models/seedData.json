@@ -1,8 +1,7 @@
 {
     "warehouses": [
       {
-        "id": 0,
-        "name": "Ankara Mamak Deposu",
+        "name": "Ankara Mamak Depo",
         "address": "Harman Mahallesi Ahmet Akbaş Caddesi No1 B Blok",
         "totalCapacity": 10000,
         "totalRate": 5000,
@@ -11,12 +10,21 @@
         "orders": 10
       },
       {
-        "name": "İstanbul Fatih Deposu",
+        "name": "İstanbul Fatih Depo",
         "address": "Ali Kuşçu Mah. Büyük Karaman Cad. Aslanhane Sok. No1 Fatih/İSTANBUL",
         "totalCapacity": 8000,
         "totalRate": 200,
-        "victimNumber": 0,
+        "victimNumber": 148,
         "city": "İstanbul",
+        "orders": 8
+      },
+      {
+        "name": "Muğla Menteşe Depo",
+        "address": "Muslihittin Mah. Recai Güreli Cd. Hedef Sk. No:1 Menteşe/Muğla",
+        "totalCapacity": 15000,
+        "totalRate": 200,
+        "victimNumber": 2748,
+        "city": "Muğla",
         "orders": 8
       }
     ]

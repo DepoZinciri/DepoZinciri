@@ -3,14 +3,16 @@ import React, { useEffect, useState } from "react";
 
 export default function Warehouse(props) {
   const [warehouse, setWarehouse] = useState({});
-  const [pendingRequests, setPendingRequests] = useState([]);
+  const [incomingSupports, setIncomingSupports] = useState([]);
   const [items, setItems] = useState([]);
+  const [nearbyNeeds, setNearbyNeeds] = useState([]);
 
   useEffect(() => {
     if (props.warehouseId) {
       getWarehouse();
-      getPendingRequests();
+      getIncomingSupports();
       getItems();
+      getNearbyNeeds();
     }
   }, [props.warehouseId]);
 
@@ -23,12 +25,12 @@ export default function Warehouse(props) {
     }
   }
 
-  async function getPendingRequests() {
+  async function getIncomingSupports() {
     try {
-      const response = await axios.post('/api/getWarehousePendingRequests', { warehouseId: props.warehouseId });
-      setPendingRequests(response.data.requests || []);
+      const response = await axios.get(`/api/getIncomingSupports/${props.warehouseId}`);
+      setIncomingSupports(response.data.requests || []);
     } catch (error) {
-      console.error("Error fetching pending requests:", error);
+      console.error("Error fetching incoming supports:", error);
     }
   }
 
@@ -38,6 +40,15 @@ export default function Warehouse(props) {
       setItems(response.data.items || []);
     } catch (error) {
       console.error("Error fetching items:", error);
+    }
+  }
+
+  async function getNearbyNeeds() {
+    try {
+      const response = await axios.get(`/api/getNearbyNeeds/${props.warehouseId}`);
+      setNearbyNeeds(response.data.requests || []);
+    } catch (error) {
+      console.error("Error fetching nearby needs:", error);
     }
   }
 
@@ -86,39 +97,6 @@ export default function Warehouse(props) {
               </div>
             </div>
             <div
-              className="col-2 d-flex align-items-center mr-3 rounded border text-dark bg-light shadow-sm"
-              data-v0-t="card"
-            >
-              <div className="px-2 py-4 d-flex align-items-center justify-content-between">
-                <div className="mr-3">
-                  <h3
-                    className="text-nowrap fs-3 fw-semibold m-0"
-                    style={{ lineHeight: 1, letterSpacing: "-0.05em" }}
-                  >
-                    ??
-                  </h3>
-                  <p className="text-muted small mb-0">Giden yardım</p>
-                </div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="2em"
-                  height="2em"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ height: "2rem", width: "2rem", color: "#76BA4A" }}
-                >
-                  <path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z"></path>
-                  <path d="M6 18h12"></path>
-                  <path d="M6 14h12"></path>
-                  <rect width="1em" height="1em" x="6" y="10"></rect>
-                </svg>
-              </div>
-            </div>
-            <div
               className="rounded-lg border shadow-sm col-2 d-flex  mr-3 bg-light "
               data-v0-t="card"
             >
@@ -128,7 +106,7 @@ export default function Warehouse(props) {
                     className="text-nowrap fs-3 fw-semibold m-0"
                     style={{ lineHeight: 1, letterSpacing: "-0.05em" }}
                   >
-                    {pendingRequests.length}
+                    {incomingSupports.length}
                   </h3>
                   <p className="text-muted small mb-0">Gelen yardım</p>
                 </div>
@@ -169,7 +147,7 @@ export default function Warehouse(props) {
                     className="text-nowrap fs-3 fw-semibold m-0"
                     style={{ lineHeight: 1, letterSpacing: "-0.05em" }}
                   >
-                    ??%
+                    0%
                   </h3>
                   <p className="small text-muted mb-0">Doluluk Oranı</p>
                 </div>
@@ -213,16 +191,16 @@ export default function Warehouse(props) {
                       </tr>
                     </thead>
                     <tbody>
-                      {items.map((item) => (
+                      {items.map((item, index) => (
                         <tr key={item.id}>
-                          <th scope="row">{item.id}</th>
+                          <th scope="row">{index + 1}</th>
                           <td>{item.itemType}</td>
                           <td>{item.quantity}</td>
                           <td>{item.expirationDate ? item.expirationDate : '-'}</td>
                           <td>??</td>
                           <td>??</td>
                           <td>
-                            <button type="button" className="btn btn-primary">
+                            <button type="button" className="btn bg-dblue text-white">
                               Düzenle
                             </button>
                           </td>
@@ -261,7 +239,7 @@ export default function Warehouse(props) {
                       </tr>
                     </thead>
                     <tbody>
-                      {pendingRequests.slice(-5).map((request) => (
+                      {incomingSupports.slice(-5).map((request) => (
                         <tr key={request.id}>
                           <td>{request.address}</td>
                           <td>{request.phone}</td>
@@ -274,8 +252,8 @@ export default function Warehouse(props) {
               </div>
             </div>
 
-            {/* Card 2: Add Warehouse */}
-            <div className="col-md-4">
+            {/* Card 2: Nearby Needs */}
+            <div className="col-md-8">
               <div className="card shadow-sm border rounded-lg">
                 <div className="card-body d-flex flex-column justify-content-between pt-3 px-3 text-center">
                   <h4 className="text-nowrap fw-semibold">
@@ -286,15 +264,21 @@ export default function Warehouse(props) {
                   <table className="table table-hover">
                     <thead>
                       <tr>
-                        <th>Yetkili İletişim No</th>
+                        <th>Tam İsim</th>
+                        <th>İletişim No</th>
                         <th>İhtiyaç Türü</th>
+                        <th>Detay</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>??</td>
-                        <td>??</td>
-                      </tr>
+                      {nearbyNeeds.map((need) => (
+                        <tr key={need.id}>
+                          <td>{need.name + " " + need.surname}</td>
+                          <td>{need.phone}</td>
+                          <td>{need.itemType}</td>
+                          <td>{need.itemDescription}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
@@ -302,7 +286,7 @@ export default function Warehouse(props) {
             </div>
 
             {/* Card 3: Total Depots 5 Companies */}
-            <div className="col-md-4">
+            {/* <div className="col-md-4">
               <div className="card shadow-sm border rounded-lg">
                 <div className="card-body d-flex flex-column justify-content-between pt-3 px-3 text-center">
                   <h4 className="text-nowrap fs-4 fw-semibold">
@@ -328,7 +312,7 @@ export default function Warehouse(props) {
                   </table>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </main>
       </div>

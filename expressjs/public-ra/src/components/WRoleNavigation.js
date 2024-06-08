@@ -39,7 +39,7 @@ function LoginNavigation(props) {
               Anasayfa
             </Link>
           </Nav.Link>
-          <Nav.Link className="nav-item p-1">
+          {/* <Nav.Link className="nav-item p-1">
             <Link
               to="/turkey-map"
               className="nav-link d-inline-flex flex-row align-items-center"
@@ -79,7 +79,7 @@ function LoginNavigation(props) {
               </svg>{" "}
               Analiz Haritası
             </Link>
-          </Nav.Link>
+          </Nav.Link> */}
           <Nav.Link className="nav-item p-1">
             <Link
               to="/warehouse"

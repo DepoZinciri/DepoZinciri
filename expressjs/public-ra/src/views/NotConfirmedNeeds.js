@@ -56,8 +56,8 @@ function NotConfirmedNeeds() {
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">İsim</th>
-                                    <th scope="col">Aciliyet Durumu</th>
                                     <th scope="col">Soyisim</th>
+                                    <th scope="col">Aciliyet Durumu</th>
                                     <th scope="col">İhtiyaç Tipi</th>
                                     <th scope="col">Detay</th>
                                     <th scope="col">Telefon</th>
@@ -70,8 +70,8 @@ function NotConfirmedNeeds() {
                                     <tr key={need.id}>
                                         <th scope="row">{need.displayId}</th>
                                         <td>{need.name}</td>
-                                        <td>{need.emergencyStatus}</td>
                                         <td>{need.surname}</td>
+                                        <td>{need.emergencyStatus}</td>
                                         <td>{need.itemType}</td>
                                         <td>{need.itemDescription}</td>
                                         <td>{need.phone}</td>

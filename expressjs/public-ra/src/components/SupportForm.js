@@ -59,13 +59,13 @@ function SupportForm() {
                 <input onChange={handleChange} type="text" name="address" value={address} placeholder="Adres*" required className="form-control mb-4" />
                 <select name="itemType" onChange={handleChange} value={itemType} className="browser-default custom-select mb-4" required>
                     <option className="d-none" value="">Destek Tipi*</option>
-                    <option value="Maddi Yardım">Maddi Yardım</option>
                     <option value="Taşıma">Taşıma</option>
                     <option value="Eşya">Eşya</option>
-                    <option value="Konaklama">Konaklama</option>
                     <option value="Gıda">Gıda</option>
-                    <option value="Sağlık">Sağlık</option>
-                    <option value="Barınma">Barınma</option>
+                    <option value="Su">Su</option>
+                    <option value="Hijyen Malzemesi">Hijyen Malzemesi</option>
+                    <option value="İlaç">İlaç</option>
+                    <option value="Çadır">Çadır</option>
                 </select>
                 <input onChange={handleChange} type="number" name="amount" value={amount} placeholder="Miktar*" required className="form-control mb-4" />
                 <input onChange={handleChange} type="text" name="phone" value={phone} placeholder="Telefon*" required className="form-control mb-4" />

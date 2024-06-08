@@ -99,7 +99,7 @@ function ConfirmedNeeds() {
                         <td>
                           <Link
                             to={editConfirmedNeed(need.id)}
-                            className="btn btn-primary"
+                            className="btn bg-dblue text-white"
                           >
                             Düzenle
                           </Link>

@@ -10,38 +10,43 @@ class EditNeed extends React.Component {
       need: "",
       item: "",
       user: props.user,
+      warehouses: [],
     };
   }
 
   componentDidMount() {
-    axios
-      .get(`/api/getRequestById/${this.state.id}`, {})
-      .then(async (response) => {
-        this.setState({ need: response.data.request[0] });
-        axios
-          .get(`/api/getItemById/${response.data.request[0].itemId}`)
-          .then((response) => {
-            this.setState({ item: response.data.items[0] });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    this.getNeed();
+    this.getWarehouses();
   }
 
-  // (TODO) send transaction to blockchain
-  async handleSubmit(id, status) {
+  async getNeed() {
     try {
-      await axios.post(`/api/confirmRequest`, { id: id, status: status });
+      const response = await axios.get(`/api/getRequestById/${this.state.id}`);
+      this.setState({ need: response.data.request[0] });
+      const itemResponse = await axios.get(`/api/getItemById/${response.data.request[0].itemId}`);
+      this.setState({ item: itemResponse.data.items[0] });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getWarehouses() {
+    try {
+      const response = await axios.get("/api/getWarehouses");
+      this.setState({ warehouses: response.data.warehouses || [] });
+    } catch (error) {
+      console.error("Error fetching warehouses:", error);
+    }
+  }
+
+  async handleSubmit(id, status, warehouseId) {
+    try {
+      await axios.post(`/api/confirmRequest`, { id, status, warehouseId });
       console.log("Request confirmed");
       const { need } = this.state;
-      const message =
-        status === "Confirm"
-          ? `${need.name} ${need.surname}'ne ait ${need.itemDescription} isteğini kabul ettiniz`
-          : `${need.name} ${need.surname}'ne ait ${need.itemDescription} isteğini reddettiniz`;
+      const message = status === "Confirm"
+        ? `${need.name} ${need.surname}'ne ait ${need.itemDescription} isteğini kabul ettiniz`
+        : `${need.name} ${need.surname}'ne ait ${need.itemDescription} isteğini reddettiniz`;
       this.props.history.push({
         pathname: "/not_confirmed_needs",
         state: { successMessage: message },
@@ -78,15 +83,17 @@ class EditNeed extends React.Component {
     let need = this.state.need;
     let user = this.state.user;
     let item = this.state.item;
+    let warehouses = this.state.warehouses;
     const handle = async (e) => {
       e.preventDefault();
       const status = e.target.elements.status.value;
-      await this.handleSubmit(need.id, status);
+      const warehouseId = e.target.elements.warehouseId.value || 1;
+      await this.handleSubmit(need.id, status, warehouseId);
     };
     return (
       <div className="container">
         <div className="row">
-          <div className="col-lg-12 mt-3 mx-auto ">
+          <div className="col-lg-12 mt-3 mx-auto">
             <form
               onSubmit={handle}
               method="POST"
@@ -99,106 +106,96 @@ class EditNeed extends React.Component {
                   <input
                     type="text"
                     name="id"
-                    placeholder="Name*"
-                    required="true"
+                    required
                     value={need.id}
-                    readOnly="true"
+                    readOnly
                     className="form-control mb-4"
-                  ></input>
+                  />
                   <p className="m-0 p-0">Tam İsmi</p>
                   <input
                     type="text"
                     name="datahash"
-                    placeholder="Surname*"
-                    required="true"
+                    required
                     value={need.name + " " + need.surname}
-                    readOnly="true"
+                    readOnly
                     className="form-control mb-4"
-                  ></input>
+                  />
                   <p className="m-0 p-0">Telefonu</p>
                   <input
                     type="text"
                     name="needType"
-                    placeholder="Need Type*"
-                    required="true"
+                    required
                     value={need.phone}
-                    readOnly="true"
+                    readOnly
                     className="form-control mb-4"
-                  ></input>
+                  />
                   <p className="m-0 p-0">İhtiyaç Tipi</p>
                   <input
                     type="text"
                     name="needType"
-                    placeholder="Need Type*"
-                    required="true"
+                    required
                     value={item.itemType}
-                    readOnly="true"
+                    readOnly
                     className="form-control mb-4"
-                  ></input>
+                  />
                   <p className="m-0 p-0">Açıklaması</p>
                   <input
                     type="text"
                     name="needType"
-                    placeholder="Need Type*"
-                    required="true"
+                    required
                     value={item.itemDescription}
-                    readOnly="true"
+                    readOnly
                     className="form-control mb-4"
-                  ></input>
+                  />
                   <p className="m-0 p-0">Miktar</p>
                   <input
                     type="number"
                     name="amount"
-                    placeholder="Amount*"
-                    required="true"
+                    required
                     value={need.amount}
-                    readOnly="true"
+                    readOnly
                     className="form-control mb-4"
-                  ></input>
+                  />
                 </div>
                 <div className="col-lg-6 mt-3">
                   <p className="m-0 p-0">Onaylayan İsim Soyisim</p>
                   <input
                     type="text"
                     name="NameSurname"
-                    placeholder=""
-                    required="true"
+                    required
                     value={user.firstname + " " + user.lastname}
-                    readOnly="true"
+                    readOnly
                     className="form-control mb-4"
-                  ></input>
+                  />
                   <input
                     type="text"
                     name="confirmName"
-                    placeholder=""
-                    required="true"
+                    required
                     value={user.firstname}
-                    readOnly="true"
+                    readOnly
                     className="form-control mb-4 d-none"
-                  ></input>
+                  />
                   <input
                     type="text"
                     name="confirmSurname"
-                    placeholder=""
-                    required="true"
+                    required
                     value={user.lastname}
-                    readOnly="true"
+                    readOnly
                     className="form-control mb-4 d-none"
-                  ></input>
+                  />
                   <p className="m-0 p-0">Onaylayan STK</p>
                   <input
                     type="text"
                     name="confirmSTK"
-                    placeholder=""
-                    required="true"
+                    required
                     value={user.stk}
-                    readOnly="true"
+                    readOnly
                     className="form-control mb-4"
-                  ></input>
+                  />
                   <p className="m-0 p-0">Aciliyet Durumu*</p>
                   <select
                     name="urgency"
-                    required="true"
+                    required
                     className="browser-default custom-select mb-4"
                   >
                     <option selected className="d-none"></option>
@@ -209,12 +206,24 @@ class EditNeed extends React.Component {
                   <p className="m-0 p-0">Durum*</p>
                   <select
                     name="status"
-                    required="true"
+                    required
                     className="browser-default custom-select mb-4"
                   >
                     <option selected className="d-none"></option>
                     <option value="Confirm">Onaylandı</option>
                     <option value="Cancel">İptal</option>
+                  </select>
+                  <p className="m-0 p-0">Bu yardımın bağlı olduğu Depo/Bölge</p>
+                  <select
+                    name="warehouseId"
+                    className="browser-default custom-select mb-4"
+                  >
+                    <option value="">Seçiniz</option>
+                    {warehouses.map((warehouse) => (
+                      <option key={warehouse.id} value={warehouse.id}>
+                        {warehouse.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>

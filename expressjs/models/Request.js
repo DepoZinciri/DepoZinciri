@@ -20,6 +20,14 @@ module.exports = (sequelize, DataTypes) => {
         amount: DataTypes.STRING,
         status: DataTypes.STRING,
         itemType: DataTypes.STRING,
+        warehouseId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: 'Warehouses',
+                key: 'id'
+            }
+        }
     });
     return Request;
 }

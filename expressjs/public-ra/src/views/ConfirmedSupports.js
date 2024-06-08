@@ -25,7 +25,12 @@ function ConfirmedSupports() {
     try {
       const response = await fetch("/api/getConfirmedSupportRequests");
       const data = await response.json();
-      setConfirmedSupports(data.requests.map((support, index) => ({ ...support, displayId: index + 1 })));
+      const supportsWithWarehouse = await Promise.all(data.requests.map(async (support, index) => {
+        const warehouseResponse = await fetch(`/api/getWarehouse/${support.warehouseId}`);
+        const warehouseData = await warehouseResponse.json();
+        return { ...support, displayId: index + 1, warehouseName: warehouseData.warehouse[0]?.name || 'Unknown' };
+      }));
+      setConfirmedSupports(supportsWithWarehouse);
     } catch (error) {
       console.error('Error fetching confirmed supports:', error);
     }
@@ -55,6 +60,8 @@ function ConfirmedSupports() {
                   <th scope="col">Detay</th>
                   <th scope="col">Telefon</th>
                   <th scope="col">Adres</th>
+                  <th scope="col">Hedef Depo</th>
+                  <th scope="col">Status</th>
                   {userResponse === "LOGGED_IN" && <th scope="col">İşlemler</th>}
                 </tr>
               </thead>
@@ -85,6 +92,8 @@ function ConfirmedSupports() {
                         ? support.address
                         : support.address.split(" ")[0] + " ****************"}
                     </td>
+                    <td>{support.warehouseName}</td>
+                    <td>{support.status}</td>
                     {userResponse === "LOGGED_IN" && (
                       <td>
                         <Link to={editConfirmedSupport(support.id)} className="btn btn-primary m-1">

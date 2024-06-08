@@ -29,6 +29,7 @@ router.get('/api/getWarehouses', index.getWarehouses);
 router.get('/api/getIncomingSupports/:id', index.getIncomingSupports);
 router.post('/api/updateSupportRequest', index.updateSupportRequest);
 router.post('/api/editConfirmSupport', index.editConfirmSupport);
+router.post('/api/editConfirmedSupportStatus', index.editConfirmedSupportStatus);
 router.post('/api/getWarehousePendingRequests',index.getWarehousePendingRequests)
 router.post('/api/getWarehouseItems', index.getWarehouseItems)
 router.post('/api/confirmRequest', index.confirmRequest);
@@ -40,6 +41,8 @@ router.post('/api')
 //router.post('/api/create-item', index.createItem);
 router.get('/api/getdatahash/:id', index.getDataHash);  //isLoggedIn eklencek
 router.delete('/api/deleteRequest/:id', index.deleteRequestById);
+router.get('/api/getNearbyNeeds/:warehouseId', index.getNearbyNeeds);
+
 
 module.exports = router;
 

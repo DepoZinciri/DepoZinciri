@@ -79,13 +79,12 @@ function NeedForm() {
                     required
                 >
                     <option className="d-none" defaultValue>İhtiyaç Tipi*</option>
-                    <option value="Maddi Yardım">Maddi Yardım</option>
-                    <option value="Taşıma">Taşıma</option>
                     <option value="Eşya">Eşya</option>
-                    <option value="Konaklama">Konaklama</option>
                     <option value="Gıda">Gıda</option>
-                    <option value="Sağlık">Sağlık</option>
-                    <option value="Barınma">Barınma</option>
+                    <option value="Su">Su</option>
+                    <option value="Hijyen Malzemesi">Hijyen Malzemesi</option>
+                    <option value="İlaç">İlaç</option>
+                    <option value="Çadır">Çadır</option>
                 </select>
                 <input
                     type="number"

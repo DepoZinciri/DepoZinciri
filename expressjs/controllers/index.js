@@ -111,7 +111,7 @@ exports.getWarehousePendingRequests = function (req, res, next) {
 }
 exports.getRequestsWithWarehouse = function (req, res, next) {
     const warehouseid = req.params.warehouseid;
-    mysql.query(`SELECT * FROM Requests WHERE warehouseId = ${warehouseid}`, function (results) {
+    mysql.query(`SELECT * FROM Requests WHERE warehouseId = ${warehouseid} AND requestType = 2`, function (results) {
         res.json({ requests: results });
     });
 }
@@ -124,31 +124,31 @@ exports.getWarehouseItems = async function (req, res, next) {
       return res.status(400).json({ error: 'Invalid warehouse ID' });
     }
   
-    const getRequestsWithWarehouse = async function (warehouseId) {
-      return await mysql.postquery(`SELECT * FROM Requests WHERE warehouseId = ${warehouseId}`, function (results) {
-        return results;
-      });
+    exports.getRequestsWithWarehouse = function (req, res, next) {
+        const warehouseid = req.params.warehouseid;
+        mysql.query(`SELECT * FROM Requests WHERE warehouseId = ${warehouseid} AND requestType = 2`, function (results) {
+            res.json({ requests: results });
+        });
     };
-  
-    const items = await getRequestsWithWarehouse(warehouseId).then((results) => {
-      if (results.length === 0) {
-        return []; // Return an empty array if no results
-      }
-      return results[0].map((result) => {
-        return result.itemId;
-      });
-    });
-  
-    if (items.length === 0) {
-      return res.json({ items: [] }); // Return empty result if items array is empty
-    }
-  
-    const sql = `SELECT * FROM Items WHERE id IN (${items.toString()})`;
-    console.log(items);
-    const results = await mysql.postquery(sql, items);
-    res.json({ items: results[0] });
-  };
-  
+    
+    exports.getWarehouseItems = async function (req, res, next) {
+        const warehouseId = req.body.warehouseId;
+        
+        console.log("Warehouse ID:", warehouseId);  // Debugging statement
+      
+        if (!warehouseId) {
+          return res.status(400).json({ error: 'Invalid warehouse ID' });
+        }
+    
+        const sql = `SELECT * FROM Items WHERE id IN (SELECT itemId FROM WarehouseItem WHERE warehouseId = ${warehouseId})`;
+        mysql.query(sql, function (error, results) {
+            if (error) {
+                return res.status(500).json({ error: 'Error fetching warehouse items' });
+            }
+            res.json({ items: results });
+        });
+    };
+}
   
 exports.getWarehouse = function (req, res, next) {
     const id = req.params.id;
@@ -199,7 +199,7 @@ exports.getOrdersInWarehouse = function (req, res, next) {
 }
 exports.getIncomingSupports = function (req, res, next) {
     const warehouseId = req.params.id;
-    mysql.query(`SELECT * FROM Requests WHERE warehouseId = ${warehouseId} AND requestType = 2 AND status = 'Confirmed'`, function (results) {
+    mysql.query(`SELECT * FROM Requests WHERE warehouseId = ${warehouseId} AND requestType = 2`, function (results) {
         res.json({ requests: results });
     });
 }
@@ -227,7 +227,7 @@ const createItem = async function (itemType, itemDescription, quantity) {
 }
 
 exports.createNeedRequest = async function (req, res, next) {
-    const { name, surname, phone, address, emergencyStatus, requestType, itemType, amount, itemDescription } = req.body;
+    const { name, surname, phone, address, emergencyStatus, requestType, itemType, amount, itemDescription, warehouseId } = req.body;
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
     if (!name || !surname || !phone || !address || !emergencyStatus || !requestType || !itemType || !amount || !itemDescription) {
         return res.status(400).json({ error: 'Missing required fields' });
@@ -236,14 +236,14 @@ exports.createNeedRequest = async function (req, res, next) {
     if (itemId === 0) {
         return res.status(500).json({ error: 'Error creating item' });
     }
-    const query = `INSERT INTO Requests (transactionId, dataHash, name, surname, phone, address, emergencyStatus, itemDescription, confirmed, requestType, amount, status, createdAt, updatedAt, itemId, warehouseId, itemType) VALUES ("transactionId", '123', '${name}', '${surname}', '${phone}', '${address}', '${emergencyStatus}', '${itemDescription}', '${false}', '${requestType}', ${amount}, "not Approved", '${now}', '${now}', ${itemId}, '1', '${itemType}')`;
+    const query = `INSERT INTO Requests (transactionId, dataHash, name, surname, phone, address, emergencyStatus, itemDescription, confirmed, requestType, amount, status, createdAt, updatedAt, itemId, warehouseId, itemType) VALUES ("transactionId", '123', '${name}', '${surname}', '${phone}', '${address}', '${emergencyStatus}', '${itemDescription}', '${false}', '${requestType}', ${amount}, "not Approved", '${now}', '${now}', ${itemId}, ${warehouseId ? warehouseId : 'NULL'}, '${itemType}')`;
     mysql.query(query, function (results) {
         res.json({ message: 'Need Request created' });
     });
 }
 
 exports.createSupportRequest = async function (req, res, next) {
-    const { name, surname, phone, address, requestType, itemType, amount, itemDescription } = req.body;
+    const { name, surname, phone, address, requestType, itemType, amount, itemDescription, warehouseId } = req.body;
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
     if (!name || !surname || !phone || !address || !requestType || !itemType || !amount || !itemDescription) {
         return res.status(400).json({ error: 'Missing required fields' });
@@ -252,11 +252,12 @@ exports.createSupportRequest = async function (req, res, next) {
     if (itemId === 0) {
         return res.status(500).json({ error: 'Error creating item' });
     }
-    const query = `INSERT INTO Requests (transactionId, dataHash, name, surname, phone, address, emergencyStatus, itemDescription, confirmed, requestType, amount, status, createdAt, updatedAt, itemId, warehouseId, itemType) VALUES ("transactionId", '123', '${name}', '${surname}', '${phone}', '${address}', '${"-"}', '${itemDescription}', '${false}', '${requestType}', ${amount}, "not Approved", '${now}', '${now}', ${itemId}, '2', '${itemType}')`;
+    const query = `INSERT INTO Requests (transactionId, dataHash, name, surname, phone, address, emergencyStatus, itemDescription, confirmed, requestType, amount, status, createdAt, updatedAt, itemId, warehouseId, itemType) VALUES ("transactionId", '123', '${name}', '${surname}', '${phone}', '${address}', '${"-"}', '${itemDescription}', '${false}', '${requestType}', ${amount}, "not Approved", '${now}', '${now}', ${itemId}, ${warehouseId ? warehouseId : 'NULL'}, '${itemType}')`;
     mysql.query(query, function (results) {
         res.json({ message: 'Support Request created' });
     });
 }
+
 
 exports.createDataHash = function (req, res, next) {
     return models.DataHash.create({
@@ -316,3 +317,27 @@ exports.getMapInfo = function (req, res, next) {
         res.status(500).json({ error: 'Error deleting request' });
     }
 };
+
+exports.getNearbyNeeds = function (req, res, next) {
+    const warehouseId = req.params.warehouseId;
+    if (!warehouseId) return res.status(400).json({ error: 'Missing required fields' });
+
+    mysql.query(`SELECT * FROM Requests WHERE confirmed = 1 AND requestType = 1 AND warehouseId = ${warehouseId}`, function (results) {
+        if (results.length === 0) {
+            return res.json({ requests: [] });
+        }
+        res.json({ requests: results });
+    });
+};
+
+exports.editConfirmedSupportStatus = function (req, res, next) {
+    const { id, status } = req.body;
+    const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    if (!id || !status) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+    mysql.query(`UPDATE Requests SET status = '${status}', updatedAt = '${now}' WHERE id = ${id}`, function (results) {
+        res.json({ message: 'Support status updated' });
+    });
+}
+
