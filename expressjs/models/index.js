@@ -65,12 +65,16 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
-// Define the seedDatabase function
+// (TODO) Add the other table seedings
 async function seedDatabase() {
   try {
-    // (TODO): This will create the warehouses after each backend start.
-    // await db.Warehouse.bulkCreate(seedData.warehouses);
-    // console.log('Database seeded successfully');
+    const existingWarehouses = await db.Warehouse.findAll();
+    if (existingWarehouses.length === 0) {
+      await db.Warehouse.bulkCreate(seedData.warehouses);
+      console.log('Database seeded successfully');
+    } else {
+      console.log('Seed data already exists. Skipping seeding process.');
+    }
   } catch (error) {
     console.error('Error seeding database:', error);
   }
