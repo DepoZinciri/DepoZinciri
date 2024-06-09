@@ -5,8 +5,10 @@ import axios from 'axios';
 function ConfirmedNeeds() {
   const location = useLocation();
   const [confirmedNeeds, setConfirmedNeeds] = useState([]);
+  const [filteredNeeds, setFilteredNeeds] = useState([]);
   const [userResponse, setUserResponse] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [filter, setFilter] = useState('All');
 
   const editConfirmedNeed = (id) => {
     let myPath = "/confirmed_need/edit/" + id + "";
@@ -30,6 +32,10 @@ function ConfirmedNeeds() {
     }
   }, [location]);
 
+  useEffect(() => {
+    filterNeeds();
+  }, [filter, confirmedNeeds]);
+
   const showConfirmedNeeds = async () => {
     try {
       const response = await axios.get("/api/getConfirmedRequests");
@@ -37,6 +43,18 @@ function ConfirmedNeeds() {
     } catch (error) {
       console.error('Error fetching confirmed needs:', error);
     }
+  };
+
+  const filterNeeds = () => {
+    if (filter === 'All') {
+      setFilteredNeeds(confirmedNeeds);
+    } else {
+      setFilteredNeeds(confirmedNeeds.filter(need => need.status === filter));
+    }
+  };
+
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value);
   };
 
   return (
@@ -52,6 +70,19 @@ function ConfirmedNeeds() {
       <div className="bg-blue p-2 mt-2 rounded border">
         <div className="bg-white rounded">
           <div className="table-responsive">
+            <div className="d-flex justify-content-between p-2">
+              <select
+                id="statusFilter"
+                className="form-control w-25"
+                value={filter}
+                onChange={handleFilterChange}
+              >
+                <option value="All">Tümü</option>
+                <option value="Confirmed">Onaylandı</option>
+                <option value="Delivered">Teslim Edildi</option>
+                <option value="NotConfirmed">İptal Edildi</option>
+              </select>
+            </div>
             <table className="table table-bordered mt-3 rounded">
               <thead className="thead-dark rounded">
                 <tr>
@@ -66,7 +97,7 @@ function ConfirmedNeeds() {
                 </tr>
               </thead>
               <tbody>
-                {confirmedNeeds.map((need) => {
+                {filteredNeeds.map((need) => {
                   return (
                     <tr key={need.id}>
                       <th scope="row">{need.displayId}</th>
@@ -92,9 +123,6 @@ function ConfirmedNeeds() {
                           ? need.address
                           : need.address.split(" ")[0] + " ****************"}
                       </td>
-                      {/* Don't remove this, this is for debugging purposes */}
-                      {/*  Display the entire need object */}
-                      {/* <td>{JSON.stringify(need)}</td> */}
                       {userResponse === "LOGGED_IN" && (
                         <td>
                           <Link

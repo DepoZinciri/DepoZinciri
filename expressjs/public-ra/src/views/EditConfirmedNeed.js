@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
+import updateNeedStatus from '../web3/updateNeedStatus';
 
 class EditConfirmedNeed extends React.Component {
     constructor(props) {
@@ -52,9 +53,14 @@ class EditConfirmedNeed extends React.Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
+        const { id, status } = this.state.formData;
         try {
-            const response = await axios.post('/api/editConfirmNeed', this.state.formData);
-            console.log(response);
+            // Wait for MetaMask transaction approval
+            await updateNeedStatus(id.toString(), status);
+
+            // Proceed to API call after MetaMask transaction approval
+            await axios.post('/api/editConfirmNeed', this.state.formData);
+            console.log("Request confirmed");
             const { need } = this.state;
             const successMessage = `${need.name} ${need.surname}'ne ait olan İhtiyaç'ı güncellediniz.`;
             this.props.history.push({
@@ -112,7 +118,7 @@ class EditConfirmedNeed extends React.Component {
                                     <p className="m-0 p-0">Soyisim</p>
                                     <input onChange={this.handleChange} type="text" name="surname" placeholder="Surname*" required="true" value={surname} className="form-control mb-4" />
                                     <p className="m-0 p-0">İhtiyaç Tipi</p>
-                                    <input onChange={this.handleChange} type="text" name="requestType" placeholder="Need Type*" required="true" readOnly="true" value={need.itemType} className="form-control mb-4" />
+                                    <input onChange={this.handleChange} type="text" name="needType" placeholder="Need Type*" required="true" readOnly="true" value={item.itemType} className="form-control mb-4" />
                                     <p className="m-0 p-0">Miktar</p>
                                     <input onChange={this.handleChange} type="text" name="amount" placeholder="Amount*" required="true" value={amount} className="form-control mb-4" />
                                     <p className="m-0 p-0">Telefon</p>
@@ -137,8 +143,7 @@ class EditConfirmedNeed extends React.Component {
                                     <select name="status" onChange={this.handleChange} required="true" className="browser-default custom-select mb-4">
                                         <option selected className="d-none"></option>
                                         {need.status === "Confirmed" ? <option value="Confirmed" selected>Onaylandı</option> : <option value="Confirmed">Onaylandı</option>}
-                                        {need.status === "Pending" ? <option value="Pending" selected>Yolda</option> : <option value="Pending">Yolda</option>}
-                                        {need.status === "On Warehouse" ? <option value="On Warehouse" selected>Depoda</option> : <option value="On Warehouse">Depoda</option>}
+                                        {need.status === "NotConfirmed" ? <option value="NotConfirmed" selected>İptal Edildi</option> : <option value="NotConfirmed">İptal Edildi</option>}
                                         {need.status === "Delivered" ? <option value="Delivered" selected>Teslim Edildi</option> : <option value="Delivered">Teslim Edildi</option>}
                                     </select>
                                 </div>

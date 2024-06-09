@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import updateSupportStatus from '../updateSupportStatus';
+import updateNeedStatus from '../web3/updateNeedStatus';
 
 
 class EditNeed extends React.Component {
@@ -41,25 +41,30 @@ class EditNeed extends React.Component {
     }
   }
 
-  async handleSubmit(id, status, warehouseId) {
-    await updateSupportStatus("1", 1);
-    return
-    try {
-      await axios.post(`/api/confirmRequest`, { id, status, warehouseId });
+  // Status is either "Confirmed" or "NotConfirmed"
+  // ID is string
+  // Status is number
+async handleSubmit(id, status, warehouseId) {
+  try {
+      // Wait for MetaMask transaction approval
+      await updateNeedStatus(id.toString(), status);
+      
+      // Proceed to API call after MetaMask transaction approval
+      await axios.post(`/api/confirmRequest`, { id, status: status, warehouseId });
       console.log("Request confirmed");
       const { need } = this.state;
-      const message = status === "Confirm"
-        ? `${need.name} ${need.surname}'ne ait ${need.itemDescription} isteğini kabul ettiniz`
-        : `${need.name} ${need.surname}'ne ait ${need.itemDescription} isteğini reddettiniz`;
+      const message = status === "Confirmed"
+          ? `${need.name} ${need.surname}'ne ait ${need.itemDescription} isteğini kabul ettiniz`
+          : `${need.name} ${need.surname}'ne ait ${need.itemDescription} isteğini reddettiniz`;
       this.props.history.push({
-        pathname: "/not_confirmed_needs",
-        state: { successMessage: message },
+          pathname: "/not_confirmed_needs",
+          state: { successMessage: message },
       });
-    } catch (error) {
+  } catch (error) {
       console.error("Error confirming request:", error);
       this.setState({
-        statusMessage: "İşlem sırasında bir hata oluştu, lütfen tekrar deneyiniz.",
-        isError: true,
+          statusMessage: "İşlem sırasında bir hata oluştu, lütfen tekrar deneyiniz.",
+          isError: true,
       });
     }
   }
@@ -218,8 +223,8 @@ class EditNeed extends React.Component {
                     className="browser-default custom-select mb-4"
                   >
                     <option selected className="d-none"></option>
-                    <option value="Confirm">Onaylandı</option>
-                    <option value="Cancel">İptal</option>
+                    <option value="Confirmed">Onaylandı</option>
+                    <option value="NotConfirmed">İptal</option>
                   </select>
                   <p className="m-0 p-0">Bu yardımın bağlı olduğu Depo/Bölge</p>
                   <select
