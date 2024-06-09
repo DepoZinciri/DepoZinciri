@@ -27,6 +27,7 @@ import "./public/css/style.css";
 import PersonalData from './views/PersonalData';
 import Warehouse from './views/Warehouse';
 import CreateSupport from './views/CreateSupport';
+import AddInventory from './views/AddInventory'; // Add this line
 
 function App() {
   const [userResponse, setUserResponse] = useState([]);
@@ -65,6 +66,7 @@ function App() {
           <Route path="/confirmed_need/edit/:id" render={(props) => <EditConfirmedNeed {...props} user={user} />} />
           <Route path="/turkey-map/:city" component={City} />
           <Route path="/warehouse" render={(props) => <Warehouse {...props} warehouseId={user.warehouseId} />} />
+          <Route path="/add-inventory/:warehouseId" component={AddInventory} />
         </Switch>
       </div>
       <Footer />

@@ -1,17 +1,19 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useHistory } from 'react-router-dom';
 
 export default function Warehouse(props) {
   const [warehouse, setWarehouse] = useState({});
   const [incomingSupports, setIncomingSupports] = useState([]);
   const [items, setItems] = useState([]);
   const [nearbyNeeds, setNearbyNeeds] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     if (props.warehouseId) {
       getWarehouse();
       getIncomingSupports();
-      getItems();
+      showWarehouseItems();
       getNearbyNeeds();
     }
   }, [props.warehouseId]);
@@ -34,13 +36,21 @@ export default function Warehouse(props) {
     }
   }
 
-  async function getItems() {
-    try {
-      const response = await axios.post('/api/getWarehouseItems', { warehouseId: props.warehouseId });
-      setItems(response.data.items || []);
-    } catch (error) {
-      console.error("Error fetching items:", error);
-    }
+  function showWarehouseItems() {
+    fetch(`/api/getWarehouseItems/${props.warehouseId}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data.items);
+        setItems(data.items || []);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   async function getNearbyNeeds() {
@@ -50,6 +60,10 @@ export default function Warehouse(props) {
     } catch (error) {
       console.error("Error fetching nearby needs:", error);
     }
+  }
+
+  function handleAddInventoryClick() {
+    history.push(`/add-inventory/${props.warehouseId}`);
   }
 
   if (!props.warehouseId) {
@@ -185,8 +199,7 @@ export default function Warehouse(props) {
                         <th scope="col">Ürün Adı</th>
                         <th scope="col">Ürün Miktarı</th>
                         <th scope="col">Son Kullanma Tarihi</th>
-                        <th scope="col">Kabul Eden</th>
-                        <th scope="col">Kontrol Eden</th>
+                        <th scope="col">Son İşlem Yapan Kullanıcı</th>
                         <th scope="col .text-center p-1">Düzenle</th>
                       </tr>
                     </thead>
@@ -197,7 +210,6 @@ export default function Warehouse(props) {
                           <td>{item.itemType}</td>
                           <td>{item.quantity}</td>
                           <td>{item.expirationDate ? item.expirationDate : '-'}</td>
-                          <td>??</td>
                           <td>??</td>
                           <td>
                             <button type="button" className="btn bg-dblue text-white">
@@ -213,6 +225,7 @@ export default function Warehouse(props) {
                   type="button"
                   className="btn m-2 p-2"
                   style={{ color: "#FFF", backgroundColor: "#76BA4A" }}
+                  onClick={handleAddInventoryClick}
                 >
                   Envanter Ekle
                 </button>

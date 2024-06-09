@@ -79,6 +79,9 @@ class EditNeed extends React.Component {
     }
   }
 
+  // handle içinde bir transaction atılacak 
+  // bu attığın transaction'ı thx'i database'e yazdır
+  
   render() {
     let need = this.state.need;
     let user = this.state.user;

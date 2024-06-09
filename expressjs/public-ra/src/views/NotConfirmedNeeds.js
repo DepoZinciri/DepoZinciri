@@ -38,10 +38,6 @@ function NotConfirmedNeeds() {
         return <div>Loading...</div>;
     }
 
-    if (notConfirmedNeeds.length === 0) {
-        return <div>No not confirmed needs found.</div>;
-    }
-
     return (
         <div className="container text-center">
             {successMessage && <div className="alert alert-success mt-4">{successMessage}</div>}

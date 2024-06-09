@@ -27,16 +27,17 @@ router.get('/api/getItemById/:id', index.getItemById)
 router.get('/api/getConfirmedSupportRequests', index.getConfirmedSupportRequests);
 router.get('/api/getWarehouses', index.getWarehouses);
 router.get('/api/getIncomingSupports/:id', index.getIncomingSupports);
+router.get('/api/getWarehouseItems/:warehouseId', index.getWarehouseItems);
 router.post('/api/updateSupportRequest', index.updateSupportRequest);
 router.post('/api/editConfirmSupport', index.editConfirmSupport);
 router.post('/api/editConfirmedSupportStatus', index.editConfirmedSupportStatus);
 router.post('/api/getWarehousePendingRequests',index.getWarehousePendingRequests)
-router.post('/api/getWarehouseItems', index.getWarehouseItems)
 router.post('/api/confirmRequest', index.confirmRequest);
 router.post('/api/create-datahash', index.createDataHash);
 router.post('/api/createNeedRequest', index.createNeedRequest);
 router.post('/api/createSupportRequest',index.createSupportRequest)
 router.post('/api/editConfirmNeed', index.editConfirmNeed);
+router.post('/api/createWarehouseItem', index.createWarehouseItem);
 router.post('/api')
 //router.post('/api/create-item', index.createItem);
 router.get('/api/getdatahash/:id', index.getDataHash);  //isLoggedIn eklencek

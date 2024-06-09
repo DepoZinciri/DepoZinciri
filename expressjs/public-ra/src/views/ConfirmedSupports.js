@@ -92,8 +92,16 @@ function ConfirmedSupports() {
                         ? support.address
                         : support.address.split(" ")[0] + " ****************"}
                     </td>
-                    <td>{support.warehouseName}</td>
-                    <td>{support.status}</td>
+                    <td>
+                      {userResponse === "LOGGED_IN"
+                        ? support.warehouseName
+                        : support.warehouseName.split(" ")[0] + " ****************"}
+                    </td>
+                    <td>
+                      {userResponse === "LOGGED_IN"
+                        ? support.status
+                        : support.status.split(" ")[0] + " ****************"}
+                    </td>
                     {userResponse === "LOGGED_IN" && (
                       <td>
                         <Link to={editConfirmedSupport(support.id)} className="btn btn-primary m-1">

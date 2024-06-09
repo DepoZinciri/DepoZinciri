@@ -43,12 +43,13 @@ const Warehouse = db['Warehouse'];
 const Item = db['Item'];
 const Request = db['Request'];
 const Order = db['Order'];
+const WarehouseItems = db['WarehouseItems'];
 
 User.belongsTo(Warehouse, { foreignKey: 'warehouseId' }); // Ref: Users.warehouse > Warehouse.id
 Warehouse.hasMany(User, { foreignKey: 'warehouseId' });
 
-Warehouse.belongsToMany(Item, { through: 'WarehouseItem' }); // Ref: Warehouse.id <> İtems.id
-Item.belongsToMany(Warehouse, { through: 'WarehouseItem' });
+Warehouse.hasMany(WarehouseItems, { foreignKey: 'warehouseId' }); // Ref: Warehouse.id > WarehouseItems.warehouseId
+WarehouseItems.belongsTo(Warehouse, { foreignKey: 'warehouseId' });
 
 Request.belongsTo(Warehouse, { foreignKey: 'warehouseId' }); // Ref: Request.warehouseid > Warehouse.id
 Warehouse.hasMany(Request, { foreignKey: 'warehouseId' });
