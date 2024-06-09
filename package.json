@@ -7,6 +7,7 @@
     "concurrently": "^7.0.0"
   },
   "scripts": {
+    "install:all": "npm install && cd expressjs && npm install && cd public-ra && npm install",
     "start": "npm run build:frontend && npm run start:all",
     "build:frontend": "cd expressjs/public-ra && npm run build",
     "start:frontend": "cd expressjs/public-ra && npm start",
