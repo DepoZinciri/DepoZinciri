@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import updateSupportStatus from '../web3/updateSupportStatus';
 
 class EditConfirmedSupport extends React.Component {
   constructor(props) {
@@ -53,6 +54,7 @@ class EditConfirmedSupport extends React.Component {
     return async (event) => {
       event.preventDefault();
       try {
+        await updateSupportStatus(id.toString(), this.state.formData.status);
         await axios.post(`/api/updateSupportRequest`, this.state.formData);
         const successMessage = `${this.state.support.name} ${this.state.support.surname}'ne ait olan destek isteğini güncellediniz.`;
         this.props.history.push({
@@ -234,9 +236,10 @@ class EditConfirmedSupport extends React.Component {
                     className="browser-default custom-select mb-4"
                   >
                     <option selected className="d-none"></option>
-                    <option value="Onaylandı">Onaylandı</option>
-                    <option value="Beklemede">Beklemede</option>
-                    <option value="Kullanıldı">Kullanıldı</option>
+                    <option value="Confirmed">Onaylandı</option>
+                    <option value="OnTheWay">Yolda</option>
+                    <option value="OnTheWarehouse">Depoda</option>
+                    <option value="Delivered">Teslim Edildi</option>
                   </select>
                   <p className="m-0 p-0">Gidicek Depo*</p>
                   <select

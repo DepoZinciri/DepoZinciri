@@ -135,9 +135,9 @@ class EditConfirmedNeed extends React.Component {
                                     <input type="text" name="confirmSTK" placeholder="" required="true" value={user.stk} readOnly="true" className="form-control mb-4" />
                                     <p className="m-0 p-0">Aciliyet Durumu*</p>
                                     <select name="emergencyStatus" onChange={this.handleChange} required="true" className="browser-default custom-select mb-4">
-                                        {need.emergencyStatus === "urgent" ? <option value="urgent" selected>Yüksek</option> : <option value="urgent">Yüksek</option>}
-                                        {need.emergencyStatus === "mid" ? <option value="mid" selected>Orta</option> : <option value="mid">Orta</option>}
-                                        {need.emergencyStatus === "not urgent" ? <option value="not urgent" selected>Düşük</option> : <option value="not urgent">Düşük</option>}
+                                        {need.emergencyStatus === "Yüksek" ? <option value="Yüksek" selected>Yüksek</option> : <option value="Yüksek">Yüksek</option>}
+                                        {need.emergencyStatus === "Orta" ? <option value="Orta" selected>Orta</option> : <option value="Orta">Orta</option>}
+                                        {need.emergencyStatus === "Düşük" ? <option value="Düşük" selected>Düşük</option> : <option value="Düşük">Düşük</option>}
                                     </select>
                                     <p className="m-0 p-0">Durum*</p>
                                     <select name="status" onChange={this.handleChange} required="true" className="browser-default custom-select mb-4">

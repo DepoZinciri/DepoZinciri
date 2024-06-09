@@ -142,12 +142,12 @@ exports.getItemById = function (req, res, next) {
     });
 };
 exports.updateSupportRequest = function (req, res, next) {
-    const { id, name, surname, phone, address, requestType, amount, itemDescription, warehouseId } = req.body;
+    const { id, name, surname, phone, address, requestType, amount, itemDescription, warehouseId, status } = req.body;
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    if (!name || !surname || !phone || !address || !requestType || !amount || !itemDescription || !warehouseId) {
-        return res.status(400).json({ error: ` missing field is ` });
+    if (!name || !surname || !phone || !address || !requestType || !amount || !itemDescription || !warehouseId || !status) {
+        return res.status(400).json({ error: `Missing field` });
     }
-    mysql.query(`UPDATE Requests SET name = '${name}', surname = '${surname}', phone = '${phone}', address = '${address}', requestType = '${requestType}', amount = ${amount}, itemDescription = '${itemDescription}', updatedAt = '${now}', warehouseId = '${warehouseId}' WHERE id = ${id}`, function (results) {
+    mysql.query(`UPDATE Requests SET name = '${name}', surname = '${surname}', phone = '${phone}', address = '${address}', requestType = '${requestType}', amount = ${amount}, itemDescription = '${itemDescription}', updatedAt = '${now}', warehouseId = '${warehouseId}', status = '${status}' WHERE id = ${id}`, function (results) {
         res.json({ message: 'Support Request updated' });
     });
 };

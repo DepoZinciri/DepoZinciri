@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 function ConfirmedSupports() {
   const [confirmedSupports, setConfirmedSupports] = useState([]);
   const [userResponse, setUserResponse] = useState([]);
+  const [filterStatus, setFilterStatus] = useState('');
   const location = useLocation();
   const successMessage = location.state?.successMessage || '';
   const [statusMessage, setStatusMessage] = useState(successMessage);
@@ -36,6 +37,10 @@ function ConfirmedSupports() {
     }
   };
 
+  const filteredSupports = confirmedSupports.filter(support => 
+    filterStatus === '' || support.status === filterStatus
+  );
+
   return (
     <div className="container text-center">
       <div className="bg-dblue rounded">
@@ -48,13 +53,21 @@ function ConfirmedSupports() {
               {statusMessage}
             </div>
           )}
+          <div className="mb-3">
+            <select className="browser-default custom-select" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
+              <option value="">Tüm Durumlar</option>
+              <option value="Confirmed">Onaylandı</option>
+              <option value="OnTheWay">Yolda</option>
+              <option value="OnTheWarehouse">Depoda</option>
+              <option value="Delivered">Teslim Edildi</option>
+            </select>
+          </div>
           <div className="table-responsive">
             <table className="table table-bordered mt-3 rounded">
               <thead className="thead-dark rounded">
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">İsim</th>
-                  {/* <th scope="col">Aciliyet Durumu</th> */}
                   <th scope="col">Soyisim</th>
                   <th scope="col">Yardım Tipi</th>
                   <th scope="col">Detay</th>
@@ -66,7 +79,7 @@ function ConfirmedSupports() {
                 </tr>
               </thead>
               <tbody>
-                {confirmedSupports.map((support) => (
+                {filteredSupports.map((support) => (
                   <tr key={support.id}>
                     <th scope="row">{support.displayId}</th>
                     <td>
@@ -74,7 +87,6 @@ function ConfirmedSupports() {
                         ? support.name
                         : `${support.name.charAt(0)}${"*".repeat(support.name.length - 1)}`}
                     </td>
-                    {/* <td>{support.emergencyStatus}</td> */}
                     <td>
                       {userResponse === "LOGGED_IN"
                         ? support.surname
