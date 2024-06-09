@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import updateSupportStatus from '../updateSupportStatus';
+
 
 class EditNeed extends React.Component {
   constructor(props) {
@@ -40,6 +42,8 @@ class EditNeed extends React.Component {
   }
 
   async handleSubmit(id, status, warehouseId) {
+    await updateSupportStatus("1", 1);
+    return
     try {
       await axios.post(`/api/confirmRequest`, { id, status, warehouseId });
       console.log("Request confirmed");
@@ -79,9 +83,10 @@ class EditNeed extends React.Component {
     }
   }
 
+  // (TODO) Inside handle send tx
+  // write the thx into the db
   // handle içinde bir transaction atılacak 
   // bu attığın transaction'ı thx'i database'e yazdır
-  
   render() {
     let need = this.state.need;
     let user = this.state.user;
