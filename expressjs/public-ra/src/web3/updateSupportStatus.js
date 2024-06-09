@@ -2,6 +2,24 @@ import Web3 from 'web3';
 import DepoZinciriArtifact from './DepoZinciri.json';
 
 const updateSupportStatus = async (supportId, status) => {
+
+    let statusNumber;
+    switch (status) {
+        case 'Confirmed':
+            statusNumber = 0;
+            break;
+        case 'OnTheWay':
+            statusNumber = 1;
+            break;
+        case 'OnTheWarehouse':
+            statusNumber = 2;
+            break;
+        case 'Delivered':
+            statusNumber = 3;
+        default:
+            throw new Error("Invalid status");
+    }
+
     // Modern dapp browsers...
     if (window.ethereum) {
         const web3 = new Web3(window.ethereum);
@@ -33,6 +51,7 @@ const updateSupportStatus = async (supportId, status) => {
                 gasPrice: gasPrice,
                 gas: gasLimit
             });
+            console.log(`Type of status: ${typeof status} type of ID: ${typeof supportId}`)
             console.log(`Support status updated to ${status} for support ID ${supportId}`);
         } catch (error) {
             console.error("Error updating support status:", error);
